@@ -2,6 +2,8 @@ var express = require('express');
 var session = require('express-session');
 var mysql = require('sync-mysql');
 var dbinfo = require('../database.js');
+var pbkfd2Password = require('pbkdf2-password');
+var hasher = pbkfd2Password();
 var router = express.Router();
 
 //connectDB.query("CREATE DATABASE IF NOT EXISTS userInfo CHARACTER SET utf8 COLLATE utf8_general_ci;");
@@ -17,7 +19,7 @@ var result = null;
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  connectDB.query("CREATE TABLE IF NOT EXISTS USERS(userId CHAR(30), userPw TEXT, userEmail TEXT, PRIMARY KEY(userId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+  connectDB.query("CREATE TABLE IF NOT EXISTS USERS(userId CHAR(30), userPw TEXT, pwSalt TEXT, userEmail TEXT, PRIMARY KEY(userId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
   console.log('테이블 생성됨');
   if(req.session.userId) {
     res.redirect('/result/'+req.session.userId);
@@ -69,12 +71,16 @@ router.post('/signin', function(req, res) {
     if(result.length < 1) {
       res.send('<script type="text/javascript">alert("존재하지 않는 사용자입니다."); history.back();</script>');
     }
-    else if(result[0].userPw != pw){
-      res.send('<script type="text/javascript">alert("비밀번호가 잘못되었습니다."); history.back();</script>');
-    }
     else {
-      req.session.userId = id;
-      res.redirect('/result/'+req.session.userId);
+      hasher({password:pw, salt:connectDB.query("SELECT pwSalt FROM USERS WHERE userId='"+id+"';")[0].pwSalt}, function(err, pass, salt, hash) {
+        if(hash === connectDB.query("SELECT userPw FROM USERS WHERE userId='"+id+"';")[0].userPw) {
+          req.session.userId = id;
+          res.redirect('/result/'+req.session.userId);
+        }
+        else {
+          res.send('<script type="text/javascript">alert("비밀번호가 잘못되었습니다."); history.back();</script>');
+        }
+      });
     }
   }
 });
@@ -99,10 +105,12 @@ router.post('/signup', function(req, res) {
     res.send('<script type="text/javascript">alert("비밀번호 입력을 확인해주세요."); history.back();</script>');
   }
   else {
-    var sql = "INSERT INTO USERS VALUES('"+id+"', '"+pw+"', '"+email+"');"
-    connectDB.query(sql);
-    console.log('데이터 입력됨');
-    res.send('<script type="text/javascript">alert("승인되었습니다. 로그인 해주세요."); location.replace("/");</script>');
+    hasher({password:pw}, function(err, pass, salt, hash) {
+      var sql = "INSERT INTO USERS VALUES('"+id+"', '"+hash+"', '"+salt+"', '"+email+"');"
+      connectDB.query(sql);
+      console.log('데이터 입력됨');
+      res.send('<script type="text/javascript">alert("승인되었습니다. 로그인 해주세요."); location.replace("/");</script>');
+    });
   }
 });
 
