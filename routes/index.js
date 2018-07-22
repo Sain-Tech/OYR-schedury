@@ -25,7 +25,7 @@ router.get('/', function(req, res) {
     res.redirect('/result/'+req.session.userId);
   }
   else {
-    res.render('loginmain', { title: '로그인' });
+    res.render('loginmain', { title: '로그인'});
   }
 });
 
@@ -86,7 +86,8 @@ router.post('/signin', function(req, res) {
 });
 
 router.get('/signup', function(req, res) {
-  res.render('signup', { title: 'Sign up' });
+  res.render('signup', { title: 'Sign up', dbIdAlreadyCheck: req.session.flagAlreadyId});
+  
 });
 
 router.post('/signup', function(req, res) {
@@ -112,6 +113,34 @@ router.post('/signup', function(req, res) {
       res.send('<script type="text/javascript">alert("승인되었습니다. 로그인 해주세요."); location.replace("/");</script>');
     });
   }
+});
+
+router.get('/checkid/:id', function(req, res) {
+  var result = connectDB.query("SELECT userId FROM USERS WHERE userId='"+req.params.id+"';");
+  var flag = false;
+
+  if(result.length > 0) {
+    flag = true;
+  }
+  else {
+    flag = false;
+  }
+
+  res.send(flag);
+});
+
+router.get('/checkemail/:email', function(req, res) {
+  var result = connectDB.query("SELECT userId FROM USERS WHERE userEmail='"+req.params.email+"';");
+  var flag = false;
+
+  if(result.length > 0) {
+    flag = true;
+  }
+  else {
+    flag = false;
+  }
+
+  res.send(flag);
 });
 
 module.exports = router;

@@ -5,15 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="theme-color" content="#ffffff">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="dist/semantic.css">
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="dist/semantic.js"></script>
 
     <title><%= title %></title>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/loginex.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/signup.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/color.css" />
+
+    <script src="javascripts/signup.js"></script>
 </head>
 <body>
+    <header>
+        <h1 class="ui header text-color-dark">Schedury</h1>
+    </header>
+    
+    <div class="div-form">
+        <form action="/signup" method="POST">
+            <div class="ui text container">
+                
+                <div class="div-input title">
+                    <h2 class="h2-spacer text-color-dark">회원가입</h2>
+                </div>
+            
+                <div class="ui segment">
+                    <div class="ui stackable one column vertically divided grid container">
+                        <div class="column">
+                            <div class="div-input">
+                                <div class="ui left icon right labeled fluid input" id="id" data-tooltip="아이디는 문자 포함 숫자 조합으로 입력하세요." data-position="bottom left">
+                                    <input class="input-orange" id="id_input" type="text" placeholder="아이디" onfocus="$('#id').removeAttr('data-tooltip').removeAttr('data-position');" onblur="checkFocus('id_ico', 'user');" oninput="checkId();" onkeyup="checkIdAlready();">
+                                    <i class="user icon" id='id_ico'></i>
+
+                                    <div class="ui basic label">
+                                            http://
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="div-input">
+                                <div class="ui left icon fluid input" id="pass" data-tooltip="비밀번호는 문자, 숫자 조합 6자리 이상 만들어주세요." data-position="bottom left">
+                                    <input class="input-orange" id="pass_input" type="password" placeholder="비밀번호" onfocus="$('#pass').removeAttr('data-tooltip').removeAttr('data-position');" onblur="checkFocus('pass_ico', 'key')" oninput="checkPassword();">
+                                    <i class="key icon" id="pass_ico"></i>
+                                </div>
+                            </div>
+
+                            <div class="div-input">
+                                <div class="ui right icon fluid input" id="pass2">
+                                    <input class="input-orange" id="pass2_input" type="password" placeholder="비밀번호 확인" onblur="checkFocus('pass2_ico', '')" oninput="checkPassword();">
+                                    <i class="icon" id="pass2_ico"></i>
+                                </div>
+                            </div>
+
+                            <div class="div-input">
+                                <div class="ui left icon fluid input" id="email">
+                                    <input class="input-orange" id="email_input" type="email" placeholder="이메일" onblur="checkFocus('email_ico', 'envelope')" oninput="checkEmail();" onkeyup="checkEmailAlready();">
+                                    <i class="envelope icon" id="email_ico"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row"></div>
+
+                        <div class="column">
+                            <div class="ui two column stackable grid">
+                                <div class="six wide column">
+                                    <img class="ui small circular image" src="/images/testimage.png">
+                                </div>
+                                
+                                <div class="ten wide column">
+                                    <h3 class="text-color-dark">프로필 사진 선택</h3>
+                                    <h4 class="text-color-dark">원하시는 프로필 사진을 선택해 주세요.</h4>
+                                    <button class="ui button fluid">사진 선택</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row"></div>
+
+                        <div class="column">
+                            <div class="ui two column stackable grid">
+                                <div class="nine wide column">
+                                    <button class="ui yellow button fluid">가입</button>
+                                </div>
+                                
+                                <div class="seven wide column">
+                                    <button class="ui button fluid" onclick="history.back();">취소</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <!--
     <div class="c_core">
         <div class="c_div_secondary">
             <form action="/signup" method="POST">
@@ -37,6 +127,6 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div>-->
 </body>
 </html>
