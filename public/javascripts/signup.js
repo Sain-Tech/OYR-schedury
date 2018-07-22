@@ -1,20 +1,47 @@
+var div = document.createElement('div');
+div.className = '';
+div.id = 'id_error';
+div.innerHTML = "";
+document.getElementById('id').appendChild(div);
+
+var div = document.createElement('div');
+div.className = '';
+div.id = 'email_error';
+div.innerHTML = "";
+document.getElementById('email').appendChild(div);
+
+var idOk = false;
+var passOk = false;
+var emailOk = false;
+//6666666
 function checkId() {
     var id = document.getElementById('id_input').value;
     var regId = new RegExp("^(?=.*?[a-z])(?=.*?[0-9]).{1,}$");
 
+    $('#id').removeAttr('data-tooltip').removeAttr('data-position');
+    $('#pass').removeAttr('data-tooltip').removeAttr('data-position');
+
+    $('#id').removeAttr('right labeled');
+    $('#id_error').removeAttr('class', '');
+    $('#id_error').html('');
+
     if(id == '') {
+        $('#id').attr('data-tooltip', '아이디는 문자 포함 숫자 조합으로 입력하세요.').attr('data-position', 'bottom left');
         document.getElementById('id').setAttribute('class', 'ui left icon fluid input');
         document.getElementById('id_ico').setAttribute('class', 'user icon');
         document.getElementById('id_input').setAttribute('class', 'input-orange');
+        idOk = false;
     }
     else if(regId.test(id)) {
         document.getElementById('id').setAttribute('class', 'ui left icon fluid input confirm');
         document.getElementById('id_ico').setAttribute('class', 'check circle icon');
+        idOk = true;
     }
     else {
         document.getElementById('id').setAttribute('class', 'ui left icon fluid input error');
         document.getElementById('id_ico').setAttribute('class', 'times circle icon');
         document.getElementById('id_input').removeAttribute('class');
+        idOk = false;
     }
 }
 
@@ -39,8 +66,10 @@ function checkIdAlready() {
                         document.getElementById('id_ico').setAttribute('class', 'times circle icon');
                         document.getElementById('id_input').removeAttribute('class');
                         
-                        var div = docuemnt.createElement('div');
-                        
+                        $('#id_error').attr('class', 'ui basic label');
+                        $('#id_error').html('사용하실 수 없는 아이디 입니다.');
+
+                        idOk = false;
                     }
                 }
             };
@@ -48,7 +77,7 @@ function checkIdAlready() {
             xhttp.open("GET", "/checkid/"+id, true);
             xhttp.send();
         }
-    }, 500);
+    }, 250);
 }
 
 function checkEmailAlready() {
@@ -66,9 +95,14 @@ function checkEmailAlready() {
 
                     }
                     else {
-                        document.getElementById('email').setAttribute('class', 'ui left icon fluid input error');
+                        document.getElementById('email').setAttribute('class', 'ui left icon right labeled fluid input error');
                         document.getElementById('email_ico').setAttribute('class', 'times circle icon');
                         document.getElementById('email_input').removeAttribute('class');
+                        
+                        $('#email_error').attr('class', 'ui basic label');
+                        $('#email_error').html('사용하실 수 없는 이메일 입니다.');
+
+                        emailOk = false;
                     }
                 }
             };
@@ -76,7 +110,7 @@ function checkEmailAlready() {
             xhttp.open("GET", "/checkemail/"+email, true);
             xhttp.send();
         }
-    }, 500);
+    }, 250);
 }
 
 function checkPassword() {
@@ -86,34 +120,50 @@ function checkPassword() {
 
     var regPw = new RegExp("^(?=.*?[a-z])(?=.*?[0-9]).{6,}$");
 
+    $('#id').removeAttr('data-tooltip').removeAttr('data-position');
+    $('#pass').removeAttr('data-tooltip').removeAttr('data-position');
+
     if(passwordOrigin == '') {
+        $('#pass').attr('data-tooltip', '비밀번호는 문자, 숫자 조합 6자리 이상 만들어주세요.').attr('data-position', 'bottom left');
         document.getElementById('pass').setAttribute('class', 'ui left icon fluid input');
         document.getElementById('pass_ico').setAttribute('class', 'key icon');
         document.getElementById('pass_input').setAttribute('class', 'input-orange');
+
+        passOk = false;
     }
     else if(regPw.test(passwordOrigin) && document.activeElement === document.getElementById('pass_input')) {
         document.getElementById('pass').setAttribute('class', 'ui left icon fluid input confirm');
         document.getElementById('pass_ico').setAttribute('class', 'check circle icon');
+
+        passOk = false;
     }
     else if(document.activeElement === document.getElementById('pass_input')) {
         document.getElementById('pass').setAttribute('class', 'ui left icon fluid input error');
         document.getElementById('pass_ico').setAttribute('class', 'times circle icon');
         document.getElementById('pass_input').removeAttribute('class');
+
+        passOk = false;
     }
 
     if(passwordConfirm == '') {
         document.getElementById('pass2').setAttribute('class', 'ui right icon fluid input');
         document.getElementById('pass2_ico').setAttribute('class', 'icon');
         document.getElementById('pass2_input').setAttribute('class', 'input-orange');
+
+        passOk = false;
     }
     else if(passwordOrigin === passwordConfirm) {
         document.getElementById('pass2').setAttribute('class', 'ui left icon fluid input confirm');
         document.getElementById('pass2_ico').setAttribute('class', 'check circle icon');
+
+        passOk = false;
     }
     else {
         document.getElementById('pass2').setAttribute('class', 'ui left icon fluid input error');
         document.getElementById('pass2_ico').setAttribute('class', 'times circle icon');
         document.getElementById('pass2_input').removeAttribute('class');
+
+        passOk = false;
     }
 }
 
@@ -122,32 +172,40 @@ function checkEmail() {
 
     var regEmail = new RegExp("^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$");
 
+    $('#id').removeAttr('data-tooltip').removeAttr('data-position');
+    $('#pass').removeAttr('data-tooltip').removeAttr('data-position');
+
+    $('#email').removeAttr('right labeled');
+    $('#email_error').removeAttr('class', '');
+    $('#email_error').html('');
+
     if(email == '') {
         document.getElementById('email').setAttribute('class', 'ui left icon fluid input');
         document.getElementById('email_ico').setAttribute('class', 'envelope icon');
         document.getElementById('email_input').setAttribute('class', 'input-orange');
+
+        emailOk = false;
     }
     else if(regEmail.test(email)) {
         document.getElementById('email').setAttribute('class', 'ui left icon fluid input confirm');
         document.getElementById('email_ico').setAttribute('class', 'check circle icon');
+
+        emailOk = true;
     }
     else {
         document.getElementById('email').setAttribute('class', 'ui left icon fluid input error');
         document.getElementById('email_ico').setAttribute('class', 'times circle icon');
         document.getElementById('email_input').removeAttribute('class');
+
+        emailOk = false;
     }
 }
 
 function checkFocus(element, icon) {
     document.getElementById(element).setAttribute('class', icon + ' icon');
 
-    if(element == 'id_ico') {
-        $('#id').attr('data-tooltip', '아이디는 문자 포함 숫자 조합으로 입력하세요.').attr('data-position', 'bottom left');
-    }
-
-    else if(element == 'pass_ico') {
-        $('#pass').attr('data-tooltip', '비밀번호는 문자, 숫자 조합 6자리 이상 만들어주세요.').attr('data-position', 'bottom left');
-    }
+    $('#id').attr('data-tooltip', '아이디는 문자 포함 숫자 조합으로 입력하세요.').attr('data-position', 'bottom left');
+    $('#pass').attr('data-tooltip', '비밀번호는 문자, 숫자 조합 6자리 이상 만들어주세요.').attr('data-position', 'bottom left');
 
     if(element == 'pass2_ico') {
         var passwordOrigin = document.getElementById('pass_input').value;
@@ -169,3 +227,69 @@ function checkFocus(element, icon) {
         }
     }
 }
+
+function inputOnFocus(arg) {
+    if(arg == 1) {
+        $('#id').removeAttr('data-tooltip').removeAttr('data-position');
+        $('#pass').attr('data-tooltip', '비밀번호는 문자, 숫자 조합 6자리 이상 만들어주세요.').attr('data-position', 'bottom left');
+    }
+    else if(arg == 0) {
+        $('#pass').removeAttr('data-tooltip').removeAttr('data-position');
+        $('#id').attr('data-tooltip', '아이디는 문자 포함 숫자 조합으로 입력하세요.').attr('data-position', 'bottom left');
+    }
+    else {
+        $('#id').removeAttr('data-tooltip').removeAttr('data-position');
+        $('#pass').removeAttr('data-tooltip').removeAttr('data-position');
+    }
+}
+
+function requestSignup() {
+    var passwordOrigin = document.getElementById('pass_input').value;
+    var passwordConfirm = document.getElementById('pass2_input').value;
+
+    var regPw = new RegExp("^(?=.*?[a-z])(?=.*?[0-9]).{6,}$");
+
+    if(regPw.test(passwordOrigin) && passwordOrigin === passwordConfirm) {
+        passOk = true;
+    }
+
+    if(idOk && passOk && emailOk) {
+        document.formsignup.submit();
+    }
+    else {
+        if(!idOk) {
+            $("html, body").animate({ scrollTop: $("#id_input").offset().top });
+            $('#id_input').focus();
+        }
+        else if(!passOk) {
+            $("html, body").animate({ scrollTop: $("#pass_input").offset().top });
+            $('#pass_input').focus();
+        }
+        else if(!emailOk) {
+            $("html, body").animate({ scrollTop: $("#email_input").offset().top });
+            $('#email_input').focus();
+        }
+    }
+}
+
+var img = document.getElementById('profile_image');
+var upload = document.getElementById('select_file');
+
+img.style.backgroundImage = 'url(images/profile_default.png)';
+
+upload.onchange = function (e) {
+    e.preventDefault();
+
+    var file = upload.files[0],
+    reader = new FileReader();
+    
+    reader.onload = function (event) {
+        img.style.backgroundImage = 'url('+event.target.result+')';
+
+        if (img.width > 128) {
+            img.width = 128;
+        }
+    };
+    reader.readAsDataURL(file);
+    return false;
+};
