@@ -159,4 +159,8 @@ router.get('/sidebar', function(req,res){
   res.render('sidebar');
 });
 
+router.get('/schedule', function(req, res) {
+  res.render('schedule');
+});
+
 module.exports = router;
