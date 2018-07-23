@@ -6,35 +6,74 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="theme-color" content="#ffffff">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="dist/semantic.css">
+    <script src="dist/semantic.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico|Shrikhand" rel="stylesheet">
 
     <title><%= title %></title>
-
-    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/loginex.css" />
+    <style>
+        #btn_login{
+            height:70px;
+            background-color: #F9A11B;
+        }
+        @media all{
+            .login-box{min-width: 320px !important; max-width: 320px !important;}
+        }
+        @media (min-width: 817px), (min-width: 612px), (min-width: 458px), (min-width:343px){
+            .main-body, .mainpage-img{
+                justify-content: center !important;
+            }
+            .head-schedury{
+                text-align: center;
+            }
+        }
+        @media(min-width: 817px){
+            .login-box{
+                min-width: 420px !important;
+                max-width: 420px !important;
+            }
+        }
+        .head-schedury{
+            font-family: 'Lobster', cursive;
+            font-size: 80px;
+        }
+    </style>
 </head>
 <body>
-    <div class="c_core">
-        <div class="c_div_secondary">
-            <form action="/signin" method="POST">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                            <div class="c_div_input">
-                                <input class="c_input" id="input_id" type="text" name="id" placeholder="ID" tabindex="1">
-                                <input class="c_input" id="input_passwd" type="password" name="passwd" placeholder="PASSWORD" tabindex="2">
+    <main>
+        <h1 class="head-schedury">Schedury</h1>
+        <div class="ui stackable grid main-body">
+            <img class="ten wide column mainpage-img" src="" alt="사이트 설명">
+            <div class="ui four wide column segment login-box">
+                <form action="/signin" method="POST" class="ui form">
+                    <div class="ui two column middle aligned grid">
+                        <div class="eleven wide column">
+                            <div class="field">
+                                <label style="display:none">ID</label>
+                                <div class="ui left icon large input">
+                                <input id="input_id" type="text" name="id" placeholder="ID">
+                                <i class="user icon"></i>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label style="display:none">Password</label>
+                                <div class="ui left icon large input">
+                                <input id="input_passwd" type="password" name="passwd" placeholder="Password">
+                                <i class="lock icon"></i>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                            <button class="c_btn_login" type="submit" id="btn_login" tabindex="3">Sign in</button>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <a href="/signup" class="c_link_signup" tabindex="4">Sign up</a>
+                        <div class="four wide column">
+                            <button type="submit" class="ui submit button" id="btn_login">Login
                         </div>
                     </div>
+                </form>
+                <div class="ui padded text container grid" style="font-size:16px">
+                    <div>아직 아이디가 없으신가요?</div>
+                    <a href="/signup">Sign Up</a>
                 </div>
-            </form>
+             </div>
         </div>
-    </div>
+    </main>
 </body>
 </html>

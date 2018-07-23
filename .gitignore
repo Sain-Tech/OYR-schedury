@@ -3,3 +3,6 @@
 package.json
 node_modules
 database.js
+uploads
+semantic
+public/dist
