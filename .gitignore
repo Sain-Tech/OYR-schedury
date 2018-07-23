@@ -6,3 +6,4 @@ database.js
 uploads
 semantic
 public/dist
+.DS_Store*

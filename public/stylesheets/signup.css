@@ -2,6 +2,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    padding: 0 16px 0 16px;
 }
 
 header {
@@ -102,14 +103,16 @@ input.upload {
 }
 
 #logo_main {
-    background-image: url('../images/logo_main.png');
+    /* background-image: url('../images/logo_main.png');
     width: 300px;
     height: 56px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
     border-style: 0 !important;
-    outline:none;
+    outline:none; */
+    font-family: 'Lobster', cursive;
+    font-size: 80px;
 }
 
 @media only screen and (max-width: 767px)  {
