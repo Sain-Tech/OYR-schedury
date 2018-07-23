@@ -150,4 +150,11 @@ router.get('/checkemail/:email', function(req, res) {
   res.send(flag);
 });
 
+
+
+
+router.get('/schedule/settings', function(req, res) {
+  res.render('settings', { title: 'Settings' });
+  
+});
 module.exports = router;
