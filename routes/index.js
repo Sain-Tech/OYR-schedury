@@ -160,7 +160,7 @@ router.get('/sidebar', function(req,res){
 });
 
 router.get('/schedule', function(req, res) {
-  res.render('schedule');
+  res.render('schedule', { title: 'Main' });
 });
 
 module.exports = router;

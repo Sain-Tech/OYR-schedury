@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#FDC23E">
+    <link rel="stylesheet" type="text/css" href="dist/semantic.css">
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="dist/semantic.js"></script>
+
+    <title><%= title %></title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/schedule.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/color.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico|Shrikhand" rel="stylesheet">
+</head>
+<body>
+    <div id="side_menu" class="ui left vertical menu sidebar yellow">
+        <h4 class="head-schedury">Schedury</h4>
+    </div>
+
+    <div class="pusher noanim">
+        <header>
+            <button class="ui labeled icon button white" onclick="onMenu();">
+                <i class="icon bars large"></i>
+                <h4 class="head-schedury small">Schedury</h4>
+            </button>
+        </header>
+    </div>
+
+    <script src="javascripts/schedule.js"></script>
+</body>
+</html>

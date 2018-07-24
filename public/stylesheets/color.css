@@ -1,54 +1,68 @@
-.ui.yellow.button {
+/* color default */
+.yellow {
     background-color: #FDC23E !important;
     color: #ffffff !important;
-    transition: 0.2s;
 }
-
-.ui.yellow.button:hover {
-    background-color: #F9A11B !important;
-    color: #ffffff !important;
-}
-
-.ui.yellow.button:active {
-    background-color: rgb(214, 138, 23) !important;
-    color: #ffffff !important;
-}
-
-.text-color-dark {
-    color: #274555 !important;
-}
-
 .orange {
     background-color: #F9A11B !important;
     color: #ffffff !important;
 }
-
-.input-orange:focus {
-    border-color: #F9A11B !important;
-    color: #274555 !important;
-}
-
 .white {
     background-color: #FFFFFF !important;
     color: #274555 !important;
 }
-
 .dark {
     background-color: #274555 !important;
     color: #ffffff !important;
 }
-
 .black {
     background-color: #000 !important;
     color: #ffffff !important;
 }
 
+/* color text */
+.text-color-dark {
+    color: #274555 !important;
+}
+
+/* button tag */
+.ui.yellow.button {
+    background-color: #FDC23E !important;
+    color: #ffffff !important;
+    transition: 0.2s;
+}
+.ui.yellow.button:hover {
+    background-color: #F9A11B !important;
+    color: #ffffff !important;
+}
+.ui.yellow.button:active {
+    background-color: rgb(214, 138, 23) !important;
+    color: #ffffff !important;
+}
+.ui.white.button {
+    background-color: #FFFFFF !important;
+    color: #ffffff !important;
+    transition: 0.2s;
+}
+.ui.white.button:hover {
+    background-color: rgb(224, 224, 224) !important;
+    color: #ffffff !important;
+}
+.ui.white.button:active {
+    background-color: rgb(170, 170, 170) !important;
+    color: #ffffff !important;
+}
+
+/* input tag */
+.input-orange:focus {
+    border-color: #F9A11B !important;
+    color: #274555 !important;
+}
 .ui.input.confirm>input {
     background-color: #f9fff6;
     border-color: #cde0b4;
     color: #569f38;
 }
-
 .ui.input.confirm>input:focus{
     background-color: #e3fad8;
     border-color: #98da42;
