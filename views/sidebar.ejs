@@ -1,10 +1,59 @@
-<!DOCTYPE <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <title>Schedury</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#ffffff">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico|Shrikhand" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="dist/semantic.css">
+    <script src="dist/semantic.js"></script>
+    <style>
+        .head-logo{
+            font-family: 'Lobster', cursive;
+            font-size: 50px;
+        }
+        .main-sidebar{
+            width:300px;
+            background-color: #FDC23E !important;
+        }
+        .profile-image{
+            width: 200px;
+            height: 200px;
+        }
+        .user-nickname{
+            font-size: 20px;
+        }
+        .sidebar-buttons{
+
+        }
+    </style>
 </head>
 <body>
-    
+    <main>
+        <div class="ui visible left vertical menu sidebar main-sidebar">
+            <div class="item"> 
+                <h1 class="head-logo">Schedury</h1>
+                <img class="ui small circular image center aligned container" src="/images/profile_default.png" alt="">
+                <div class="ui center aligned container user-nickname">Nickname</div>
+                <div class="ui segment">
+                    메시지
+                </div>
+            </div>
+            <div class="item">
+                <div class="ui segment container">
+                    일기 미리보기
+                </div>
+            </div>
+            <div class="ui right aligned container sidebar-buttons">
+                <a href=""><i class="big sync icon"></i></a>
+                <a href=""><i class="big cog icon"></i></a>
+            </div>
+        </div>
+        <div class="pusher">
+        </div>
+    </main>
 </body>
 </html>
