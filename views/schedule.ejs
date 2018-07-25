@@ -25,10 +25,17 @@
 
     <div class="pusher noanim">
         <header>
-            <button class="ui labeled icon button white" onclick="onMenu();">
-                <i class="icon bars large"></i>
-                <h4 class="head-schedury small">Schedury</h4>
-            </button>
+            <div class="button-menu">
+                <button class="ui labeled icon button white" onclick="onMenu();">
+                    <i class="icon bars large"></i>
+                    <h4 class="head-schedury small">Schedury</h4>
+                </button>
+            </div>
+
+            <div class="ui container menu">
+                <a id="menu_schedule" class="item active" onclick="menuToggle(this.id);"><i class="icon calendar check outline"></i>일정</a>
+                <a id="menu_diary" class="item" onclick="menuToggle(this.id);"><i class="icon edit outline"></i>일기</a>
+            </div>
         </header>
     </div>
 

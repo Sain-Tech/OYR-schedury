@@ -27,11 +27,28 @@
 .head-schedury.small {
     font-family: 'Lobster', cursive;
     font-size: 24px;
-    margin: 0;
+    margin: -2px 0 0 -4px;
 }
 
 header {
     display: flex;
+}
+
+.ui.visible.left.sidebar ~ .pusher {
+    width : -webkit-calc(100% - 260px); /* for Chrome, Safari */
+    width :    -moz-calc(100% - 260px); /* for Firefox */
+    width :         calc(100% - 260px); /* for IE */
+}
+
+.ui.labeled.icon.button.white {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.ui.container.menu {
+    margin: 16px auto 0 auto !important;
+    width: auto;
 }
 
 @media only screen and (min-width: 801px)  {
@@ -48,5 +65,30 @@ header {
         -moz-transition: none!important;
         -ms-transition: none!important;
         transition: none!important;
+    }
+}
+
+@media only screen and (max-width: 800px)  {
+    .ui.visible.left.sidebar ~ .pusher {
+        width: 100%;
+    }
+
+    .button-menu {
+        transition: opacity .2s;
+        opacity: 1;
+        pointer-events: all;
+        display: inline !important;
+        position: absolute;
+    }
+
+    .ui.container.menu {
+        margin: 8px auto 0 auto !important;
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 512px)  {
+    .ui.container.menu {
+        margin: 8px 8px 0 auto !important;
     }
 }

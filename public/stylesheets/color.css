@@ -41,16 +41,16 @@
 }
 .ui.white.button {
     background-color: #FFFFFF !important;
-    color: #ffffff !important;
+    color: #274555 !important;
     transition: 0.2s;
 }
 .ui.white.button:hover {
     background-color: rgb(224, 224, 224) !important;
-    color: #ffffff !important;
+    color: #274555 !important;
 }
 .ui.white.button:active {
     background-color: rgb(170, 170, 170) !important;
-    color: #ffffff !important;
+    color: #274555 !important;
 }
 
 /* input tag */
@@ -67,4 +67,34 @@
     background-color: #e3fad8;
     border-color: #98da42;
     color: #569f38;
+}
+
+/* icon tag */
+.ui.labeled.icon.buttons.white > .button > .icon, .ui.labeled.icon.button > .icon {
+    background-color: transparent;
+}
+
+/* menu tag */
+.ui.menu:not(.vertical) .item {
+    color: #274555;
+}
+.ui.menu:not(.vertical) .item:hover {
+    background: #FDC23E;
+    color: #274555;
+}
+.ui.menu:not(.vertical) .item:active {
+    background: #F9A11B;
+    color: #274555;
+}
+.ui.menu .active.item {
+    background: #F9A11B;
+    color: white;
+}
+.ui.menu .active.item:hover {
+    background: #FDC23E;
+    color: #274555;
+}
+.ui.menu .active.item:active {
+    background: #F9A11B;
+    color: #274555;
 }
