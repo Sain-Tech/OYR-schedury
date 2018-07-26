@@ -20,11 +20,49 @@
     <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico|Shrikhand" rel="stylesheet">
 </head>
 <body>
-    <div id="side_menu" class="ui left vertical menu sidebar yellow">
-        <h4 class="head-schedury">Schedury</h4>
+    <div id="side_menu" class="ui left vertical menu sidebar main-sidebar">
+        <div class="item"> 
+            <h1 class="ui center aligned container head-logo">Schedury</h1>
+            <div class="user-profile">
+                <img class="ui small circular image center aligned container" src="/images/profile_default.png" alt="profile image">
+                <div class="ui center aligned container user-nickname">Nickname</div>
+                <div class="ui segment">
+                    메시지
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ui segment container">
+                일기 미리보기
+            </div>
+        </div>
+        <div class="ui sidebar-buttons">
+            <a href="" class="" data-tooltip="캘린더 동기화"><i class="big black sync icon styler"></i></a>
+            <a href="/schedule/settings" class="" data-tooltip="환경설정"><i class="big black cog icon styler"></i></a>
+        </div>
     </div>
 
     <div class="pusher noanim">
+
+        <div class="ui card info-card" id="info_card">
+            <div class="content">
+                <img class="ui small circular image center aligned container profile-image" src="/images/profile_default.png" alt="profile image" />
+                <div class="ui fluid input user-nickname" data-tooltip="닉네임 변경">
+                    <input class="nickname" type="text" value="Nickname" />
+                </div>
+                <div class="ui fluid input user-msg" data-tooltip="메시지 변경">
+                    <input class="user-message" type="text" value="메시지">
+                </div>
+                <div class="ui circular button logout-button" onclick="location='/logout'">Logout</div>
+            </div>
+        </div>
+        <div class="ui mini modal profpic-modal">
+            <div class="ui actions grid modal-cont">
+                <a class="centered row" href=""><div>프로필 사진 변경</div></a>
+                <a class="centered row" href=""><div>프로필 사진 삭제 (기본 이미지로 설정)</div></a>
+                <a class="centered row" href=""><div>취소</div></a>
+            </div>
+        </div>
 
         <header>
             <div class="button-menu">

@@ -102,6 +102,31 @@ function menuToggle(x){
     document.getElementById(x).className="item active";
 }
 
+$(document).ready(function(){
+    var uNickname = $('.nickname');
+    var changedName = '';
+    var uMessage = $('.user-message');
+    var changedMessage = '';
+
+    uNickname.blur(function(){
+        changedName = $(this).val();
+        uNickname.val(changedName);
+    });
+    uMessage.blur(function(){
+        changedMessage = $(this).val(); // changedMessage를 서버에 보내서 상태메시지의 변경된 내용 저장
+        uMessage.val(changedMessage);
+    });
+
+    $('.profile-image').click(function(){
+        $('.profpic-modal').modal('show');
+    });
+
+    $('.user-profile').click(function(){
+        console.log('hi');
+        $('#info_card').attr({'style': 'display: block !important'});
+    });
+});
+
 var x = window.matchMedia("only screen and (max-width: 800px)");
 myFunction(x);
 x.addListener(myFunction);
