@@ -34,6 +34,12 @@ header {
     display: flex;
 }
 
+.header-menu {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .ui.visible.left.sidebar ~ .pusher {
     width : -webkit-calc(100% - 260px); /* for Chrome, Safari */
     width :    -moz-calc(100% - 260px); /* for Firefox */
@@ -46,7 +52,7 @@ header {
     border-top-right-radius: 0;
 }
 
-.ui.container.menu {
+.ui.pagination.menu {
     margin: 16px auto 0 auto !important;
     width: auto;
 }
@@ -81,14 +87,14 @@ header {
         position: absolute;
     }
 
-    .ui.container.menu {
+    .ui.pagination.menu {
         margin: 8px auto 0 auto !important;
         width: auto;
     }
 }
 
 @media only screen and (max-width: 512px)  {
-    .ui.container.menu {
+    .ui.pagination.menu {
         margin: 8px 8px 0 auto !important;
     }
 }

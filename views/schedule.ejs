@@ -11,6 +11,7 @@
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
     <script src="dist/semantic.js"></script>
+    <script src="javascripts/jquery.touchSwipe.min.js"></script>
 
     <title><%= title %></title>
 
@@ -24,6 +25,7 @@
     </div>
 
     <div class="pusher noanim">
+
         <header>
             <div class="button-menu">
                 <button class="ui labeled icon button white" onclick="onMenu();">
@@ -32,13 +34,43 @@
                 </button>
             </div>
 
-            <div class="ui container menu">
-                <a id="menu_schedule" class="item active" onclick="menuToggle(this.id);"><i class="icon calendar check outline"></i>일정</a>
-                <a id="menu_diary" class="item" onclick="menuToggle(this.id);"><i class="icon edit outline"></i>일기</a>
+            <div class="header-menu">
+                <div class="ui pagination menu">
+                    <a id="menu_schedule" class="item active" onclick="menuToggle(this.id);"><i class="icon calendar check outline"></i>일정</a>
+                    <a id="menu_diary" class="item" onclick="menuToggle(this.id);"><i class="icon edit outline"></i>일기</a>
+                </div>
             </div>
+            
         </header>
+
+        <div class="calendar-this">
+            <div class="calendar-menu">
+                <div class="ui pagination menu">
+                    <a class="icon item" onclick="prevCalendar(1);">
+                        <i class="left chevron icon"></i>
+                    </a>
+                    <a id="tbCalendarYM" class="item calendar title"></a>
+                    <a class="icon item" onclick="nextCalendar(1);">
+                        <i class="right chevron icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <table class="ui segment calendar">
+                <thead id="calendar_header">
+                </thead>
+                <tbody id="calendar_body" class="tbody-anim">      
+                </tbody>
+            </table>
+        </div>
     </div>
 
+    <script src="javascripts/calendar.js"></script>
     <script src="javascripts/schedule.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/calendar.css" />
+
+    <script>
+        buildCalendar(1);
+    </script>
 </body>
 </html>

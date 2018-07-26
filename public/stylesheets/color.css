@@ -75,26 +75,26 @@
 }
 
 /* menu tag */
-.ui.menu:not(.vertical) .item {
+.ui.pagination.menu:not(.vertical) .item {
     color: #274555;
 }
-.ui.menu:not(.vertical) .item:hover {
+.ui.pagination.menu:not(.vertical) .item:hover {
     background: #FDC23E;
     color: #274555;
 }
-.ui.menu:not(.vertical) .item:active {
+.ui.pagination.menu:not(.vertical) .item:active {
     background: #F9A11B;
     color: #274555;
 }
-.ui.menu .active.item {
+.ui.pagination.menu .active.item {
     background: #F9A11B;
     color: white;
 }
-.ui.menu .active.item:hover {
+.ui.pagination.menu .active.item:hover {
     background: #FDC23E;
     color: #274555;
 }
-.ui.menu .active.item:active {
+.ui.pagination.menu .active.item:active {
     background: #F9A11B;
     color: #274555;
 }
