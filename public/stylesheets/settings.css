@@ -6,3 +6,35 @@
     
     color: #274555 !important;
 }
+#적용,#취소{
+    width:200px;
+}
+#Schedury{
+    font-family: 'Lobster', cursive;
+    font-size: 30px;
+    background-color: white;
+    border:0px;
+    outline:none;
+}
+.ui.header{
+    text-align:center;
+    font-size:50px !important;
+    font-family: 'Lobster', cursive;
+}
+.ui.segment{
+    width:30%;   
+    justify-content: center;
+    padding:20px 20px 20px 20px !important;
+}
+.segment{
+    display:flex;
+    justify-content: center;
+    margin-top:10px;
+}
+#menu_layout{
+    display:flex;
+    justify-content:center;
+}
+.content{
+    text-align:center;
+}
