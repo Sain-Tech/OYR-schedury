@@ -16,18 +16,52 @@
             font-size: 50px;
         }
         .main-sidebar{
-            width:300px;
+            width: 300px !important;
             background-color: #FDC23E !important;
         }
+        .user-profile{
+            cursor: pointer;
+        }
         .profile-image{
-            width: 200px;
-            height: 200px;
+            display: block !important;
+            cursor: pointer;
         }
         .user-nickname{
             font-size: 20px;
+            margin: 10px;
+            font-size: 18px !important;
+        }
+        .nickname{
+            text-align: center !important;
+            border: none !important;
+        }
+        .nickname:focus{
+            border: 1px solid rgba(34, 36, 38, 0.15) !important;
         }
         .sidebar-buttons{
-
+            position: absolute !important;
+            right: 0;
+            margin: 8px;
+        }
+        .info-card{
+            display: none !important;
+            position: absolute;
+            left: 50px;
+            top: 10px;
+            padding: 20px !important;
+        }
+        .logout-button{
+            display: block !important;
+            margin: 20px auto !important;
+            width: fit-content;
+            border-radius: 50% !important;
+            padding: 20px 8px !important;
+        }
+        .user-msg{
+            margin: 15px auto;
+        }
+        .modal-cont{
+            padding: 0 !important;
         }
     </style>
 </head>
@@ -35,11 +69,13 @@
     <main>
         <div class="ui visible left vertical menu sidebar main-sidebar">
             <div class="item"> 
-                <h1 class="head-logo">Schedury</h1>
-                <img class="ui small circular image center aligned container" src="/images/profile_default.png" alt="">
-                <div class="ui center aligned container user-nickname">Nickname</div>
-                <div class="ui segment">
-                    메시지
+                <h1 class="ui center aligned container head-logo">Schedury</h1>
+                <div class="user-profile">
+                    <img class="ui small circular image center aligned container" src="/images/profile_default.png" alt="profile image">
+                    <div class="ui center aligned container user-nickname">Nickname</div>
+                    <div class="ui segment">
+                        메시지
+                    </div>
                 </div>
             </div>
             <div class="item">
@@ -47,13 +83,58 @@
                     일기 미리보기
                 </div>
             </div>
-            <div class="ui right aligned container sidebar-buttons">
-                <a href=""><i class="big sync icon"></i></a>
-                <a href=""><i class="big cog icon"></i></a>
+            <div class="ui sidebar-buttons">
+                <a href="" class="" data-tooltip="캘린더 동기화"><i class="big black sync icon"></i></a>
+                <a href="/schedule/settings" class="" data-tooltip="환경설정"><i class="big black cog icon"></i></a>
             </div>
         </div>
         <div class="pusher">
+            <div class="ui card info-card" id="info_card">
+                <div class="content">
+                    <img class="ui small circular image center aligned container profile-image" src="/images/profile_default.png" alt="profile image" />
+                    <div class="ui fluid input user-nickname" data-tooltip="닉네임 변경">
+                        <input class="nickname" type="text" value="Nickname" />
+                    </div>
+                    <div class="ui fluid input user-msg" data-tooltip="메시지 변경">
+                        <input class="user-message" type="text" value="메시지">
+                    </div>
+                    <div class="ui circular button logout-button" onclick="location='/logout'">Logout</div>
+                </div>
+            </div>
         </div>
+        <div class="ui mini modal profpic-modal">
+            <div class="ui actions grid modal-cont">
+                <a class="centered row" href=""><div>프로필 사진 변경</div></a>
+                <a class="centered row" href=""><div>프로필 사진 삭제 (기본 이미지로 설정)</div></a>
+                <a class="centered row" href=""><div>취소</div></a>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                var uNickname = $('.nickname');
+                var changedName = '';
+                var uMessage = $('.user-message');
+                var changedMessage = '';
+
+                uNickname.blur(function(){
+                    changedName = $(this).val();
+                    uNickname.val(changedName);
+                });
+                uMessage.blur(function(){
+                    changedMessage = $(this).val(); // changedMessage를 서버에 보내서 상태메시지의 변경된 내용 저장
+                    uMessage.val(changedMessage);
+                });
+
+                $('.profile-image').click(function(){
+                    $('.profpic-modal').modal('show');
+                });
+
+                $('.user-profile').click(function(){
+                    console.log('hi');
+                    $('#info_card').attr({'style': 'display: block !important'});
+                });
+            });
+        </script>
     </main>
 </body>
 </html>
