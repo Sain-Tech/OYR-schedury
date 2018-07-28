@@ -14,17 +14,25 @@
         .head-logo{
             font-family: 'Lobster', cursive;
             font-size: 50px;
+
+        }
+        #logo_schedury{
+            margin: 0 !important;
+            margin-bottom: 20px !important;
         }
         .main-sidebar{
-            width: 300px !important;
             background-color: #FDC23E !important;
         }
         .user-profile{
             cursor: pointer;
         }
-        .profile-image{
+        #profile_image{
             display: block !important;
             cursor: pointer;
+            margin: 0 auto !important;
+        }
+        #profile_pic{
+            margin: 0 auto !important;
         }
         .user-nickname{
             font-size: 20px;
@@ -69,9 +77,9 @@
     <main>
         <div class="ui visible left vertical menu sidebar main-sidebar">
             <div class="item"> 
-                <h1 class="ui center aligned container head-logo">Schedury</h1>
+                <h1 class="ui center aligned container head-logo" id="logo_schedury">Schedury</h1>
                 <div class="user-profile">
-                    <img class="ui small circular image center aligned container" src="/images/profile_default.png" alt="profile image">
+                    <img class="ui small circular image center aligned container" id="profile_pic" src="/images/profile_default.png" alt="profile image">
                     <div class="ui center aligned container user-nickname">Nickname</div>
                     <div class="ui segment">
                         메시지
@@ -84,14 +92,14 @@
                 </div>
             </div>
             <div class="ui sidebar-buttons">
-                <a href="" class="" data-tooltip="캘린더 동기화"><i class="big black sync icon"></i></a>
-                <a href="/schedule/settings" class="" data-tooltip="환경설정"><i class="big black cog icon"></i></a>
+                <a href="" class="" data-tooltip="캘린더 동기화" data-position="bottom right"><i class="big black sync icon"></i></a>
+                <a href="/schedule/settings" class="" data-tooltip="환경설정" data-position="bottom right"><i class="big black cog icon"></i></a>
             </div>
         </div>
         <div class="pusher">
             <div class="ui card info-card" id="info_card">
                 <div class="content">
-                    <img class="ui small circular image center aligned container profile-image" src="/images/profile_default.png" alt="profile image" />
+                    <img class="ui small circular image center aligned container" id="profile_image" src="/images/profile_default.png" alt="profile image" />
                     <div class="ui fluid input user-nickname" data-tooltip="닉네임 변경">
                         <input class="nickname" type="text" value="Nickname" />
                     </div>
@@ -125,7 +133,7 @@
                     uMessage.val(changedMessage);
                 });
 
-                $('.profile-image').click(function(){
+                $('#profile_image').click(function(){
                     $('.profpic-modal').modal('show');
                 });
 
