@@ -102,6 +102,10 @@ input.upload {
     position: absolute;
 }
 
+#profile_image{
+    background-image: url('../images/profile_default.png');
+}
+
 #logo_main {
     /* background-image: url('../images/logo_main.png');
     width: 300px;
@@ -112,9 +116,22 @@ input.upload {
     border-style: 0 !important;
     outline:none; */
     font-family: 'Lobster', cursive;
-    font-size: 80px;
+    font-size: 60px;
 }
 
+#intro_input{
+    border: 1px solid rgba(34, 36, 38, 0.15);
+    border-radius: 0.28571429rem;
+    padding: 0.67857143em 1em;
+    padding-left: 2.67142857em !important;
+    padding-right: 1em !important;
+    width: 100%;
+    height: 120px;
+}
+
+#intro_ico{
+    height: 40px;
+}
 @media only screen and (max-width: 767px)  {
     header {
         margin: 16px auto 0 auto !important;
