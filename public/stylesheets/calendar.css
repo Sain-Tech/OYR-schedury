@@ -1,0 +1,79 @@
+.calendar-this {
+    padding: 0 16px 0 16px;
+}
+
+.item.calendar.title {
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-menu {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.ui.segment.calendar {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    box-shadow: 3px 5px 16px 2px rgba(34, 36, 38, 0.15);
+}
+
+.ui.segment.calendar td, .ui.segment.calendar th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.ui.segment.calendar th {
+    background-color: #cecece;
+    height: 48px;
+}
+
+.ui.segment.calendar td {
+    transition: background-color .2s;
+    height: 96px;
+    vertical-align: top;
+    text-align: left;
+}
+
+.ui.segment.calendar .tbody-anim td{
+    -webkit-animation-name: fade; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: .3s; /* Safari 4.0 - 8.0 */
+    animation-name: fade;
+    animation-duration: .3s;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes fade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+/* Standard syntax */
+@keyframes fade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.ui.segment.calendar td:hover {
+    transition: all .2s;
+    background-color: #FDC23E;
+}
+
+.ui.segment.calendar td:active {
+    transition: all .2s;
+    color: #ffffff !important;
+    background-color: #F9A11B;
+}
+
+h3 {
+    padding-bottom: 4px;
+}
+
+.calendar-navi-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}

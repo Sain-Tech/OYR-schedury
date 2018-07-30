@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Schedury</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#ffffff">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico|Shrikhand" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="dist/semantic.css">
+    <script src="dist/semantic.js"></script>
+    <style>
+        .head-logo{
+            font-family: 'Lobster', cursive;
+            font-size: 50px;
+
+        }
+        #logo_schedury{
+            margin: 0 !important;
+            margin-bottom: 20px !important;
+        }
+        .main-sidebar{
+            background-color: #FDC23E !important;
+        }
+        .user-profile{
+            cursor: pointer;
+        }
+        #profile_image{
+            display: block !important;
+            cursor: pointer;
+            margin: 0 auto !important;
+        }
+        #profile_pic{
+            margin: 0 auto !important;
+        }
+        .user-nickname{
+            font-size: 20px;
+            margin: 10px;
+            font-size: 18px !important;
+        }
+        .nickname{
+            text-align: center !important;
+            border: none !important;
+        }
+        .nickname:focus{
+            border: 1px solid rgba(34, 36, 38, 0.15) !important;
+        }
+        .sidebar-buttons{
+            position: absolute !important;
+            right: 0;
+            margin: 8px;
+        }
+        .info-card{
+            display: none !important;
+            position: absolute;
+            left: 50px;
+            top: 10px;
+            padding: 20px !important;
+        }
+        .logout-button{
+            display: block !important;
+            margin: 20px auto !important;
+            width: fit-content;
+            border-radius: 50% !important;
+            padding: 20px 8px !important;
+        }
+        .user-msg{
+            margin: 15px auto;
+        }
+        .modal-cont{
+            padding: 0 !important;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="ui visible left vertical menu sidebar main-sidebar">
+            <div class="item"> 
+                <h1 class="ui center aligned container head-logo" id="logo_schedury">Schedury</h1>
+                <div class="user-profile">
+                    <img class="ui small circular image center aligned container" id="profile_pic" src="/images/profile_default.png" alt="profile image">
+                    <div class="ui center aligned container user-nickname">Nickname</div>
+                    <div class="ui segment">
+                        메시지
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ui segment container">
+                    일기 미리보기
+                </div>
+            </div>
+            <div class="ui sidebar-buttons">
+                <a href="" class="" data-tooltip="캘린더 동기화" data-position="bottom right"><i class="big black sync icon"></i></a>
+                <a href="/schedule/settings" class="" data-tooltip="환경설정" data-position="bottom right"><i class="big black cog icon"></i></a>
+            </div>
+        </div>
+        <div class="pusher">
+            <div class="ui card info-card" id="info_card">
+                <div class="content">
+                    <img class="ui small circular image center aligned container" id="profile_image" src="/images/profile_default.png" alt="profile image" />
+                    <div class="ui fluid input user-nickname" data-tooltip="닉네임 변경">
+                        <input class="nickname" type="text" value="Nickname" />
+                    </div>
+                    <div class="ui fluid input user-msg" data-tooltip="메시지 변경">
+                        <input class="user-message" type="text" value="메시지">
+                    </div>
+                    <div class="ui circular button logout-button" onclick="location='/logout'">Logout</div>
+                </div>
+            </div>
+        </div>
+        <div class="ui mini modal profpic-modal">
+            <div class="ui actions grid modal-cont">
+                <a class="centered row" href=""><div>프로필 사진 변경</div></a>
+                <a class="centered row" href=""><div>프로필 사진 삭제 (기본 이미지로 설정)</div></a>
+                <a class="centered row" href=""><div>취소</div></a>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                var uNickname = $('.nickname');
+                var changedName = '';
+                var uMessage = $('.user-message');
+                var changedMessage = '';
+
+                uNickname.blur(function(){
+                    changedName = $(this).val();
+                    uNickname.val(changedName);
+                });
+                uMessage.blur(function(){
+                    changedMessage = $(this).val(); // changedMessage를 서버에 보내서 상태메시지의 변경된 내용 저장
+                    uMessage.val(changedMessage);
+                });
+
+                $('#profile_image').click(function(){
+                    $('.profpic-modal').modal('show');
+                });
+
+                $('.user-profile').click(function(){
+                    console.log('hi');
+                    $('#info_card').attr({'style': 'display: block !important'});
+                });
+            });
+        </script>
+    </main>
+</body>
+</html>
