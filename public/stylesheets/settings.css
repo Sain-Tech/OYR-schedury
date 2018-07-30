@@ -1,13 +1,19 @@
 #layout{
     margin:20px 20px 20px 20px;
 }
+.nanumsquare {
+    font-family: 'NanumSquare', sans-serif !important; 
+}
 .active.item{
     border-color: #274555 !important;
-    
+
     color: #274555 !important;
 }
+
 #적용,#취소{
-    width:200px;
+    width:100px;
+    margin-left:5px;
+    margin-right:5px;
 }
 #Schedury{
     font-family: 'Lobster', cursive;
@@ -15,14 +21,15 @@
     background-color: white;
     border:0px;
     outline:none;
+    cursor:pointer;
 }
 .ui.header{
     text-align:center;
-    font-size:50px !important;
-    font-family: 'Lobster', cursive;
+    font-size:35px !important;
+    font-family: 'NanumSquare';
 }
 .ui.segment{
-    width:30%;   
+    width:400px;
     justify-content: center;
     padding:20px 20px 20px 20px !important;
 }
@@ -30,6 +37,7 @@
     display:flex;
     justify-content: center;
     margin-top:10px;
+    margin-bottom:10px;
 }
 #menu_layout{
     display:flex;
@@ -37,4 +45,23 @@
 }
 .content{
     text-align:center;
+}
+#google{
+    background-color:#4285F4;
+    margin-top:10px;
+    margin-bottom:10px;
+    color: white;
+}
+#naver{
+    background-color:#00BE39;
+    margin-top:10px;
+    margin-bottom:10px;
+    color: white;
+}
+.ui.selection{
+    margin-bottom:20px;
+}
+.item{
+    font-family: 'SeoulNamsanM';
+
 }
