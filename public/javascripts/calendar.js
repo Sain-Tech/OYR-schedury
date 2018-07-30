@@ -10,6 +10,8 @@ function prevCalendar(arg) {//이전 달
     var tbCalendar = document.getElementById("calendar_body");
     tbCalendar.deleteRow(0);
     tbCalendar.deleteRow(0);
+
+    doFillFirstCnt();
 }
 
 function nextCalendar(arg) {//다음 달
@@ -21,6 +23,8 @@ function nextCalendar(arg) {//다음 달
     var tbCalendar = document.getElementById("calendar_body");
     tbCalendar.deleteRow(0);
     tbCalendar.deleteRow(0);
+
+    doFillFirstCnt();
 }
 
 function buildCalendar(arg){//현재 달 달력 만들기
@@ -111,6 +115,8 @@ function buildCalendar(arg){//현재 달 달력 만들기
         cell.innerHTML = i;//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
         cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
 
+        console.log('test: ' + cnt);
+
         /* 토요일 시작 */
         if(arg == 0) {
             if (cnt % 7 == 1) {/*토요일 계산*/
@@ -176,5 +182,31 @@ function buildCalendar(arg){//현재 달 달력 만들기
             //달력에 있는 년,달과 내 컴퓨터의 로컬 년,달이 같고, 일이 오늘의 일과 같으면
             cell.bgColor = "#F9A11B";//셀의 배경색을 노랑으로 
         }
+    }
+
+    var lastFillCnt = 7 - (cnt % 7);
+    var firstFillCnt = (arg == 0 ? (doMonth.getDay() || 7 - 6) : (arg == 1 ? doMonth.getDay() : (doMonth.getDay() || 7 - 1)));
+
+    console.log(firstFillCnt);
+
+    firstFillCnt2 = firstFillCnt;
+
+    for(var i = 0; i < lastFillCnt; i++) {
+        cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
+        cell.innerHTML = "<font color=#bdbdbd>" + (i + 1);
+    }
+
+    doFillFirstCnt();
+}
+
+var firstFillCnt2;
+
+function doFillFirstCnt() {
+    var tbCalendar = document.getElementById("calendar_body");
+    var lastDate = new Date(today.getFullYear(),today.getMonth(),0);
+
+    for(var i = 0; i < firstFillCnt2; i++) {
+        var x = tbCalendar.rows[0].cells;
+        x[i].innerHTML = "<font color=#bdbdbd>" + (lastDate.getDate() - ((firstFillCnt2 - 1) - i));
     }
 }

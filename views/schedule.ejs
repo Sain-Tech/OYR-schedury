@@ -44,26 +44,12 @@
 
     <div class="pusher noanim">
 
-        <div class="ui card info-card" id="info_card">
-            <div class="content">
-                <img class="ui small circular image center aligned container profile-image" src="/images/profile_default.png" alt="profile image" />
-                <div class="ui fluid input user-nickname" data-tooltip="닉네임 변경">
-                    <input class="nickname" type="text" value="Nickname" />
-                </div>
-                <div class="ui fluid input user-msg" data-tooltip="메시지 변경">
-                    <input class="user-message" type="text" value="메시지">
-                </div>
-                <div class="ui circular button logout-button" onclick="location='/logout'">Logout</div>
+        <!-- <div class="calendar-navi-back">
+            <div class="calendar-navi-main">
+                
             </div>
-        </div>
-        <div class="ui mini modal profpic-modal">
-            <div class="ui actions grid modal-cont">
-                <a class="centered row" href=""><div>프로필 사진 변경</div></a>
-                <a class="centered row" href=""><div>프로필 사진 삭제 (기본 이미지로 설정)</div></a>
-                <a class="centered row" href=""><div>취소</div></a>
-            </div>
-        </div>
-
+        </div> -->
+       
         <header>
             <div class="button-menu">
                 <button class="ui labeled icon button white" onclick="onMenu();">
@@ -81,13 +67,31 @@
             
         </header>
 
+        <div class="card-back"></div>
+
+        <div class="ui card info-card" id="info_card">
+            <div class="content">
+                <img class="ui small circular image center aligned container profile-image" src="/images/profile_default.png" alt="profile image" />
+                <div class="ui fluid input user-nickname" data-tooltip="닉네임 변경">
+                    <input class="nickname" type="text" value="Nickname" />
+                </div>
+                <div class="ui fluid input user-msg" data-tooltip="메시지 변경">
+                    <input class="user-message" type="text" value="메시지">
+                </div>
+                <div class="ui circular button logout-button" onclick="location='/logout'">Logout</div>
+            </div>
+        </div>
+        
         <div class="calendar-this">
             <div class="calendar-menu">
                 <div class="ui pagination menu">
                     <a class="icon item" onclick="prevCalendar(1);">
                         <i class="left chevron icon"></i>
                     </a>
-                    <a id="tbCalendarYM" class="item calendar title"></a>
+
+                    <a id="tbCalendarYM" class="item calendar title">
+                    </a>
+
                     <a class="icon item" onclick="nextCalendar(1);">
                         <i class="right chevron icon"></i>
                     </a>
@@ -100,6 +104,14 @@
                 <tbody id="calendar_body" class="tbody-anim">      
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="ui mini modal profpic-modal">
+        <div class="ui actions grid modal-cont">
+            <a class="centered row" href=""><div>프로필 사진 변경</div></a>
+            <a class="centered row" href=""><div>프로필 사진 삭제 (기본 이미지로 설정)</div></a>
+            <a class="centered row" href=""><div>취소</div></a>
         </div>
     </div>
 

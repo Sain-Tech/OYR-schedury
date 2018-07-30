@@ -109,6 +109,7 @@ $(document).ready(function(){
     var changedMessage = '';
 
     uNickname.blur(function(){
+        console.log('nickname blured');
         changedName = $(this).val();
         uNickname.val(changedName);
     });
@@ -117,13 +118,19 @@ $(document).ready(function(){
         uMessage.val(changedMessage);
     });
 
-    $('.profile-image').click(function(){
+    $('.profile-image').click(function() {
         $('.profpic-modal').modal('show');
     });
 
-    $('.user-profile').click(function(){
+    $('.user-profile').click(function() {
         console.log('hi');
         $('#info_card').attr({'style': 'display: block !important'});
+        $('.card-back').attr({'style': 'display: block !important'});
+    });
+
+    $('.card-back').click(function() {
+        $('#info_card').attr({'style': 'display: none !important'});
+        $('.card-back').attr({'style': 'display: none !important'});
     });
 });
 
