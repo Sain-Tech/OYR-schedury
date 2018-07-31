@@ -27,6 +27,79 @@ function nextCalendar(arg) {//다음 달
     doFillFirstCnt();
 }
 
+function changeSearchDateSelf(arg) {
+    var year = $('#search_year').val();
+    var month = $('#search_month').val();
+    var day = $('#search_day').val();
+   
+    var lastDate = new Date(year, month, 0);
+
+    if(arg == 1) {
+        if(day > lastDate.getDate()) {
+            $('#search_day').val(lastDate.getDate());
+        }
+        if(month > 12) {
+            $('#search_year').val(parseInt(year) + 1);
+            $('#search_month').val(1);
+        }
+        else if(month < 1) {
+            $('#search_year').val(parseInt(year) - 1);
+            $('#search_month').val(12);
+        }
+    }
+
+    else if(arg == 2) {
+        if(day > lastDate.getDate()) {
+            $('#search_month').val(parseInt(month) + 1);
+            $('#search_day').val(1);
+
+            if(parseInt(month) + 1 > 12) {
+                $('#search_year').val(parseInt(year) + 1);
+                $('#search_month').val(1);
+            }
+        }
+    
+        else if(day < 1) {
+            $('#search_month').val(parseInt(month) - 1);
+            $('#search_day').val(lastDate.getDate());
+
+            if(parseInt(month) - 1 < 1) {
+                $('#search_year').val(parseInt(year) - 1);
+                $('#search_month').val(12);
+            }
+        }
+    }
+
+    // if(day > lastDate.getDate()) {
+    //     console.log("over day");
+    //     $('#search_month').val((parseInt(month) + 1) + '');
+    //     $('#search_day').val('1');
+    // }
+
+    // else if(day < 1) {
+    //     console.log("under day");
+    //     $('#search_month').val((parseInt(month) - 1) + '');
+    // }
+
+    // if(month > 12) {
+    //     console.log("over month");
+    //     $('#search_year').val((parseInt(year) + 1) + '');
+    //     $('#search_month').val('1');
+    // }
+
+    // else if(month < 1) {
+    //     console.log("under month");
+    //     $('#search_year').val((parseInt(year) - 1) + '');
+    //     $('#search_month').val('12');
+    // }
+}
+
+function getDateForSearch() {
+    $('#search_year').attr('value', new Date().getFullYear());
+    $('#search_month').attr('value', new Date().getMonth() + 1);
+    $('#search_day').attr('value', new Date().getDate());
+}
+
 function buildCalendar(arg){//현재 달 달력 만들기
     var doMonth = new Date(today.getFullYear(),today.getMonth(),1);
     //이번 달의 첫째 날,
@@ -208,5 +281,16 @@ function doFillFirstCnt() {
     for(var i = 0; i < firstFillCnt2; i++) {
         var x = tbCalendar.rows[0].cells;
         x[i].innerHTML = "<font color=#bdbdbd>" + (lastDate.getDate() - ((firstFillCnt2 - 1) - i));
+    }
+}
+
+function calendarNavToggle(arg) {
+    if(arg == 0) {
+        $('.calendar-navi-back').css({display:'block'});
+        $('.calendar-navi-div').css({display:'block'});
+    }
+    else if(arg == 1) {
+        $('.calendar-navi-back').css({display:'none'});
+        $('.calendar-navi-div').css({display:'none'});
     }
 }

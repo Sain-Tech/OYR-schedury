@@ -44,12 +44,40 @@
 
     <div class="pusher noanim">
 
-        <!-- <div class="calendar-navi-back">
+        <div class="calendar-navi-back" onclick="calendarNavToggle(1)">
+        </div>
+
+        <div class="calendar-navi-div">
             <div class="calendar-navi-main">
-                
+                <div class="ui card">
+                    <div class="search-self">
+
+                        <div class="ui input">
+                            <input id="search_year" class="input-orange" type="number" onchange="changeSearchDateSelf(0)">
+                        </div>
+                        <div class="date-spacer">
+                            -
+                        </div>
+                        <div class="ui input">
+                            <input id="search_month" class="input-orange" type="number" onchange="changeSearchDateSelf(1)">
+                        </div>
+                        <div class="date-spacer">
+                            -
+                        </div>
+                        <div class="ui input">
+                            <input id="search_day" class="input-orange" type="number" onchange="changeSearchDateSelf(2)">
+                        </div>
+
+                    </div>
+
+                    <div class="search-click">
+
+                    </div>
+                    
+                </div>
             </div>
-        </div> -->
-       
+        </div> 
+
         <header>
             <div class="button-menu">
                 <button class="ui labeled icon button white" onclick="onMenu();">
@@ -89,7 +117,7 @@
                         <i class="left chevron icon"></i>
                     </a>
 
-                    <a id="tbCalendarYM" class="item calendar title">
+                    <a id="tbCalendarYM" class="item calendar title" onclick="calendarNavToggle(0); getDateForSearch();">
                     </a>
 
                     <a class="icon item" onclick="nextCalendar(1);">
