@@ -33,7 +33,7 @@
                 </div>
             
                 <div class="ui segment">
-                    <div>
+                    <div id="page">
                         <div class="ui stackable one column vertically divided grid container">
                             <div class="column">
                                 <div class="div-input">
@@ -70,7 +70,7 @@
                             <div class="column">
                                 <div class="ui two column stackable grid">
                                     <div class="nine wide column">
-                                        <button class="ui yellow button fluid" type="button" onclick="">다음</button>
+                                        <button class="ui yellow button fluid" type="button" onclick="next(document.getElementById('next_page'),document.getElementById('page'))">다음</button>
                                     </div>
                                     
                                     <div class="seven wide column">
@@ -80,62 +80,65 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                회원가입 페이지2
-                <div class="ui segment">
-                    <div>
-                        <div class="ui stackable one column vertically divided grid container">
 
-                            <div class="row"></div>
+                    <!--회원가입 페이지2 -->
+                    <div  id="next_page" style="display:none">
+                        <div>
+                            <div class="ui stackable one column vertically divided grid container">
 
-                            <div class="column">
-                                <div class="ui two column stackable grid">
-                                    <div class="six wide column">
-                                        <img id="profile_image" class="ui small circular image" onclick="$('#select_file').trigger('click');">
-                                    </div>
-                                    
-                                    <div class="ten wide column">
-                                        <h3 class="text-color-dark">프로필 사진 선택</h3>
-                                        <h4 class="text-color-dark">원하시는 프로필 사진을 선택해 주세요.</h4>
-                                        <button class="ui button fluid" type="button" onclick="$('#select_file').trigger('click');">사진 선택</button>
-                                        <input id="select_file" type="file" value="파일 업로드" class="upload" name="profimg"> 
-                                    </div>
-                                </div>
-                            </div>
+                                <div class="row"></div>
 
-                            <div class="column">
-                                <div class="div-input">
-                                    <div class="ui left icon fluid input" id="nickname" data-tooltip="닉네임을 입력하세요." data-position="bottom left">
-                                        <input class="input-orange" id="nickname_input" name="nickname" type="text" placeholder="닉네임" onfocus="inputOnFocus(3);" onblur="checkFocus('nickname_ico', 'address card')">
-                                        <i class="address card icon" id="nickname_ico"></i>
+                                <div class="column">
+                                    <div class="ui two column stackable grid">
+                                        <div class="six wide column">
+                                            <img id="profile_image" class="ui small circular image" onclick="$('#select_file').trigger('click');">
+                                        </div>
+                                        
+                                        <div class="ten wide column">
+                                            <h3 class="text-color-dark">프로필 사진 선택</h3>
+                                            <h4 class="text-color-dark">원하시는 프로필 사진을 선택해 주세요.</h4>
+                                            <button class="ui button fluid" type="button" onclick="$('#select_file').trigger('click');">사진 선택</button>
+                                            <input id="select_file" type="file" value="파일 업로드" class="upload" name="profimg"> 
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="div-input">
-                                    <div class="ui left icon fluid input" id="user_intro" data-tooltip="자기소개 메시지를 입력하세요." data-position="bottom left">
-                                        <textarea class="input-orange" id="intro_input" name="intro" placeholder="자기소개 메시지" onfocus="inputOnFocus(3);" onblur="checkFocus('intro_ico', 'pencil alternate');"></textarea>
-                                        <i class="pencil alternate icon" id='intro_ico'></i>
+                                <div class="column">
+                                    <div class="div-input">
+                                        <div class="ui left icon fluid input" id="nickname" data-tooltip="닉네임을 입력하세요." data-position="bottom left">
+                                            <input class="input-orange" id="nickname_input" name="nickname" type="text" placeholder="닉네임" onfocus="inputOnFocus(3);" onblur="checkFocus('nickname_ico', 'address card')">
+                                            <i class="address card icon" id="nickname_ico"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="div-input">
+                                        <div class="ui left icon fluid input" id="user_intro" data-tooltip="자기소개 메시지를 입력하세요." data-position="bottom left">
+                                            <textarea class="input-orange" id="intro_input" name="intro" placeholder="자기소개 메시지" onfocus="inputOnFocus(3);" onblur="checkFocus('intro_ico', 'edit');"></textarea>
+                                            <i class="edit icon" id='intro_ico'></i>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row"></div>
+                                <div class="row"></div>
 
-                            <div class="column">
-                                <div class="ui two column stackable grid">
-                                    <div class="nine wide column">
-                                        <button class="ui yellow button fluid" type="button" onclick="requestSignup();">가입</button>
-                                    </div>
-                                    
-                                    <div class="seven wide column">
-                                        <button class="ui button fluid" type="button" onclick="history.back();">취소</button>
+                                <div class="column">
+                                    <div class="ui two column stackable grid">
+                                        <div class="nine wide column">
+                                            <button class="ui yellow button fluid" type="button" onclick="requestSignup();">가입</button>
+                                        </div>
+                                        
+                                        <div class="seven wide column">
+                                            <button class="ui button fluid" type="button" onclick="history.back();">취소</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                
 
             </div>
         </form>

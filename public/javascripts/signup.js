@@ -293,3 +293,8 @@ upload.onchange = function (e) {
     reader.readAsDataURL(file);
     return false;
 };
+
+function next(x,y){
+    y.style.display="none";
+    x.style.display='block';
+}
