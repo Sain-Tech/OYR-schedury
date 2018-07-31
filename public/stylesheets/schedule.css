@@ -6,7 +6,9 @@
     transition: none!important;
 }
  */
-
+ .nanumsquare {
+    font-family: 'NanumSquare', sans-serif !important; 
+}
 .noanim {
     -webkit-transition: none!important;
     -moz-transition: none!important;

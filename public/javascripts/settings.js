@@ -15,5 +15,9 @@ function changeMenu(x){
 }
 
 
+$('#적용').click(function() {
+    $('.ui.longer.modal').modal('show');
+});
 
 $('.ui.selection.dropdown').dropdown();
+

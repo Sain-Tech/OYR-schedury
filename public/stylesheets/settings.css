@@ -65,3 +65,28 @@
     font-family: 'SeoulNamsanM';
 
 }
+
+#mod{
+    display:none !important;
+    position: absolute !important;
+    width:90%;
+    height:100%;
+}
+#mod_left{
+    width:25%;
+    height:100% !important;
+    border-right:1px solid grey;
+}
+#mod_right{
+    width:75%;
+    height:100% !important;
+}
+#content_layout{
+    display:flex;
+    flex-direction: row;
+    height:100% !important;
+}
+.scrolling{
+   
+    height:100% !important;
+}
