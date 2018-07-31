@@ -101,38 +101,6 @@ header {
     }
 }
 
-.head-logo{
-    font-family: 'Lobster', cursive;
-    font-size: 50px;
-}
-.main-sidebar{
-    /* width: 300px !important; */
-    background-color: #FDC23E !important;
-}
-.user-profile{
-    cursor: pointer;
-}
-.profile-image{
-    display: block !important;
-    cursor: pointer;
-}
-.user-nickname{
-    font-size: 20px;
-    margin: 10px;
-    font-size: 18px !important;
-}
-.nickname{
-    text-align: center !important;
-    border: none !important;
-}
-.nickname:focus{
-    border: 1px solid rgba(34, 36, 38, 0.15) !important;
-}
-.sidebar-buttons{
-    position: absolute !important;
-    right: 0;
-    margin: 8px;
-}
 .info-card{
     display: none !important;
     position: absolute !important;
@@ -159,21 +127,70 @@ header {
     width: 100%;
     height: 100%;
 }
-.logout-button{
+
+.big.black.icon.styler {
+    background-color: transparent !important;
+}
+
+.head-logo{
+    font-family: 'Lobster', cursive;
+    font-size: 50px;
+}
+#logo_schedury{
+    margin: 0 !important;
+    margin-bottom: 20px !important;
+}
+.main-sidebar{
+    background-color: #FDC23E !important;
+}
+.user-profile{
+    cursor: pointer;
+}
+#profile_image{
     display: block !important;
-    margin: 20px auto !important;
+    cursor: pointer;
+    margin: 0 auto !important;
+}
+#profile_pic{
+    margin: 0 auto !important;
+}
+.user-nickname{
+    font-size: 20px;
+    margin: 10px;
+    font-size: 18px !important;
+}
+#nickname{
+    text-align: center !important;
+    border: none !important;
+}
+#user_message{
+    text-align: center;
+    border: none !important;
+}
+#edit_nickname{
+    cursor: pointer;
+    margin: auto 8px;
+}
+.sidebar-buttons{
+    position: absolute !important;
+    right: 0;
+    margin: 8px;
+}
+.bottom-menu{
     width: fit-content;
-    border-radius: 50% !important;
-    padding: 20px 8px !important;
+    margin: 0 auto;
+}
+#logout_button, #edit_button{
+    height: 52px;
+    width: 52px;
+    margin: 10px !important;
+    padding: 20px 0px !important;
 }
 .user-msg{
     margin: 15px auto;
 }
 .modal-cont{
     padding: 0 !important;
-}
-.big.black.icon.styler {
-    background-color: transparent !important;
 }
 
 /* Safari 4.0 - 8.0 */

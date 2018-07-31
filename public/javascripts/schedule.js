@@ -102,24 +102,78 @@ function menuToggle(x){
     document.getElementById(x).className="item active";
 }
 
+// $(document).ready(function(){
+//     var uNickname = $('.nickname');
+//     var changedName = '';
+//     var uMessage = $('.user-message');
+//     var changedMessage = '';
+
+//     uNickname.blur(function(){
+//         console.log('nickname blured');
+//         changedName = $(this).val();
+//         uNickname.val(changedName);
+//     });
+//     uMessage.blur(function(){
+//         changedMessage = $(this).val(); // changedMessage를 서버에 보내서 상태메시지의 변경된 내용 저장
+//         uMessage.val(changedMessage);
+//     });
+
+//     $('.profile-image').click(function() {
+//         $('.profpic-modal').modal('show');
+//     });
+
+//     $('.user-profile').click(function() {
+//         console.log('hi');
+//         $('#info_card').attr({'style': 'display: block !important'});
+//         $('.card-back').attr({'style': 'display: block !important'});
+//     });
+
+//     $('.card-back').click(function() {
+//         $('#info_card').attr({'style': 'display: none !important'});
+//         $('.card-back').attr({'style': 'display: none !important'});
+//     });
+// });
+
 $(document).ready(function(){
-    var uNickname = $('.nickname');
+    var uNickname = $('#nickname');
     var changedName = '';
-    var uMessage = $('.user-message');
+    var uMessage = $('#user_message');
     var changedMessage = '';
+    var editFlag=0;
 
-    uNickname.blur(function(){
-        console.log('nickname blured');
-        changedName = $(this).val();
-        uNickname.val(changedName);
-    });
-    uMessage.blur(function(){
-        changedMessage = $(this).val(); // changedMessage를 서버에 보내서 상태메시지의 변경된 내용 저장
-        uMessage.val(changedMessage);
+    $('#edit_button').click(function(){
+        if(editFlag==0){
+            uNickname.attr('readonly', false);
+            uMessage.attr('readonly', false);
+            uNickname.attr('style', 'border: 1px solid rgba(34, 36, 38, 0.15) !important;');
+            uMessage.attr('style', 'border: 1px solid rgba(34, 36, 38, 0.15) !important;');
+            $('#edit_button').html('Save');
+            $('#edit_button').attr('data-tooltip', '저장');
+
+            editFlag=1;
+        } else {
+            changedName = uNickname.val();
+            changedMessage = uMessage.val(); // changedMessage를 서버에 보내서 상태메시지의 변경된 내용 데이터베이스에 저장
+            uMessage.val(changedMessage);
+            uNickname.val(changedName);
+
+            uNickname.attr('readonly', true);
+            uMessage.attr('readonly', true);
+            uNickname.attr('style', 'border: none');
+            uMessage.attr('style', 'border: none');
+            $('#edit_button').html('Edit');
+            $('#edit_button').attr('data-tooltip', '정보 수정');
+
+            editFlag=0;
+        }
     });
 
-    $('.profile-image').click(function() {
+    $('#profile_image').click(function(){
         $('.profpic-modal').modal('show');
+    });
+
+    $('.user-profile').click(function(){
+        $('#info_card').attr({'style': 'display: block !important'});
     });
 
     $('.user-profile').click(function() {

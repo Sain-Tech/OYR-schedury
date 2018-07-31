@@ -22,9 +22,9 @@
 <body>
     <div id="side_menu" class="ui left vertical menu sidebar main-sidebar">
         <div class="item"> 
-            <h1 class="ui center aligned container head-logo">Schedury</h1>
+            <h1 class="ui center aligned container head-logo" id="logo_schedury">Schedury</h1>
             <div class="user-profile">
-                <img class="ui small circular image center aligned container" src="/images/profile_default.png" alt="profile image">
+                <img class="ui small circular image center aligned container" id="profile_pic" src="/images/profile_default.png" alt="profile image">
                 <div class="ui center aligned container user-nickname">Nickname</div>
                 <div class="ui segment">
                     메시지
@@ -37,8 +37,8 @@
             </div>
         </div>
         <div class="ui sidebar-buttons">
-            <a href="" class="" data-tooltip="캘린더 동기화"><i class="big black sync icon styler"></i></a>
-            <a href="/schedule/settings" class="" data-tooltip="환경설정"><i class="big black cog icon styler"></i></a>
+            <a href="" class="" data-tooltip="캘린더 동기화" data-position="bottom right"><i class="big black sync icon"></i></a>
+            <a href="/schedule/settings" class="" data-tooltip="환경설정" data-position="bottom right"><i class="big black cog icon"></i></a>
         </div>
     </div>
 
@@ -99,14 +99,17 @@
 
         <div class="ui card info-card" id="info_card">
             <div class="content">
-                <img class="ui small circular image center aligned container profile-image" src="/images/profile_default.png" alt="profile image" />
-                <div class="ui fluid input user-nickname" data-tooltip="닉네임 변경">
-                    <input class="nickname" type="text" value="Nickname" />
+                <img class="ui small circular image center aligned container" id="profile_image" src="/images/profile_default.png" alt="profile image" />
+                <div class="ui fluid input user-nickname">
+                    <input id="nickname" type="text" value="Nickname" readonly>
                 </div>
-                <div class="ui fluid input user-msg" data-tooltip="메시지 변경">
-                    <input class="user-message" type="text" value="메시지">
+                <div class="ui fluid input user-msg">
+                    <input id="user_message" type="text" value="메시지" readonly>
                 </div>
-                <div class="ui circular button logout-button" onclick="location='/logout'">Logout</div>
+                <div class="bottom-menu">
+                    <div class="ui circular button" id="edit_button" data-tooltip="정보 수정" data-position="left center">Edit</div>
+                    <div class="ui circular button" id="logout_button" onclick="location='/logout'" data-tooltip="로그아웃" data-position="right center">Logout</div>
+                </div>
             </div>
         </div>
         
