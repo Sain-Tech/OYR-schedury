@@ -14,7 +14,6 @@
         .head-logo{
             font-family: 'Lobster', cursive;
             font-size: 50px;
-
         }
         #logo_schedury{
             margin: 0 !important;
@@ -39,12 +38,17 @@
             margin: 10px;
             font-size: 18px !important;
         }
-        .nickname{
+        #nickname{
             text-align: center !important;
             border: none !important;
         }
-        .nickname:focus{
-            border: 1px solid rgba(34, 36, 38, 0.15) !important;
+        #user_message{
+            text-align: center;
+            border: none !important;
+        }
+        #edit_nickname{
+            cursor: pointer;
+            margin: auto 8px;
         }
         .sidebar-buttons{
             position: absolute !important;
@@ -58,12 +62,15 @@
             top: 10px;
             padding: 20px !important;
         }
-        .logout-button{
-            display: block !important;
-            margin: 20px auto !important;
+        .bottom-menu{
             width: fit-content;
-            border-radius: 50% !important;
-            padding: 20px 8px !important;
+            margin: 0 auto;
+        }
+        #logout_button, #edit_button{
+            height: 52px;
+            width: 52px;
+            margin: 10px !important;
+            padding: 20px 0px !important;
         }
         .user-msg{
             margin: 15px auto;
@@ -100,13 +107,16 @@
             <div class="ui card info-card" id="info_card">
                 <div class="content">
                     <img class="ui small circular image center aligned container" id="profile_image" src="/images/profile_default.png" alt="profile image" />
-                    <div class="ui fluid input user-nickname" data-tooltip="닉네임 변경">
-                        <input class="nickname" type="text" value="Nickname" />
+                    <div class="ui fluid input user-nickname">
+                        <input id="nickname" type="text" value="Nickname" readonly>
                     </div>
-                    <div class="ui fluid input user-msg" data-tooltip="메시지 변경">
-                        <input class="user-message" type="text" value="메시지">
+                    <div class="ui fluid input user-msg">
+                        <input id="user_message" type="text" value="메시지" readonly>
                     </div>
-                    <div class="ui circular button logout-button" onclick="location='/logout'">Logout</div>
+                    <div class="bottom-menu">
+                        <div class="ui circular button" id="edit_button" data-tooltip="정보 수정" data-position="left center">Edit</div>
+                        <div class="ui circular button" id="logout_button" onclick="location='/logout'" data-tooltip="로그아웃" data-position="right center">Logout</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -119,18 +129,37 @@
         </div>
         <script>
             $(document).ready(function(){
-                var uNickname = $('.nickname');
+                var uNickname = $('#nickname');
                 var changedName = '';
-                var uMessage = $('.user-message');
+                var uMessage = $('#user_message');
                 var changedMessage = '';
+                var editFlag=0;
 
-                uNickname.blur(function(){
-                    changedName = $(this).val();
-                    uNickname.val(changedName);
-                });
-                uMessage.blur(function(){
-                    changedMessage = $(this).val(); // changedMessage를 서버에 보내서 상태메시지의 변경된 내용 저장
-                    uMessage.val(changedMessage);
+                $('#edit_button').click(function(){
+                    if(editFlag==0){
+                        uNickname.attr('readonly', false);
+                        uMessage.attr('readonly', false);
+                        uNickname.attr('style', 'border: 1px solid rgba(34, 36, 38, 0.15) !important;');
+                        uMessage.attr('style', 'border: 1px solid rgba(34, 36, 38, 0.15) !important;');
+                        $('#edit_button').html('Save');
+                        $('#edit_button').attr('data-tooltip', '저장');
+
+                        editFlag=1;
+                    } else {
+                        changedName = uNickname.val();
+                        changedMessage = uMessage.val(); // changedMessage를 서버에 보내서 상태메시지의 변경된 내용 데이터베이스에 저장
+                        uMessage.val(changedMessage);
+                        uNickname.val(changedName);
+
+                        uNickname.attr('readonly', true);
+                        uMessage.attr('readonly', true);
+                        uNickname.attr('style', 'border: none');
+                        uMessage.attr('style', 'border: none');
+                        $('#edit_button').html('Edit');
+                        $('#edit_button').attr('data-tooltip', '정보 수정');
+
+                        editFlag=0;
+                    }
                 });
 
                 $('#profile_image').click(function(){
@@ -138,7 +167,6 @@
                 });
 
                 $('.user-profile').click(function(){
-                    console.log('hi');
                     $('#info_card').attr({'style': 'display: block !important'});
                 });
             });
