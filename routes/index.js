@@ -167,4 +167,7 @@ router.get('/schedule/list', function(req, res){
   res.render('schedule_list');
 });
 
+router.get('/schedule/diary', function(req, res){
+  res.render('schedule_diary');
+});
 module.exports = router;
