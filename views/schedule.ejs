@@ -116,14 +116,14 @@
         <div class="calendar-this">
             <div class="calendar-menu">
                 <div class="ui pagination menu">
-                    <a class="icon item" onclick="prevCalendar(1);">
+                    <a class="icon item" onclick="prevCalendar(2);">
                         <i class="left chevron icon"></i>
                     </a>
 
                     <a id="tbCalendarYM" class="item calendar title" onclick="calendarNavToggle(0); getDateForSearch();">
                     </a>
 
-                    <a class="icon item" onclick="nextCalendar(1);">
+                    <a class="icon item" onclick="nextCalendar(2);">
                         <i class="right chevron icon"></i>
                     </a>
                 </div>
@@ -138,6 +138,8 @@
         </div>
     </div>
 
+    <!-- 모달 관련 태그 붙이는 곳 -->
+    <!-- 프로필 사진 수정 모달 -->
     <div class="ui mini modal profpic-modal">
         <div class="ui actions grid modal-cont">
             <a class="centered row" href=""><div>프로필 사진 변경</div></a>
@@ -146,12 +148,27 @@
         </div>
     </div>
 
+    <!-- 일기, 일정 모달 -->
+    <div id='mod' class="ui longer modal">
+        <div id='modal_header_diary' class="header">7월 31일 화요일</div>
+        <div class="scrolling">
+            <div id='content_layout'>    
+            <div id="mod_left">
+                Very long content goes here
+            </div>
+            <div id='mod_right'>
+                Very long content goes here
+            </div>
+            </div>
+        </div>
+    </div>
+
     <script src="javascripts/calendar.js"></script>
     <script src="javascripts/schedule.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/calendar.css" />
 
     <script>
-        buildCalendar(1);
+        buildCalendar(2);
     </script>
 </body>
 </html>

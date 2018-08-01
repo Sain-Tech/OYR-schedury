@@ -59,48 +59,7 @@ header {
     width: auto;
 }
 
-@media only screen and (min-width: 801px)  {
-    .ui.left.visible.sidebar, .ui.right.visible.sidebar {
-        box-shadow: none;
-        -webkit-transition: none!important;
-        -moz-transition: none!important;
-        -ms-transition: none!important;
-        transition: none!important;
-    }
-
-    .ui.visible.left.sidebar ~ .pusher {
-        -webkit-transition: none!important;
-        -moz-transition: none!important;
-        -ms-transition: none!important;
-        transition: none!important;
-    }
-}
-
-@media only screen and (max-width: 800px)  {
-    .ui.visible.left.sidebar ~ .pusher {
-        width: 100%;
-    }
-
-    .button-menu {
-        transition: opacity .2s;
-        opacity: 1;
-        pointer-events: all;
-        display: inline !important;
-        position: absolute;
-    }
-
-    .ui.pagination.menu {
-        margin: 8px auto 0 auto !important;
-        width: auto;
-    }
-}
-
-@media only screen and (max-width: 512px)  {
-    .ui.pagination.menu {
-        margin: 8px 8px 0 auto !important;
-    }
-}
-
+/* 프로필 카드 */
 .info-card{
     display: none !important;
     position: absolute !important;
@@ -215,4 +174,73 @@ header {
 @keyframes animOut {
     from {opacity: 1;}
     to {opacity: 0;}
+}
+
+/* 일기, 일정 모달 */
+#mod{
+    display:none !important;
+    position: absolute !important;
+    width:90%;
+    height:100%;
+}
+#mod_left{
+    width:25%;
+    height:100% !important;
+    border-right:1px solid grey;
+}
+#mod_right{
+    width:75%;
+    height:100% !important;
+}
+#content_layout{
+    display:flex;
+    flex-direction: row;
+    height:100% !important;
+}
+.scrolling{
+   
+    height:100% !important;
+}
+
+/* 미디어 쿼리 오는 곳 */
+@media only screen and (min-width: 801px)  {
+    .ui.left.visible.sidebar, .ui.right.visible.sidebar {
+        box-shadow: none;
+        -webkit-transition: none!important;
+        -moz-transition: none!important;
+        -ms-transition: none!important;
+        transition: none!important;
+    }
+
+    .ui.visible.left.sidebar ~ .pusher {
+        -webkit-transition: none!important;
+        -moz-transition: none!important;
+        -ms-transition: none!important;
+        transition: none!important;
+    }
+}
+
+@media only screen and (max-width: 800px)  {
+    .ui.visible.left.sidebar ~ .pusher {
+        width: 100%;
+    }
+
+    .button-menu {
+        transition: opacity .2s;
+        opacity: 1;
+        pointer-events: all;
+        display: inline !important;
+        position: absolute;
+    }
+
+    .ui.pagination.menu {
+        margin: 8px auto 0 auto !important;
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 512px)  {
+    .ui.pagination.menu {
+        margin: 8px 8px 0 auto !important;
+    }
 }

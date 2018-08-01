@@ -101,6 +101,8 @@ function getDateForSearch() {
 }
 
 function buildCalendar(arg){//현재 달 달력 만들기
+    startDate = arg;
+
     var doMonth = new Date(today.getFullYear(),today.getMonth(),1);
     //이번 달의 첫째 날,
     //new를 쓰는 이유 : new를 쓰면 이번달의 로컬 월을 정확하게 받아온다.     
@@ -174,9 +176,9 @@ function buildCalendar(arg){//현재 달 달력 만들기
     //테이블에 새로운 열 삽입//즉, 초기화
     var cnt = 0;// count, 셀의 갯수를 세어주는 역할
 
-    // 1일이 시작되는 칸을 맞추어 줌 - 월요일 시작
-    for (i=0; i < (arg == 0 ? (doMonth.getDay() || 7 - 6) : (arg == 1 ? doMonth.getDay() : (doMonth.getDay() || 7 - 1))); i++) {
-    /*이번달의 day만큼 돌림*/
+    // 1일이 시작되는 칸을 맞추어 줌
+    for (i=0; i < getFirstDayPosition(doMonth.getDay(), arg); i++) {
+        /*이번달의 day만큼 돌림*/
         cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
         cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
     }
@@ -187,8 +189,8 @@ function buildCalendar(arg){//현재 달 달력 만들기
         cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
         cell.innerHTML = i;//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
         cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
-
-        console.log('test: ' + cnt);
+        cell.setAttribute('id', 'c_'+today.getFullYear()+'_'+(today.getMonth()+1)+'_'+i);
+        cell.setAttribute('onclick', 'calendarDayOnClick('+today.getFullYear()+', '+(today.getMonth()+1)+', '+i+')');
 
         /* 토요일 시작 */
         if(arg == 0) {
@@ -253,20 +255,20 @@ function buildCalendar(arg){//현재 달 달력 만들기
             && today.getMonth() == date.getMonth()
             && i == date.getDate()) {
             //달력에 있는 년,달과 내 컴퓨터의 로컬 년,달이 같고, 일이 오늘의 일과 같으면
-            cell.bgColor = "#F9A11B";//셀의 배경색을 노랑으로 
+            cell.bgColor = "#FDC23E";//셀의 배경색을 노랑으로 
         }
     }
 
     var lastFillCnt = 7 - (cnt % 7);
-    var firstFillCnt = (arg == 0 ? (doMonth.getDay() || 7 - 6) : (arg == 1 ? doMonth.getDay() : (doMonth.getDay() || 7 - 1)));
-
-    console.log(firstFillCnt);
+    var firstFillCnt = getFirstDayPosition(doMonth.getDay(), arg);
 
     firstFillCnt2 = firstFillCnt;
 
     for(var i = 0; i < lastFillCnt; i++) {
         cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
         cell.innerHTML = "<font color=#bdbdbd>" + (i + 1);
+        cell.setAttribute('id', 'c_'+today.getFullYear()+'_'+(today.getMonth()+2)+'_'+(i+1));
+        cell.setAttribute('onclick', 'calendarDayOnClick('+today.getFullYear()+', '+(today.getMonth()+2)+', '+(i+1)+')');
     }
 
     doFillFirstCnt();
@@ -281,6 +283,8 @@ function doFillFirstCnt() {
     for(var i = 0; i < firstFillCnt2; i++) {
         var x = tbCalendar.rows[0].cells;
         x[i].innerHTML = "<font color=#bdbdbd>" + (lastDate.getDate() - ((firstFillCnt2 - 1) - i));
+        x[i].setAttribute('id', 'c_'+today.getFullYear()+'_'+today.getMonth()+'_'+(lastDate.getDate() - ((firstFillCnt2 - 1) - i)));
+        x[i].setAttribute('onclick', 'calendarDayOnClick('+today.getFullYear()+', '+today.getMonth()+', '+(lastDate.getDate() - ((firstFillCnt2 - 1) - i))+')');
     }
 }
 
@@ -293,4 +297,82 @@ function calendarNavToggle(arg) {
         $('.calendar-navi-back').css({display:'none'});
         $('.calendar-navi-div').css({display:'none'});
     }
+}
+
+var startDate = 0;
+
+function calendarDayOnClick(year, month, day) {
+    //alert('Your choice: '+year+'년 '+month+'월 '+day+'일 ');
+    today = new Date(year, month-1, day);
+
+    $('.ui.longer.modal').modal('show');
+    $('#modal_header_diary').html(month+'월 '+day+'일 '+getDayNameOfWeek(today.getDay())+'요일');
+}
+
+function getFirstDayPosition(doMonthGetDay, argStartDateOpt) {
+    if(argStartDateOpt == 2) {
+        if(doMonthGetDay == 0)
+            return 6;
+        else if(doMonthGetDay == 1)
+            return 0;
+        else if(doMonthGetDay == 2)
+            return 1;
+        else if(doMonthGetDay == 3)
+            return 2;
+        else if(doMonthGetDay == 4)
+            return 3;
+        else if(doMonthGetDay == 5)
+            return 4;
+        else if(doMonthGetDay == 6)
+            return 5;
+    }
+    else if(argStartDateOpt == 1) {
+        if(doMonthGetDay == 0)
+            return 0;
+        else if(doMonthGetDay == 1)
+            return 1;
+        else if(doMonthGetDay == 2)
+            return 2;
+        else if(doMonthGetDay == 3)
+            return 3;
+        else if(doMonthGetDay == 4)
+            return 4;
+        else if(doMonthGetDay == 5)
+            return 5;
+        else if(doMonthGetDay == 6)
+            return 6;
+    }
+    else if(argStartDateOpt == 0) {
+        if(doMonthGetDay == 0)
+            return 1;
+        else if(doMonthGetDay == 1)
+            return 2;
+        else if(doMonthGetDay == 2)
+            return 3;
+        else if(doMonthGetDay == 3)
+            return 4;
+        else if(doMonthGetDay == 4)
+            return 5;
+        else if(doMonthGetDay == 5)
+            return 6;
+        else if(doMonthGetDay == 6)
+            return 0;
+    }
+}
+
+function getDayNameOfWeek(dayArg) {
+    if(dayArg == 0)
+        return '일';
+    else if(dayArg == 1)
+        return '월';
+    else if(dayArg == 2)
+        return '화';
+    else if(dayArg == 3)
+        return '수';
+    else if(dayArg == 4)
+        return '목';
+    else if(dayArg == 5)
+        return '금';
+    else if(dayArg == 6)
+        return '토';
 }
