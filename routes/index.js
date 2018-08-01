@@ -163,8 +163,4 @@ router.get('/schedule', function(req, res) {
   res.render('schedule', { title: 'Main' });
 });
 
-router.get('/schedule/list', function(req, res){
-  res.render('schedule_list');
-});
-
 module.exports = router;
