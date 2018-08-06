@@ -77,7 +77,10 @@ h4 {
 }
 
 .ui.segment {
+    height: 368px;
     margin-bottom: 24px !important;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .ui.basic.label {
@@ -164,4 +167,25 @@ input.upload {
         margin-top: -14px !important;
     }
     
+    .ui.segment {
+        height: 420px;
+    }
+}
+
+#page {
+    width: 100%;
+    position: absolute;
+    opacity: 1;
+    transition: all .333s
+}
+
+#next_page {
+    width: 100%;
+    position: absolute;
+    opacity: 0;
+    transition: all .333s
+}
+
+.segment-width {
+    height: 500px ;
 }
