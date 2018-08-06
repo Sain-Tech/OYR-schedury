@@ -16,7 +16,7 @@ var emailOk = false;
 //6666666
 function checkId() {
     var id = document.getElementById('id_input').value;
-    var regId = new RegExp("^(?=.*?[a-z])(?=.*?[0-9]).{1,}$");
+    var regId = new RegExp("^(?=.*?[a-z]).{3,}$");
 
     $('#id').removeAttr('data-tooltip').removeAttr('data-position');
     $('#pass').removeAttr('data-tooltip').removeAttr('data-position');
@@ -26,7 +26,7 @@ function checkId() {
     $('#id_error').html('');
 
     if(id == '') {
-        $('#id').attr('data-tooltip', '아이디는 문자 포함 숫자 조합으로 입력하세요.').attr('data-position', 'bottom left');
+        $('#id').attr('data-tooltip', '아이디는 문자 3자 이상 포함해서 입력하세요.').attr('data-position', 'bottom left');
         document.getElementById('id').setAttribute('class', 'ui left icon fluid input');
         document.getElementById('id_ico').setAttribute('class', 'user icon');
         document.getElementById('id_input').setAttribute('class', 'input-orange');
@@ -243,7 +243,7 @@ function inputOnFocus(arg) {
     }
 }
 
-function requestSignup() {
+function checkFinal() {
     var passwordOrigin = document.getElementById('pass_input').value;
     var passwordConfirm = document.getElementById('pass2_input').value;
 
@@ -252,11 +252,16 @@ function requestSignup() {
     if(regPw.test(passwordOrigin) && passwordOrigin === passwordConfirm) {
         passOk = true;
     }
+}
+
+function requestSignup() {
+    checkFinal();
 
     if(idOk && passOk && emailOk) {
         document.formsignup.submit();
     }
     else {
+        prev(document.getElementById('next_page'),document.getElementById('page'));
         if(!idOk) {
             $("html, body").animate({ scrollTop: $("#id_input").offset().top });
             $('#id_input').focus();
@@ -293,3 +298,33 @@ upload.onchange = function (e) {
     reader.readAsDataURL(file);
     return false;
 };
+
+function nextPage(next, prev) {
+    checkFinal();
+    if(idOk && passOk && emailOk) {
+        next.style = 'visibility: visible; opacity: 1;';
+        prev.style = 'visibility: hidden; opacity: 0;';
+        $('.ui.segment').addClass('segment-width');
+    }
+    else {
+        prevPage(document.getElementById('next_page'),document.getElementById('page'));
+        if(!idOk) {
+            $("html, body").animate({ scrollTop: $("#id_input").offset().top });
+            $('#id_input').focus();
+        }
+        else if(!passOk) {
+            $("html, body").animate({ scrollTop: $("#pass_input").offset().top });
+            $('#pass_input').focus();
+        }
+        else if(!emailOk) {
+            $("html, body").animate({ scrollTop: $("#email_input").offset().top });
+            $('#email_input').focus();
+        }
+    }
+}
+
+function prevPage(next, prev) {
+    next.style = 'visibility: hidden; opacity: 0;';
+    prev.style = 'visibility: visible; opacity: 1;';
+    $('.ui.segment').removeClass('segment-width');
+}

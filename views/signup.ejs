@@ -70,7 +70,7 @@
                             <div class="column">
                                 <div class="ui two column stackable grid">
                                     <div class="nine wide column">
-                                        <button class="ui yellow button fluid" type="button" onclick="next(document.getElementById('next_page'),document.getElementById('page'))">다음</button>
+                                        <button class="ui yellow button fluid" type="button" onclick="nextPage(document.getElementById('next_page'),document.getElementById('page'))">다음</button>
                                     </div>
                                     
                                     <div class="seven wide column">
@@ -83,7 +83,7 @@
 
 
                     <!--회원가입 페이지2 -->
-                    <div  id="next_page" style="display:none">
+                    <div  id="next_page" style="visibility:hidden">
                         <div>
                             <div class="ui stackable one column vertically divided grid container">
 
@@ -129,7 +129,7 @@
                                         </div>
                                         
                                         <div class="seven wide column">
-                                            <button class="ui button fluid" type="button" onclick="history.back();">취소</button>
+                                            <button class="ui button fluid" type="button" onclick="prevPage(document.getElementById('next_page'),document.getElementById('page'))">이전</button>
                                         </div>
                                     </div>
                                 </div>
@@ -137,8 +137,6 @@
                         </div>
                     </div>
                 </div>
-
-                
 
             </div>
         </form>

@@ -21,7 +21,7 @@ var result = null;
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  connectDB.query("CREATE TABLE IF NOT EXISTS USERS(userId CHAR(30), userPw TEXT, pwSalt TEXT, userEmail TEXT, profileImageDir TEXT, PRIMARY KEY(userId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+  connectDB.query("CREATE TABLE IF NOT EXISTS USERS(userId CHAR(30), userPw TEXT, pwSalt TEXT, userEmail TEXT, profileImageDir TEXT, userNickName TEXT, userMessate TEXT, PRIMARY KEY(userId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
   console.log('테이블 생성됨');
   if(req.session.userId) {
     res.redirect('/result/'+req.session.userId);
@@ -96,7 +96,7 @@ router.get('/signup', function(req, res) {
 router.post('/signup', upload.single('profimg'), function(req, res) {
   var id = req.body.id;
   var pw = req.body.passwd;
-  var email = req.body.email;
+  var email = req.body.email; var nickname = req.body.nickname; var intro = req.body.intro;
 
   if(req.file != undefined)
     var profimgfile = '../' + req.file.path;
@@ -115,7 +115,7 @@ router.post('/signup', upload.single('profimg'), function(req, res) {
   //   res.send('<script type="text/javascript">alert("비밀번호 입력을 확인해주세요."); history.back();</script>');
   // }
   hasher({password:pw}, function(err, pass, salt, hash) {
-    var sql = "INSERT INTO USERS VALUES('"+id+"', '"+hash+"', '"+salt+"', '"+email+"', '"+profimgfile+"');"
+    var sql = "INSERT INTO USERS VALUES('"+id+"', '"+hash+"', '"+salt+"', '"+email+"', '"+profimgfile+"', '"+nickname+"', '"+intro+"');"
     connectDB.query(sql);
     console.log('데이터 입력됨');
     res.send('<script type="text/javascript">alert("승인되었습니다. 로그인 해주세요."); location.replace("/");</script>');
