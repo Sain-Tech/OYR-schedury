@@ -168,6 +168,6 @@ router.get('/schedule/list', function(req, res){
 });
 
 router.get('/schedule/diary', function(req, res){
-  res.render('schedule_diary');
+  res.render('schedule_diary',{ title:'Schedule_diary'});
 });
 module.exports = router;
