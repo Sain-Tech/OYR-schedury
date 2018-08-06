@@ -7,6 +7,8 @@ function myFunction(x) {
         });
     $('.pusher').addClass('noanim');
     if (x.matches) {
+        mediaQueryFlag800 = true;
+        $('.calendar-menu>.ui.pagination.menu').css('cssText', 'margin-top: ');
         $('#side_menu').removeClass('push');
         $('.sidebar').sidebar('hide');
         $('.button-menu').css({display: 'inline'});
@@ -41,6 +43,8 @@ function myFunction(x) {
             }); 
         });
     } else {
+        mediaQueryFlag800 = false;
+        $('.calendar-menu>.ui.pagination.menu').css('cssText', 'margin-top: 24px !important');
         $('#side_menu').addClass('noanim');
         $('#side_menu').removeClass('overlay');
         $('.sidebar').sidebar('show');
@@ -95,11 +99,33 @@ function onMenu() {
     }
 }
 
+var mediaQueryFlag800 = false;
+
 function menuToggle(x){
     var y=document.getElementsByClassName("item active")[0];
     y.className="item";
 
     document.getElementById(x).className="item active";
+
+    if(x == 'menu_schedule') {
+        $('.calendar-this').removeClass('height-fill');
+        $('.calendar-menu').css({'position': 'inherit'});
+        $('.calendar-menu>.ui.pagination.menu').css('cssText', 'margin-top: ');
+        $('#view_calendar').css({display: 'table'});
+        $('#view_diary_preview').css({display: 'none', 'height': ''});
+        $('.height-fill').off();
+    }
+    else if(x == 'menu_diary') {
+        $('.calendar-this').addClass('height-fill');
+        $('.calendar-menu').css({'position': 'fixed'});
+        $('.calendar-menu>.ui.pagination.menu').css('cssText', !mediaQueryFlag800 ? 'margin-top: 24px !important' : '');
+        $('#view_calendar').css({display: 'none'});
+        $('#view_diary_preview').css({display: 'block', 'height': '72px'});
+
+    }
+    else if(x == 'menu_pictures') {
+
+    }
 }
 
 // $(document).ready(function(){
@@ -191,3 +217,127 @@ $(document).ready(function(){
 var x = window.matchMedia("only screen and (max-width: 800px)");
 myFunction(x);
 x.addListener(myFunction);
+
+var delayAnim = '0s';
+function actionOnSearch(arg) {
+    if (arg == 1) {
+        $('#searchbar').css({visibility: 'visible', opacity: 1, transform: 'translateX(0)', 'transition-delay': '0s'});
+        $('#searchbar_back').css({visibility: 'hidden', opacity: 0, transform: 'translateX(-204px)', 'transition-delay': '0s'});
+       
+        var timer = setInterval(function() {
+            $('#searchbar input').focus();
+            clearInterval(timer); 
+        }, 100);
+
+        var timer2 = setInterval(function () {
+            delayAnim = '1s';
+            clearInterval(timer2);
+        }, 338);
+    }
+
+    else if(arg == 0) {
+        $('#searchbar').css({visibility: 'hidden', opacity: 0, transform: 'translateX(260px)', 'transition-delay': delayAnim});
+        $('#searchbar_back').css({visibility: 'visible', opacity: 1, transform: 'translateX(0)', 'transition-delay': delayAnim});
+
+        var tmp = $('#searchbar input').val();
+        $('#searchbar_back input').attr('placeholder', tmp == ''?'검색':tmp);
+
+        var timer2 = setInterval(function () {
+            delayAnim = '0s';
+            clearInterval(timer2);
+        }, 338);
+    }
+}
+
+function actionSyncOnSearch() {
+    
+}
+
+var flagSpread = true;
+
+$('article').scroll(function () {
+    var height = $('article').scrollTop();
+    console.log(height);
+    if(height == 0) {
+        $('article').removeClass('shadow');
+    }
+    else {
+        $('article').addClass('shadow');
+    }
+
+    if(height < 84) {
+        $('.calendar-menu').css({height: '96px', opacity: 1, visibility: 'visible'});
+        $('.search-diary').css({'margin-top': '90px'});
+        $('#searchbar_back').css({visibility: 'visible', opacity: 1});
+        $('article').css('cssText', 'margin-top: 192px; padding-top: 16px !important; height: calc(100% - 192px);');
+        $('.height-fill').off();
+        flagSpread = true;
+    }
+    else {
+        $('.calendar-menu').css({height: '0px', opacity: 0, visibility: 'hidden'});
+        $('.search-diary').css({'margin-top': '-32px'});
+        $('article').css('cssText', 'margin-top: 72px; padding-top: 136px !important; height: calc(100% - 72px);');
+        $('#searchbar_back').css({visibility: css1, opacity: css2});
+
+        flagSpread = false;
+
+        var overThreshold = 72;
+
+        $('article').mousemove(function (event) {
+            actionOnSearch(0);
+
+            if(!flagSpread)
+                $('#searchbar_back').css({visibility: css1, opacity: css2});
+        });
+
+        $('.height-fill').mousemove(function (event) {
+            x = event.pageX;
+            y = event.pageY;
+
+            console.log(x +' ' + y);
+
+            if(y < overThreshold) {
+                console.log('true');
+                overThreshold = 290;
+                $('.calendar-menu').css({height: '96px', opacity: 1, visibility: 'visible'});
+                $('.search-diary').css({'margin-top': '90px'});
+                $('article').css('cssText', 'margin-top: 192px; padding-top: 16px !important; height: calc(100% - 192px);');
+                $('#searchbar_back').css({visibility: 'visible', opacity: 1});
+            }
+            else {
+                if(y < overThreshold) {
+                    $('.calendar-menu').css({height: '96px', opacity: 1, visibility: 'visible'});
+                    $('.search-diary').css({'margin-top': '90px'});
+                    $('article').css('cssText', 'margin-top: 192px; padding-top: 16px !important; height: calc(100% - 192px);');
+                    $('#searchbar_back').css({visibility: 'visible', opacity: 1});
+                }
+                else {
+                    $('.calendar-menu').css({height: '0px', opacity: 0, visibility: 'hidden'});
+                    $('.search-diary').css({'margin-top': '-32px'});
+                    $('article').css('cssText', 'margin-top: 72px; padding-top: 136px !important; height: calc(100% - 72px);');
+                    overThreshold = 72;
+                }
+            }
+        });
+    }
+});
+
+var css1 = 'hidden';
+var css2 = '0';
+
+function myFunction1(x1) {
+    if(x1.matches) {
+        css1 = 'hidden';
+        css2 = '0';
+    }
+    else {
+        css1 = 'visible';
+        css2 = '1';
+    }
+}
+
+var x1 = window.matchMedia("only screen and (max-width: 513px)");
+myFunction1(x1);
+x1.addListener(myFunction1);
+    
+     

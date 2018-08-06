@@ -107,6 +107,7 @@
                 <div class="ui pagination menu">
                     <a id="menu_schedule" class="item active" onclick="menuToggle(this.id);"><i class="icon calendar check outline"></i>일정</a>
                     <a id="menu_diary" class="item" onclick="menuToggle(this.id);"><i class="icon edit outline"></i>일기</a>
+                    <a id="menu_pictures" class="item" onclick="menuToggle(this.id);"><i class="icon edit outline"></i>사진</a>
                 </div>
             </div>
             
@@ -146,12 +147,178 @@
                 </div>
             </div>
 
-            <table class="ui segment calendar">
+            <!-- 일정 - 캘린더 태그 -->
+            <table id="view_calendar" class="ui segment calendar">
                 <thead id="calendar_header">
                 </thead>
                 <tbody id="calendar_body" class="tbody-anim">      
                 </tbody>
             </table>
+
+            <!-- 일기 미리보기 태그 -->
+            <div id="view_diary_preview" class="height-fill">
+                <header class="search-diary">
+                    <div id="searchbar_back" class="ui transparent left icon input" onmouseover="actionOnSearch(1)">
+                        <input type="text" placeholder="검색" onfocus="actionOnSearch(1)">
+                        <i class="search icon"></i>
+                    </div>
+
+                    <div id="searchbar" class="ui action input" 
+                    onmouseout="actionOnSearch(0)" onmouseover="actionOnSearch(1)">
+                        <input class="input-orange" type="text" placeholder="검색">
+                        <select class="ui compact selection dropdown input-orange">
+                            <option selected="" value="all">전체검색</option>
+                            <option value="titleonly">제목만</option>
+                            <option value="contentonly">내용만</option>
+                        </select>
+                        <div class="ui button yellow">Search</div>
+                    </div>
+                </header>
+
+                <article class="padding">
+                    
+                    <div class="article-element">
+                        <div class="article-title">
+                            <h1 class="ui header">글이 작품이 되는 공간, 브런치</h1>
+                            <h4 class="ui header">1일 전</h4>
+                        </div>
+                        <div class="ui two column stackable grid">
+                            <div class="eleven wide column">
+                                <div class="content">
+                                    <span>
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                        서랍 속 간직하고 있는 글과 감성을.
+                                    </span> 
+                                </div>
+                            </div>
+    
+                            <div class="five wide column">
+                                <div class="content-image">
+                                    <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
+                                    <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
+                                    <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- divider -->
+                    <div class="divider-article-element"></div>
+
+                    <div class="article-element">
+                        <div class="article-title">
+                            <h1 class="ui header">글이 작품이 되는 공간, 브런치</h1>
+                            <h4 class="ui header">1일 전</h4>
+                        </div>
+                        <div class="ui two column stackable grid">
+                            <div class="eleven wide column">
+                                <div class="content">
+                                    <span>
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                        서랍 속 간직하고 있는 글과 감성을.
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                        서랍 속 간직하고 있는 글과 감성을.
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                        서랍 속 간직하고 있는 글과 감성을.
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                        서랍 속 간직하고 있는 글과 감성을.
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                        서랍 속 간직하고 있는 글과 감성을.
+                                    </span> 
+                                </div>
+                            </div>
+    
+                            <div class="five wide column">
+                                <div class="content-image">
+                                    <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
+                                    <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
+                                    <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- divider -->
+                    <div class="divider-article-element"></div>
+                    
+                    <div class="article-element">
+                        <div class="article-title">
+                            <h1 class="ui header">글이 작품이 되는 공간, 브런치</h1>
+                            <h4 class="ui header">1일 전</h4>
+                        </div>
+                        <div class="ui two column stackable grid">
+                            <div class="eleven wide column">
+                                <div class="content">
+                                    <span>
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                        서랍 속 간직하고 있는 글과 감성을.
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                        서랍 속 간직하고 있는 글과 감성을.
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                        서랍 속 간직하고 있는 글과 감성을.
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                    </span> 
+                                </div>
+                            </div>
+    
+                            <div class="five wide column">
+                                <div class="content-image">
+                                    <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
+                                    <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
+                                    <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- divider -->
+                    <div class="divider-article-element"></div>
+
+                    <div class="article-element">
+                        <div class="article-title">
+                            <h1 class="ui header">글이 작품이 되는 공간, 브런치</h1>
+                            <h4 class="ui header">1일 전</h4>
+                        </div>
+                        <div class="ui two column stackable grid">
+                            <div class="eleven wide column">
+                                <div class="content">
+                                    <span>
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                        서랍 속 간직하고 있는 글과 감성을.
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                        서랍 속 간직하고 있는 글과 감성을.
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                        서랍 속 간직하고 있는 글과 감성을.
+                                        브런치에 담긴 아름다운 작품을 감상해 보세요.
+                                        그리고 다시 꺼내 보세요.
+                                    </span> 
+                                </div>
+                            </div>
+    
+                            <div class="five wide column">
+                                <div class="content-image">
+                                    <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
+                                    <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
+                                    <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </article>
+            </div>         
         </div>
     </div>
 
@@ -282,6 +449,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/calendar.css" />
 
     <script>
+        $('.ui.dropdown').dropdown();
         buildCalendar(2);
     </script>
 </body>

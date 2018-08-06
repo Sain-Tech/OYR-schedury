@@ -9,7 +9,7 @@
 
 .calendar-menu {
     width: 100%;
-    position: fixed;
+    position: inherit;
     top: 50px;
     display: flex;
     justify-content: center;
