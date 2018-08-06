@@ -5,10 +5,150 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/dist/semantic.css">
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="/dist/semantic.js"></script>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/schedule.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/color.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico|Shrikhand" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/list.css" />
+    <script src="/javascripts/schedule_list.js"></script>
+
+     <!-- Main Quill library -->
+     <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+
+
+     <!-- Theme included stylesheets -->
+     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+     <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet"> 
+
+    <!-- 날짜 검색 라이브러리 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
 </head>
 <body>
-    
+    <div>
+        <div id='mod' class="ui longer modal">
+            <div id="modal_content" class="ui two column stackable grid">
+                <div id="left_cont" class="four wide column">
+                    <h2 id='modal_header_diary' class="ui center aligned header nanumsquare">7월 31일 화요일</h2>
+
+                    <div id="list_of_schedules" class="nanumsquare">
+                        <table id="sched_table" class="ui stackable table">
+                            <thead style="display: none">
+                                <tr><th class="three wide"></th>
+                                <th class="ten wide"></th>
+                                <th class="three wide"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="일정1">
+                                    <td class="schedule-time">오전</td>
+                                    <td>
+                                        일정 이름 ddddddddd<br>
+                                        일정 장소<br>
+                                    </td>
+                                    <td>아이콘</td>
+                                </tr>
+                                <tr class="일정2">
+                                    <td class="schedule-time">오후</td>
+                                    <td>
+                                        일정 이름<br>
+                                        일정 장소<br>
+                                    </td>
+                                    <td>아이콘</td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="full-width">
+                                <tr style="padding: 0">
+                                    <th colspan="3" style="padding: 0 !important">
+                                        <button id="newsched_button" class="fluid ui button">
+                                            <i class="plus icon"></i>
+                                            새 일정 추가
+                                        </button>
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="left_cont2" class="four wide column">
+                    <div id="sched_name" class="ui input">
+                        <input type="text" class="nanumsquare" placeholder="일정 이름">
+                    </div>
+                    
+                    <span class="group-text nanumsquare">일정 시작<br></span>
+                    <div style="display: flex">
+                        <div class="ui input">
+                            <input id="start_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
+                        </div>
+                        <div class="ui input">
+                            <input id="time1" placeholder="시간" class="nanumsquare">
+                        </div>
+                    </div>
+
+                    <span class="group-text nanumsquare">일정 종료<br></span>
+                    <div style="display: flex">
+                        <div class="ui input">
+                            <input id="end_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
+                        </div>
+                        <div class="ui input">
+                            <input id="time2" placeholder="시간" class="nanumsquare">
+                        </div>
+                    </div> 
+
+                    <div class="ui input">
+                        <input id="all_day" type="checkbox">
+                        <label for="all_day" class="nanumsquare">종일</label>
+                    </div>
+
+                </div>
+                
+                <div id="cont_divider" class="ui vertical divider" style="position: relative"></div>
+                <!-- 여기까지~~~~~~~~~~~~~~~~!~!~!~!~!~!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+                <div class="twelve wide column">
+                    <div id='mod_right_content'>
+                        <i class="big close icon"></i>
+
+                        <div id='diary_hnc'>
+                            <h3 id='diary_head'>제목</h3>
+                            <div id='diary_content'>내용 오늘 동아리방에 왔는데 다들 공포영화를 보고 있었다. 
+                                그리고 과자를 먹었는데 목말라서 여준오빠한테 음료수 사달라고 했다가 가위바위보 져서 
+                                내가 지연언니한테 카톡으로 부탁했다. 그래서 요거프레서 쿠폰을 주셨는데 너무 멀어서 
+                                내일 여준오빠가 대신 갖다주기로 했다. 그 대신 컵안에 버블 가서 그린티 버블을 먹었다. 
+                                그리고 trigon 1600점을 찍었다. 너무 배부르다.</div>
+                        </div>
+                        <div id='new_diary_hnc'>
+                            <h3 id='new_diary_head'>아직 오늘의 일기를 작성하지 않으셨나요?</h3>
+                            <button class='fluid ui button' id='new_diary_content'>+ 새 일기 작성</button>
+                            
+                        </div>
+                        <div id='write_diary'>
+                            <div id="editor-container">
+                            </div>
+                                
+                            <div style="display:flex; justify-content: center;">
+                                <button class="ui yellow button nanumsquare" id='적용' type="button" >완료</button>
+                                <button class="ui button nanumsquare" id='취소' type="button">취소</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+       $('.ui.longer.modal').modal('show');
+    </script>
 </body>
 </html>

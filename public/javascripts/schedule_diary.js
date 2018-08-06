@@ -186,8 +186,39 @@ $(document).ready(function(){
         $('#info_card').attr({'style': 'display: none !important'});
         $('.card-back').attr({'style': 'display: none !important'});
     });
-});
 
-var x = window.matchMedia("only screen and (max-width: 800px)");
-myFunction(x);
-x.addListener(myFunction);
+    var x = window.matchMedia("only screen and (max-width: 800px)");
+    myFunction(x);
+    x.addListener(myFunction);
+    
+    
+    //schedule_diary
+    $(".close").click(function(){
+        $('.ui.longer.modal').modal('hide');
+    });
+    
+    
+    var quill = new Quill('#editor-container', {
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, false] }],
+            ['bold', 'italic', 'underline'],
+            ['image', 'code-block']
+          ]
+        },
+        placeholder: 'Compose an epic...',
+        theme: 'snow'  // or 'bubble'
+      });
+      
+
+    $('#취소').click(function(){
+        $('#new_diary_hnc').attr({'style':'display: block !important'});
+        $('#write_diary').attr({'style':'display: none !important'});
+    });
+
+    $('#new_diary_content').click(function(){
+        $('#new_diary_hnc').attr({'style':'display: none !important'});
+        $('#write_diary').attr({'style':'display: block !important'});
+    });
+    
+});

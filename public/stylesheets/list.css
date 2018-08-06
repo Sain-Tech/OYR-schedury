@@ -1,0 +1,91 @@
+#modal_content{
+    height: 100%;
+    margin: 0 !important;
+}
+
+#left_cont{
+    padding: 0 !important;
+}
+
+#left_cont2{
+    display: none !important;
+    padding: 0 !important;
+}
+
+#modal_header_diary{
+    margin: 20px;
+}
+
+#list_of_schedules{
+}
+
+#sched_table{
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+}
+
+#cont_divider, #cont_divider::after, #cont_divider::before {
+    height: 100% !important;
+    border-right: none;
+}
+
+#newsched_button{
+    border-radius: 0;
+    background-color: #FDC23E;
+}
+
+#sched_name{
+    margin: 10px auto !important;
+    width: 70% !important;
+    display: block;
+}
+
+.group-text{
+    font-size: 14px;
+    margin: 5px;
+}
+
+#start_date, #end_date{
+    width: 120px;
+}
+
+#time1, #time2{
+    width: 100px;
+}
+
+.close.icon{
+    float:right;
+    cursor:pointer;
+}
+#diary_head{
+    font-size:30px;
+}
+#mod_right_content{
+    margin:10px 10px 10px 10px !important;
+}
+
+#diary_hnc{
+    border-bottom:1px solid grey;
+    padding: 5px 5px 5px 5px;
+}
+#new_diary_hnc{
+    text-align:center;
+    padding: 5px 5px 5px 5px;
+}
+#plus_icon{
+    width:50px;
+}
+#적용,#취소{
+    width:100px;
+    margin-left:5px;
+    margin-right:5px;
+    margin-top:10px;
+}
+#write_diary{
+    display:none;
+    margin-top:10px;
+}
+#editor-container {
+    height: 375px;
+  }
