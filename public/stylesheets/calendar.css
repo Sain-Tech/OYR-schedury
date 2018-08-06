@@ -9,8 +9,11 @@
 
 .calendar-menu {
     width: 100%;
+    position: fixed;
+    top: 50px;
     display: flex;
     justify-content: center;
+    overflow: hidden;
 }
 
 .ui.segment.calendar {
@@ -144,6 +147,10 @@ h3 {
 
 .date-spacer {
     padding: 8px 3px 0 3px;
+}
+
+.calendar-menu>.ui.pagination.menu {
+    height: 69px;
 }
 
 @media only screen and (max-width: 800px)  {
