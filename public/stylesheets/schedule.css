@@ -252,6 +252,10 @@ header {
         margin: 8px 8px 0 auto !important;
     }
 
+    .header-menu>.ui.pagination.menu .item {
+        width: 64px;
+    }
+
     .calendar-menu>.ui.pagination.menu {
         margin: 8px auto 0 auto !important;
     }
@@ -260,6 +264,15 @@ header {
         height : -webkit-calc(100% - 72px); /* for Chrome, Safari */
         height :    -moz-calc(100% - 72px); /* for Firefox */
         height :         calc(100% - 72px); /* for IE */
+    }
+
+    .head-schedury.small {
+        font-size: 22px;
+        margin: 2px 0 0 -6px;
+    }
+
+    .button-menu>.ui.labeled.icon.button.white>.icon.bars.large {
+        margin-top: 2px !important;
     }
 }
 

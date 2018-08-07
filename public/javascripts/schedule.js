@@ -44,7 +44,9 @@ function myFunction(x) {
         });
     } else {
         mediaQueryFlag800 = false;
-        $('.calendar-menu>.ui.pagination.menu').css('cssText', 'margin-top: 24px !important');
+        if(activeItem == 1) {
+            $('.calendar-menu>.ui.pagination.menu').css('cssText', 'margin-top: 24px !important');
+        }
         $('#side_menu').addClass('noanim');
         $('#side_menu').removeClass('overlay');
         $('.sidebar').sidebar('show');
@@ -100,6 +102,8 @@ function onMenu() {
 }
 
 var mediaQueryFlag800 = false;
+var mediaQueryFlag512 = false;
+var activeItem = 0;
 
 function menuToggle(x){
     var y=document.getElementsByClassName("item active")[0];
@@ -108,23 +112,33 @@ function menuToggle(x){
     document.getElementById(x).className="item active";
 
     if(x == 'menu_schedule') {
+        activeItem = 0;
         $('.calendar-this').removeClass('height-fill');
         $('.calendar-menu').css({'position': 'inherit'});
         $('.calendar-menu>.ui.pagination.menu').css('cssText', 'margin-top: ');
         $('#view_calendar').css({display: 'table'});
         $('#view_diary_preview').css({display: 'none', 'height': ''});
-        $('.height-fill').off();
+
+        $('.calendar-menu').css({height: '96px', opacity: 1, visibility: 'visible'});
+        $('.search-diary').css({'margin-top': '90px'});
+        $('article').css('cssText', 'margin-top: 192px; padding-top: 16px !important; height: calc(100% - 192px);');
+        $('#searchbar_back').css({visibility: 'visible', opacity: 1});
+
+        $('.height-fill').unbind('mousemove');
+        $('article').unbind();
+        $('#header_main_menu').unbind();
     }
     else if(x == 'menu_diary') {
+        activeItem = 1;
         $('.calendar-this').addClass('height-fill');
         $('.calendar-menu').css({'position': 'fixed'});
-        $('.calendar-menu>.ui.pagination.menu').css('cssText', !mediaQueryFlag800 ? 'margin-top: 24px !important' : '');
+        $('.calendar-menu>.ui.pagination.menu').css('cssText', !mediaQueryFlag800 ? 'margin-top: 24px !important' : mediaQueryFlag512 ? 'margin-top: 22px !important': '');
         $('#view_calendar').css({display: 'none'});
         $('#view_diary_preview').css({display: 'block', 'height': '72px'});
 
     }
     else if(x == 'menu_pictures') {
-
+        activeItem = 2;
     }
 }
 
@@ -290,35 +304,46 @@ $('article').scroll(function () {
                 $('#searchbar_back').css({visibility: css1, opacity: css2});
         });
 
-        $('.height-fill').mousemove(function (event) {
-            x = event.pageX;
-            y = event.pageY;
+        $('#header_main_menu').click(function() {
+            console.log('true');
+            overThreshold = 290;
+            $('.calendar-menu').css({height: '96px', opacity: 1, visibility: 'visible'});
+            $('.search-diary').css({'margin-top': '90px'});
+            $('article').css('cssText', 'margin-top: 192px; padding-top: 16px !important; height: calc(100% - 192px);');
+            $('#searchbar_back').css({visibility: 'visible', opacity: 1});
+        });
 
-            console.log(x +' ' + y);
+        if(activeItem == 1) {
+            $('.height-fill').mousemove(function (event) {
+                x = event.pageX;
+                y = event.pageY;
 
-            if(y < overThreshold) {
-                console.log('true');
-                overThreshold = 290;
-                $('.calendar-menu').css({height: '96px', opacity: 1, visibility: 'visible'});
-                $('.search-diary').css({'margin-top': '90px'});
-                $('article').css('cssText', 'margin-top: 192px; padding-top: 16px !important; height: calc(100% - 192px);');
-                $('#searchbar_back').css({visibility: 'visible', opacity: 1});
-            }
-            else {
+                console.log(x +' ' + y);
+
                 if(y < overThreshold) {
+                    console.log('true');
+                    overThreshold = 290;
                     $('.calendar-menu').css({height: '96px', opacity: 1, visibility: 'visible'});
                     $('.search-diary').css({'margin-top': '90px'});
                     $('article').css('cssText', 'margin-top: 192px; padding-top: 16px !important; height: calc(100% - 192px);');
                     $('#searchbar_back').css({visibility: 'visible', opacity: 1});
                 }
                 else {
-                    $('.calendar-menu').css({height: '0px', opacity: 0, visibility: 'hidden'});
-                    $('.search-diary').css({'margin-top': '-32px'});
-                    $('article').css('cssText', 'margin-top: 72px; padding-top: 136px !important; height: calc(100% - 72px);');
-                    overThreshold = 72;
+                    if(y < overThreshold) {
+                        $('.calendar-menu').css({height: '96px', opacity: 1, visibility: 'visible'});
+                        $('.search-diary').css({'margin-top': '90px'});
+                        $('article').css('cssText', 'margin-top: 192px; padding-top: 16px !important; height: calc(100% - 192px);');
+                        $('#searchbar_back').css({visibility: 'visible', opacity: 1});
+                    }
+                    else {
+                        $('.calendar-menu').css({height: '0px', opacity: 0, visibility: 'hidden'});
+                        $('.search-diary').css({'margin-top': '-32px'});
+                        $('article').css('cssText', 'margin-top: 72px; padding-top: 136px !important; height: calc(100% - 72px);');
+                        overThreshold = 72;
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 });
 
@@ -327,16 +352,18 @@ var css2 = '0';
 
 function myFunction1(x1) {
     if(x1.matches) {
+        mediaQueryFlag512 = true;
         css1 = 'hidden';
         css2 = '0';
     }
     else {
+        mediaQueryFlag512 = false;
         css1 = 'visible';
         css2 = '1';
     }
 }
 
-var x1 = window.matchMedia("only screen and (max-width: 513px)");
+var x1 = window.matchMedia("only screen and (max-width: 512px)");
 myFunction1(x1);
 x1.addListener(myFunction1);
     
