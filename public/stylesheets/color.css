@@ -69,6 +69,13 @@
     color: #569f38;
 }
 
+/* textarea tag */
+textarea {
+    outline: none;
+    resize: none;
+    transition: border-color .2s;
+}
+
 /* icon tag */
 .ui.labeled.icon.buttons.white > .button > .icon, .ui.labeled.icon.button > .icon {
     background-color: transparent;

@@ -14,6 +14,10 @@ var idOk = false;
 var passOk = false;
 var emailOk = false;
 //6666666
+
+$('.ui.segment').addClass('segment-height-normal');
+$('.ui.segment').removeClass('segment-height-extended');
+
 function checkId() {
     var id = document.getElementById('id_input').value;
     var regId = new RegExp("^(?=.*?[a-z]).{3,}$");
@@ -304,7 +308,8 @@ function nextPage(next, prev) {
     if(idOk && passOk && emailOk) {
         next.style = 'visibility: visible; opacity: 1;';
         prev.style = 'visibility: hidden; opacity: 0;';
-        $('.ui.segment').addClass('segment-width');
+        $('.ui.segment').addClass('segment-height-extended');
+        $('.ui.segment').removeClass('segment-height-normal');
     }
     else {
         prevPage(document.getElementById('next_page'),document.getElementById('page'));
@@ -326,5 +331,6 @@ function nextPage(next, prev) {
 function prevPage(next, prev) {
     next.style = 'visibility: hidden; opacity: 0;';
     prev.style = 'visibility: visible; opacity: 1;';
-    $('.ui.segment').removeClass('segment-width');
+    $('.ui.segment').addClass('segment-height-normal');
+    $('.ui.segment').removeClass('segment-height-extended');
 }

@@ -77,7 +77,6 @@ h4 {
 }
 
 .ui.segment {
-    height: 368px;
     margin-bottom: 24px !important;
     padding-left: 0;
     padding-right: 0;
@@ -167,8 +166,12 @@ input.upload {
         margin-top: -14px !important;
     }
     
-    .ui.segment {
-        height: 420px;
+    .segment-height-normal {
+        height: 420px !important;
+    }
+
+    .segment-height-extended {
+        height: 728px !important;
     }
 }
 
@@ -176,16 +179,20 @@ input.upload {
     width: 100%;
     position: absolute;
     opacity: 1;
-    transition: all .333s
+    transition: all .2s;
 }
 
 #next_page {
     width: 100%;
     position: absolute;
     opacity: 0;
-    transition: all .333s
+    transition: all .2s;
 }
 
-.segment-width {
-    height: 500px ;
+.segment-height-normal {
+    height: 364px;
+}
+
+.segment-height-extended {
+    height: 516px;
 }
