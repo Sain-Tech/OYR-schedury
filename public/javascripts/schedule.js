@@ -22,7 +22,7 @@ function myFunction(x) {
         }, 100);
 
         $(function(){ 
-            $(this).swipe({ 
+            $('.pusher').swipe({ 
                 swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
                     if( direction == "left" ) { 
                         $('.sidebar').sidebar('hide');
@@ -56,19 +56,19 @@ function myFunction(x) {
             'pointer-events': 'none'
         });
 
-        $(function(){ 
-            $(this).swipe({ 
-                swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-                    if( direction == "left" ) { 
-                        // Overrided method
-                        threshold:9999;
-                    }else if( direction == "right" ) { 
-                        // Overrided method
-                        threshold:9999;
-                    } 
-                }, 
-            }); 
-        });
+        // $(function(){ 
+        //     $('#side_menu').swipe({ 
+        //         swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+        //             if( direction == "left" ) { 
+        //                 // Overrided method
+        //                 threshold:9999;
+        //             }else if( direction == "right" ) { 
+        //                 // Overrided method
+        //                 threshold:9999;
+        //             } 
+        //         }, 
+        //     }); 
+        // });
     }
     sidebarFlag = false;
 }
