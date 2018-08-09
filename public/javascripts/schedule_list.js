@@ -59,16 +59,21 @@ $(document).ready(function(){
         $('.ui.longer.modal').modal('hide');
     });
     
-    
+    var BackgroundClass = Quill.import('attributors/class/background');
+    var ColorClass = Quill.import('attributors/class/color');
+    var SizeStyle = Quill.import('attributors/style/size');
+    Quill.register(BackgroundClass, true);
+    Quill.register(ColorClass, true);
+    Quill.register(SizeStyle, true);
     var quill = new Quill('#editor-container', {
         modules: {
-          toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            ['image', 'code-block']
-          ]
+            toolbar:'#toolbar-container' ,
+            imageResize: {
+                displaySize: true
+              },
+            imageDrop: true
         },
-        placeholder: 'Compose an epic...',
+        placeholder: '오늘의 일기를 작성해주세요',
         theme: 'snow'  // or 'bubble'
       });
       
@@ -82,6 +87,6 @@ $(document).ready(function(){
         $('#new_diary_hnc').attr({'style':'display: none !important'});
         $('#write_diary').attr({'style':'display: block !important'});
     });
-
+    
 });
 
