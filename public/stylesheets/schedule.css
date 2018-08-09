@@ -245,6 +245,14 @@ header {
         height :    -moz-calc(100% - 64px); /* for Firefox */
         height :         calc(100% - 64px); /* for IE */
     }
+
+    article>.article-element {
+        padding: 2px 48px 2px 48px !important;
+    }
+
+    article>.article-element>div>h4.ui.header {
+        margin-right: unset !important;
+    }
 }
 
 @media only screen and (max-width: 512px)  {
@@ -273,6 +281,10 @@ header {
 
     .button-menu>.ui.labeled.icon.button.white>.icon.bars.large {
         margin-top: 2px !important;
+    }
+
+    article>.article-element {
+        padding: 2px 14px 2px 14px !important;
     }
 }
 
@@ -342,7 +354,7 @@ article::-webkit-scrollbar {
 
 article>.article-element {
     padding: 2px;
-    margin: 4px 0 4px 0;
+    padding: 2px 92px 2px 72px;
 }
 
 .article-title {
@@ -352,6 +364,7 @@ article>.article-element {
 
 article>.article-element>div>h4.ui.header {
     margin-left: auto;
+    margin-right: calc(31% - 220px);
     margin-top: 0;
     font-weight: 480;
     font-size: 12px;
@@ -361,14 +374,15 @@ article>.article-element>div>h4.ui.header {
 }
 
 .divider-article-element {
-    border-top: 1px solid #8d8d8d;
+    border-top: 0.5px solid #8d8d8d;
+    opacity: 0.5;
     margin-left: auto;
     margin-right: auto;
     margin-top: 48px;
     margin-bottom: 48px;
-    width : -webkit-calc(100% - 500px); /* for Chrome, Safari */
-    width :    -moz-calc(100% - 500px); /* for Firefox */
-    width :         calc(100% - 500px); /* for IE */
+    width : -webkit-calc(100% - 300px); /* for Chrome, Safari */
+    width :    -moz-calc(100% - 300px); /* for Firefox */
+    width :         calc(100% - 300px); /* for IE */
     min-width: 192px;
 }
 
@@ -457,4 +471,8 @@ article>.article-element>div>div>.content{
 
 #view_diary_preview {
     display: none;
+}
+
+#searchbar_back>input {
+    text-overflow: ellipsis;
 }
