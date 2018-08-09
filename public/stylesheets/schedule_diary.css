@@ -255,10 +255,10 @@ header {
 }
 #mod_right_content{
     margin:10px 10px 10px 10px !important;
+    height:100%;
 }
 
 #diary_hnc{
-    border-bottom:1px solid grey;
     padding: 5px 5px 5px 5px;
 }
 #new_diary_hnc{
@@ -277,7 +277,8 @@ header {
 #write_diary{
     display:none;
     margin-top:10px;
+    height: 100%;
 }
 #editor-container {
-    height: 375px;
+    height: 90%;
   }
