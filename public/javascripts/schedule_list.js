@@ -5,13 +5,14 @@ $(document).ready(function(){
     });
 
     $("#start_date").flatpickr({
+        mode: 'range',
         enableTime: false,
-        dateFormat: "Y-m-d"
+        dateFormat: "Y.m.d"
     });
-    $("#end_date").flatpickr({
-        enableTime: false,
-        dateFormat: "Y-m-d"
-    });
+    // $("#end_date").flatpickr({
+    //     enableTime: false,
+    //     dateFormat: "Y.m.d"
+    // });
     $('#time1').flatpickr({
         enableTime: true,
         noCalendar: true,
@@ -33,30 +34,55 @@ $(document).ready(function(){
         }
     });
     
-    var startDate = flatpickr('#start_date');
+    // var startDate = flatpickr('#start_date');
     var endDate = flatpickr('#end_date');
+    var startTime = flatpickr('#time1');
+    var endTime = flatpickr('#time2');
 
-    startDate.set("onChange", function(d){
-        console.log(d);
-        endDate.set("minDate", d);
-    });
-    endDate.set("onChange", function(d){
-        startDate.set("maxDate", d);
-    });
-
-    // var check_in = flatpickr("#check_in_date", { minDate: new Date() });
-    // var check_out = flatpickr("#check_out_date", { minDate: new Date() });
-
-    // check_in.set("onChange", function(d) {
-    //     check_out.set("minDate", d.fp_incr(1)); //increment by one day
+    // flatpickr("#start_date", {
+    //     enableTime: false,
+    //     dateFormat: "Y.m.d",
+    //     onChange: function(dateObj, dateStr) {
+    //         //console.log(dateObj);
+    //         //console.log(dateStr);
+    //         endDate = flatpickr("#end_date", { minDate: dateStr, dateFormat: "Y.m.d", });
+    //         // endDate.set('minDate', dateStr);
+    //     }
     // });
-    // check_out.set("onChange", function(d) {
-    //     check_in.set("maxDate", d);
+    // flatpickr("#end_date", {
+    //     enableTime: false,
+    //     dateFormat: "Y.m.d",
+    //     onChange: function(dateObj, dateStr) {
+    //         startDate = flatpickr("#start_date", { maxDate: dateStr, dateFormat: "Y.m.d", });
+    //     }
     // });
+
+    // flatpickr('#time1', {
+    //     enableTime: true,
+    //     noCalendar: true,
+    //     dateFormat: "h:i K",
+    //     onChange: function(timeObj, timeStr) {
+    //         console.log(timeStr);
+
+    //     }
+    // });
+
+    $('.ui.accordion').accordion({
+        selector: {
+            trigger: '.title .icon'
+            }
+        });
+
+    $('.ui.selection.dropdown').dropdown();
 
     // 채원이거 여기부터~~!~!
     $(".close").click(function(){
         $('.ui.longer.modal').modal('hide');
+    });
+
+    $("#end_repeat").flatpickr({
+        enableTime: false,
+        dateFormat: "Y.m.d"
     });
     
     

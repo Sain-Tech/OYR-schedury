@@ -47,7 +47,7 @@
 }
 
 #start_date, #end_date{
-    width: 120px;
+    width: 200px;
 }
 
 #time1, #time2{
@@ -88,4 +88,9 @@
 }
 #editor-container {
     height: 375px;
+  }
+
+  .cont_repeat{
+      display: flex;
+      flex-direction: column;
   }

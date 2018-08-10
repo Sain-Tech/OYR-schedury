@@ -86,16 +86,96 @@
                         <input type="text" class="nanumsquare" placeholder="일정 이름">
                     </div>
                     
-                    <span class="group-text nanumsquare">일정 시작<br></span>
+                    <span class="group-text nanumsquare">날짜<br></span>
                     <div style="display: flex">
                         <div class="ui input">
                             <input id="start_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
                         </div>
+                    </div>
+                    <div style="display: flex">
                         <div class="ui input">
-                            <input id="time1" placeholder="시간" class="nanumsquare">
+                            <input id="time1" placeholder="시작 시간" class="nanumsquare">
+                        </div>
+                        <div class="ui input">
+                            <input id="time2" placeholder="종료 시간" class="nanumsquare">
+                        </div>
+                    </div>
+                    <div class="ui input">
+                        <input id="all_day" type="checkbox">
+                        <label for="all_day" class="nanumsquare">종일</label>
+                    </div>
+                    <div class="cont_repeat">
+                        <!-- <div class="ui accordion">
+                            <div class="title">
+                                <i class="dropdown icon"></i>
+                                <span class="repeat_sched nanumsquare">반복 일정</span>
+                            </div>
+                            <div class="content">
+                                <div class="ui form">
+                                    <div class="grouped fields">
+                                        <div class="field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="period" value="pDay">
+                                                <label>매일</label>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="period" value="pWeek">
+                                                <label>매주</label>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="period" value="pMonth">
+                                                <label>매달</label>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="period" value="pYear">
+                                                <label>매년</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div> -->
+                        
+                        <div class="ui accordion nanumsquare">
+                            <div class="title">
+                                <i class="icon dropdown"></i>
+                                반복 없음
+                            </div>
+                            <div class="content field">
+                                <label class="transition hidden">일정 반복</label>
+                                <div class="ui selection dropdown nanumsquare">
+                                    <input type="hidden" name="repeat">
+                                    <i class="dropdown icon"></i>
+                                    <div class="default text">일정 반복</div>
+                                    <div class="menu">
+                                        <div class="item" data-value="0">매일</div>
+                                        <div class="item" data-value="1">매주</div>
+                                        <div class="item" data-value="2">매달</div>
+                                        <div class="item" data-value="3">매년</div>
+                                    </div>
+                                </div>
+                                <div class="ui right labeled input">
+                                    <input type="text" value="1">
+                                    <div class="ui basic label">
+                                        일마다
+                                    </div>
+                                </div>
+                                <div style="display: flex">
+                                    <div class="ui input">
+                                        <input id="end_repeat" class="nanumsquare" type="text" placeholder="종료일" data-input>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
+<!-- 
                     <span class="group-text nanumsquare">일정 종료<br></span>
                     <div style="display: flex">
                         <div class="ui input">
@@ -104,12 +184,7 @@
                         <div class="ui input">
                             <input id="time2" placeholder="시간" class="nanumsquare">
                         </div>
-                    </div> 
-
-                    <div class="ui input">
-                        <input id="all_day" type="checkbox">
-                        <label for="all_day" class="nanumsquare">종일</label>
-                    </div>
+                    </div>  -->
 
                 </div>
                 
