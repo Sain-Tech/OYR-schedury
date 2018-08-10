@@ -85,12 +85,30 @@
 #write_diary{
     display:none;
     margin-top:10px;
+    height: 100%;
 }
 #editor-container {
-    height: 375px;
-  }
-
-  .cont_repeat{
-      display: flex;
-      flex-direction: column;
-  }
+    height: 90%;
+}
+#close_layout{
+    height:28px;
+}
+#title{
+    border-bottom:1px solid grey;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    width:90%;
+    height:30px;
+    outline:none;
+    font-size:20px;
+}
+#title_layout{
+    display:flex;
+    justify-content:center;
+    margin-bottom:10px;
+}
+.cont_repeat{
+    display: flex;
+    flex-direction: column;
+}
