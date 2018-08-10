@@ -58,18 +58,18 @@
 .close.icon{
     float:right;
     cursor:pointer;
+
 }
 #diary_head{
     font-size:30px;
 }
 #mod_right_content{
     margin:10px 10px 10px 10px !important;
-    height:100%;
+    height:80%;
 }
-
-#diary_hnc{
+/* #diary_hnc{
     padding: 5px 5px 5px 5px;
-}
+} */
 #new_diary_hnc{
     text-align:center;
     padding: 5px 5px 5px 5px;
@@ -90,4 +90,22 @@
 }
 #editor-container {
     height: 90%;
-  }
+}
+#close_layout{
+    height:28px;
+}
+#title{
+    border-bottom:1px solid grey;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    width:90%;
+    height:30px;
+    outline:none;
+    font-size:20px;
+}
+#title_layout{
+    display:flex;
+    justify-content:center;
+    margin-bottom:10px;
+}
