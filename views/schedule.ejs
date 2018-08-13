@@ -38,7 +38,7 @@
     <script src="/javascripts/image-resize.min.js"></script>
     <script src="/javascripts/image-drop.min.js"></script>
 </head>
-<body>
+<body class="nanumsquare">
     <div id="side_menu" class="ui left vertical menu sidebar main-sidebar">
         <div class="item"> 
             <h1 class="ui center aligned container head-logo" id="logo_schedury">Schedury</h1>
@@ -416,9 +416,7 @@
             <!-- 여기까지~~~~~~~~~~~~~~~~!~!~!~!~!~!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
             <div class="twelve wide column">
                 <div id='mod_right_content'>
-                        <div id="close_layout">
-                            <i class="big close icon"></i>
-                        </div>
+                        <i class="big close icon"></i>
                         <div id='diary_hnc'>
                             <!-- <h3 id='diary_head'></h3> 제목 -->
                             <!-- <div id='diary_content'></div> 내용 -->
@@ -431,7 +429,171 @@
                         <div id='write_diary'>
                             <div id="title_layout">
                                 <input id="title" type="text" class="nanumsquare" placeholder="제목을 입력하세요">
-                            </div>
+                                
+                                <div id="기분날씨">
+                                    <div class="ui inline dropdown" id='emotion'>
+                                        <div class="text">
+                                        <img class="ui image" src="/images/emotion/073-muted-1.png">
+                                        기분
+                                        </div>
+                                        <i class="dropdown icon"></i>
+                                        <div class="menu">
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/048-smile.png">
+                                            좋아요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/021-sad.png">
+                                            슬퍼요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/034-neutral.png">
+                                            그저 그래요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/097-angry.png">
+                                            화나요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/077-sick.png">
+                                            아파요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/016-sleeping.png">
+                                            졸려요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/008-tired.png">
+                                            피곤해요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/013-smiling-1.png">
+                                            즐거워요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/018-shocked-2.png">
+                                            놀라워요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/029-puking.png">
+                                            언짢아요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/040-laughing.png">
+                                            웃겨요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/044-tongue-3.png">
+                                            맛있어요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/079-kiss.png">
+                                            설레요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/089-confused.png">
+                                            당황스러워요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/099-angel.png">
+                                            비우자
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/100-alien.png">
+                                            이 세계가 싫어요
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/emotion/090-clown-1.png">
+                                            재밌어요
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui inline dropdown" id='weather'>
+                                        <div class="text">
+                                        <img class="ui image" src="/images/weather/021-sunrise.png">
+                                        날씨
+                                        </div>
+                                        <i class="dropdown icon"></i>
+                                        <div class="menu">
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-sun.png">
+                                            맑음
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-cloudy.png">
+                                            가끔 구름
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-cloud.png">
+                                            바람구름
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-cloudy-1.png">
+                                            구름
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-night.png">
+                                            보름달
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-night-1.png">
+                                            반달
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-rain.png">
+                                            비
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-rain-1.png">
+                                            가끔 비
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-rain-2.png">
+                                            장마
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-snowflake.png">
+                                            서리
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-snowing.png">
+                                            가끔 눈
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-snowing-1.png">
+                                            진눈깨비
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-snowing-2.png">
+                                            눈
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-storm.png">
+                                            번개
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-summer.png">
+                                            폭염
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-sun.png">
+                                            맑음
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-tornado.png">
+                                            폭풍
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="/images/weather/021-winter.png">
+                                            혹한
+                                        </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            
                             <div id="toolbar-container">
                                 <span class="ql-formats">
                                     <select class="ql-header">
@@ -472,7 +634,7 @@
                                 </span>
                                 
                             </div>
-                            
+                        
                             <div id="editor-container" class="nanumsquare">
                     
                             </div>
@@ -481,7 +643,7 @@
                                 <button class="ui yellow button nanumsquare" id='적용' type="button" >완료</button>
                                 <button class="ui button nanumsquare" id='취소' type="button">취소</button>
                             </div>
-
+                        </div>
                         </div>
                 </div>
             </div>

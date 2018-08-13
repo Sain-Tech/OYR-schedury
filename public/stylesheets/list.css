@@ -16,8 +16,8 @@
     margin: 20px;
 }
 
-#list_of_schedules{
-}
+/* #list_of_schedules{
+} */
 
 #sched_table{
     border-left: 0;
@@ -63,6 +63,9 @@
 #diary_head{
     font-size:30px;
 }
+#new_diary_head{
+    margin-top:60px;
+}
 #mod_right_content{
     margin:10px 10px 10px 10px !important;
     height:80%;
@@ -84,15 +87,12 @@
     margin-top:10px;
 }
 #write_diary{
-    display:none;
+    display:none !important;
     margin-top:10px;
     height: 100%;
 }
 #editor-container {
-    height: 90%;
-}
-#close_layout{
-    height:28px;
+    height: 80%;
 }
 #title{
     border-bottom:1px solid grey;
@@ -105,7 +105,21 @@
     font-size:20px;
 }
 #title_layout{
-    display:flex;
-    justify-content:center;
     margin-bottom:10px;
+}
+.menu.transition{
+    height: 360px;
+    overflow-y: auto;
+    display: block;
+}
+#emotion, #weather{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin:5px 5px 5px 5px;
+}
+#emotion{
+    width:160px;
+}
+#weather{
+    width:120px;
 }
