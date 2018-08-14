@@ -68,7 +68,7 @@
 }
 #mod_right_content{
     margin:10px 10px 10px 10px !important;
-    height:80%;
+    height:90%;
 }
 /* #diary_hnc{
     padding: 5px 5px 5px 5px;
@@ -84,7 +84,7 @@
     width:100px;
     margin-left:5px;
     margin-right:5px;
-    margin-top:10px;
+    margin-top:20px;
 }
 #write_diary{
     display:none !important;
@@ -103,6 +103,7 @@
     height:30px;
     outline:none;
     font-size:20px;
+    margin-top:5px;
 }
 #title_layout{
     margin-bottom:10px;
@@ -122,4 +123,7 @@
 }
 #weather{
     width:120px;
+}
+#기분날씨{
+    margin-top:15px;
 }
