@@ -47,16 +47,18 @@
 }
 
 #start_date, #end_date{
-    width: 200px;
+    width: 120px;
 }
 
 #time1, #time2{
     width: 100px;
 }
 
+/* schedule_diary */
 .close.icon{
     float:right;
     cursor:pointer;
+
 }
 #diary_head{
     font-size:30px;
@@ -66,12 +68,11 @@
 }
 #mod_right_content{
     margin:10px 10px 10px 10px !important;
+    height:80%;
 }
-
-#diary_hnc{
-    border-bottom:1px solid grey;
+/* #diary_hnc{
     padding: 5px 5px 5px 5px;
-}
+} */
 #new_diary_hnc{
     text-align:center;
     padding: 5px 5px 5px 5px;
@@ -105,10 +106,6 @@
 }
 #title_layout{
     margin-bottom:10px;
-}
-.cont_repeat{
-    display: flex;
-    flex-direction: column;
 }
 .menu.transition{
     height: 360px;
