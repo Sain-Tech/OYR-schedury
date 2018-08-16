@@ -131,8 +131,12 @@
 .cont_repeat{
     display: flex;
     flex-direction: column;
+<<<<<<< HEAD
 }
 
 #number_of_repeat{
     width: 40px;
 }    
+=======
+}
+>>>>>>> parent of 28423d7... 일정 추가시 데이터베이스에 저장
