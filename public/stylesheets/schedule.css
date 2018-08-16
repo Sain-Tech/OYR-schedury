@@ -479,3 +479,166 @@ article>.article-element>div>div>.content{
 #searchbar_back>input {
     text-overflow: ellipsis;
 }
+
+#modal_content{
+    height: 100%;
+    margin: 0 !important;
+}
+
+#left_cont{
+    padding: 0 !important;
+}
+
+#left_cont2{
+    display: none !important;
+    padding: 0 !important;
+}
+
+#modal_header_diary{
+    margin: 20px;
+}
+
+/* #list_of_schedules{
+} */
+
+#sched_table{
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+}
+
+#cont_divider, #cont_divider::after, #cont_divider::before {
+    height: 100% !important;
+    border-right: none;
+}
+
+#newsched_button{
+    border-radius: 0;
+    background-color: #FDC23E;
+}
+
+#sched_name{
+    margin: 10px auto !important;
+    width: 70% !important;
+    display: block;
+}
+
+.group-text{
+    font-size: 14px;
+    margin: 5px;
+}
+
+#start_date, #end_date{
+    width: 120px;
+}
+
+#time1, #time2{
+    width: 100px;
+}
+
+/* schedule_diary */
+.close.icon{
+    float:right;
+    cursor:pointer;
+
+}
+#diary_head{
+    font-size:30px;
+}
+#new_diary_head{
+    margin-top:60px;
+}
+#mod_right_content{
+    margin:10px 10px 10px 10px !important;
+    height:90%;
+}
+/* #diary_hnc{
+    padding: 5px 5px 5px 5px;
+} */
+#new_diary_hnc{
+    text-align:center;
+    padding: 5px 5px 5px 5px;
+}
+#plus_icon{
+    width:50px;
+}
+#적용,#취소{
+    width:100px;
+    margin-left:5px;
+    margin-right:5px;
+    margin-top:20px;
+}
+#write_diary{
+    display:none !important;
+    margin-top:10px;
+    height: 100%;
+}
+#editor-container {
+    height: 80%;
+}
+#title{
+    border-bottom:1px solid grey;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    width:90%;
+    height:30px;
+    outline:none;
+    font-size:20px;
+    margin-top:5px;
+}
+#title_layout{
+    margin-bottom:10px;
+}
+.menu.transition{
+    height: 360px;
+    overflow-y: auto;
+    display: block;
+}
+#emotion, #weather{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin:5px 5px 5px 5px;
+}
+#weather{
+    width:120px;
+}
+#기분날씨{
+    margin-top:15px;
+}
+
+.cont_repeat{
+    display: flex;
+    flex-direction: column;
+}
+
+#number_of_repeat{
+    width: 40px;
+}    
+
+.default_emotion{
+    margin-right:5px !important;
+}
+#view_pictures{
+    display:none;
+
+}
+#view_pictures_layout{
+    flex-direction: column;
+    margin-left:15%;
+    margin-right:15%;
+}
+.pre_image{
+    width: 100%;
+    object-fit: cover;
+}
+.pre_image_layout{
+    flex: 100%;
+    box-flex: 1;
+    -webkit-box-flex: 1;
+    margin: 10px 10px 10px 10px;
+} 
+.images_column{
+    display: flex;
+    line-height:0px !important;
+}

@@ -6,44 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#FDC23E">
+
+  <!-- Semantic UI -->
   <link rel="stylesheet" type="text/css" href="dist/semantic.css">
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
   <script src="dist/semantic.js"></script>
+
+  <!-- Our stylesheets -->
+  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/schedule.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/calendar.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/color.css">
+
+  <!-- JQuery touch library -->
   <script src="javascripts/jquery.touchSwipe.min.js"></script>
 
-  <title>
-    <%= title %>
-  </title>
-
-  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/schedule.css">
-  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/color.css">
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico|Shrikhand" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
-
-  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/list.css">
-  <script src="/javascripts/schedule_list.js"></script>
 
   <!-- Main Quill library -->
   <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
 
   <!-- Theme included stylesheets -->
   <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-  <!-- <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">  -->
+
+  <!-- Image libraries for Quill Editor -->
+  <script src="/javascripts/image-resize.min.js"></script>
+  <script src="/javascripts/image-drop.min.js"></script>
 
   <!-- 날짜 검색 라이브러리 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
 
-  <script src="/javascripts/image-resize.min.js"></script>
-  <script src="/javascripts/image-drop.min.js"></script>
+  <title>
+    <%= title %>
+  </title>
 </head>
 
 <body class="nanumsquare">
-
-
-
   <div id="side_menu" class="ui left vertical menu sidebar main-sidebar">
     <div class="item">
       <h1 class="ui center aligned container head-logo" id="logo_schedury">Schedury</h1>
@@ -432,40 +434,104 @@
       </div>
 
       <div id="left_cont2" class="four wide column">
-        <div id="sched_name" class="ui input">
-          <input type="text" class="nanumsquare" placeholder="일정 이름">
-        </div>
+        <form action="/new_schedule" method="post">
+            <div id="sched_name" class="ui input">
+                <input name="nameSched" type="text" class="nanumsquare" placeholder="일정 이름">
+            </div>
+            
+            <span class="group-text nanumsquare">날짜<br></span>
+            <div style="display: flex">
+                <div class="ui input">
+                    <input name="dateSched" id="start_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
+                </div>
+            </div>
+            <div style="display: flex">
+                <div class="ui input">
+                    <input name="startTime" id="time1" placeholder="시작 시간" class="nanumsquare">
+                </div>
+                <div class="ui input">
+                    <input name="endTime" id="time2" placeholder="종료 시간" class="nanumsquare">
+                </div>
+            </div>
+            <div class="ui input">
+                <input name="allDay" id="all_day" type="checkbox">
+                <label for="all_day" class="nanumsquare">종일</label>
+            </div>
 
-        <span class="group-text nanumsquare">일정 시작
-          <br>
-        </span>
-        <div style="display: flex">
-          <div class="ui input">
-            <input id="start_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
-          </div>
-          <div class="ui input">
-            <input id="time1" placeholder="시간" class="nanumsquare">
-          </div>
-        </div>
-
-        <span class="group-text nanumsquare">일정 종료
-          <br>
-        </span>
-        <div style="display: flex">
-          <div class="ui input">
-            <input id="end_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
-          </div>
-          <div class="ui input">
-            <input id="time2" placeholder="시간" class="nanumsquare">
-          </div>
-        </div>
-
-        <div class="ui input">
-          <input id="all_day" type="checkbox">
-          <label for="all_day" class="nanumsquare">종일</label>
-        </div>
-
-      </div>
+            <!-- <div class="cont_repeat">                        
+                <div class="ui accordion nanumsquare">
+                    <div class="title nanumsquare">
+                        <i class="icon dropdown"></i>
+                        반복 없음
+                    </div>
+                    <div class="content field">
+                        <label class="transition hidden">일정 반복</label>
+                        <div id="repeat_dropdown" class="ui selection dropdown nanumsquare">
+                            <input id="p_repeat" type="hidden" name="repeat">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">일정 반복</div>
+                            <div class="menu">
+                                <div class="item" data-value="일">매일</div>
+                                <div class="item" data-value="주">매주</div>
+                                <div class="item" data-value="개월">매달</div>
+                                <div class="item" data-value="년">매년</div>
+                            </div>
+                        </div>
+                        <div class="ui right labeled input">
+                            <input type="text" value="1" name="numberPeriod">
+                            <div id="repeating_period" class="ui basic label">
+                                일마다
+                            </div>
+                        </div>
+                        <div style="display: flex">
+                            <div class="ui input">
+                                <input name="endRepeat" id="end_repeat" class="nanumsquare" type="text" placeholder="종료일" data-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="cont_repeat nanumsquare">
+                <div>
+                    <label>일정 반복</label>
+                    <div id="repeat_dropdown" class="ui selection dropdown nanumsquare">
+                        <input id="p_repeat" type="hidden" name="repeat">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">반복 없음</div>
+                        <div class="menu">
+                            <div class="item active selected" data-value="0">반복 없음</div>
+                            <div class="item" data-value="1">매일</div>
+                            <div class="item" data-value="2">매주</div>
+                            <div class="item" data-value="3">매달</div>
+                            <div class="item" data-value="4">매년</div>
+                        </div>
+                    </div>
+                    <div id="repeat_details" class="ui right labeled input">
+                        <input id="number_of_repeat" type="text" value="1" name="numberPeriod">
+                        <div id="repeating_period" class="ui basic label">
+                            일마다
+                        </div>
+                    </div>
+                    <div id="repeat_details2">
+                        <div class="ui input">
+                            <input name="endRepeat" id="end_repeat" class="nanumsquare" type="text" placeholder="종료일" data-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sched_location" class="ui input nanumsquare">
+                <label>장소<br></label>
+                <input name="locationSched" type="text" class="nanumsquare" placeholder="일정 장소">
+            </div>
+            <div class="ui input">
+                <input name="importantSched" id="important_schedule" type="checkbox">
+                <label for="important_schedule" class="nanumsquare">중요</label>
+            </div>
+            <div>
+                <input class="ui button nanumsquare" id="submit-form" type="submit" value="일정 등록">
+            </div>
+        </form>
+    </div>
 
       <div id="cont_divider" class="ui vertical divider" style="position: relative"></div>
       <!-- 여기까지~~~~~~~~~~~~~~~~!~!~!~!~!~!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
@@ -676,7 +742,6 @@
 
   <script src="javascripts/calendar.js"></script>
   <script src="javascripts/schedule.js"></script>
-  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/calendar.css">
 
   <script>
     $('.ui.dropdown').dropdown();
