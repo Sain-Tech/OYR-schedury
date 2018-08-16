@@ -145,6 +145,9 @@ function menuToggle(x){
         $('#view_calendar').css({display: 'none'});
         $('#view_diary_preview').css({display: 'none'});
         $('#view_pictures').css({display: 'block'});
+
+        $('.pre_image').height($('.pre_image').width());
+
         
     }
 }
@@ -233,6 +236,12 @@ $(document).ready(function(){
         $('#info_card').attr({'style': 'display: none !important'});
         $('.card-back').attr({'style': 'display: none !important'});
     });
+
+    $('.pre_image').height($('.pre_image').width());
+    $(window).resize(()=>{
+      $('.pre_image').height($('.pre_image').width());
+    });
+
 });
 
 var x = window.matchMedia("only screen and (max-width: 800px)");

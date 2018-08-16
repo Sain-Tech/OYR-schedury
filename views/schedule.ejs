@@ -2,686 +2,686 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="theme-color" content="#FDC23E">
-    <link rel="stylesheet" type="text/css" href="dist/semantic.css">
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-    <script src="dist/semantic.js"></script>
-    <script src="javascripts/jquery.touchSwipe.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#FDC23E">
+  <link rel="stylesheet" type="text/css" href="dist/semantic.css">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+  <script src="dist/semantic.js"></script>
+  <script src="javascripts/jquery.touchSwipe.min.js"></script>
 
-    <title>
-        <%= title %>
-    </title>
+  <title>
+    <%= title %>
+  </title>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/schedule.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/color.css">
-    <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico|Shrikhand" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/schedule.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/color.css">
+  <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico|Shrikhand" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/list.css">
-    <script src="/javascripts/schedule_list.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/list.css">
+  <script src="/javascripts/schedule_list.js"></script>
 
-    <!-- Main Quill library -->
-    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+  <!-- Main Quill library -->
+  <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
 
-    <!-- Theme included stylesheets -->
-    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <!-- <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">  -->
+  <!-- Theme included stylesheets -->
+  <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <!-- <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">  -->
 
-    <!-- 날짜 검색 라이브러리 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
+  <!-- 날짜 검색 라이브러리 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
 
-    <script src="/javascripts/image-resize.min.js"></script>
-    <script src="/javascripts/image-drop.min.js"></script>
+  <script src="/javascripts/image-resize.min.js"></script>
+  <script src="/javascripts/image-drop.min.js"></script>
 </head>
 
 <body class="nanumsquare">
-    <div id="side_menu" class="ui left vertical menu sidebar main-sidebar">
-        <div class="item">
-            <h1 class="ui center aligned container head-logo" id="logo_schedury">Schedury</h1>
-            <div class="user-profile">
-                <img class="ui small circular image center aligned container" id="profile_pic" src="/images/profile_default.png" alt="profile image">
-                <div class="ui center aligned container user-nickname">Nickname</div>
-                <div class="ui segment">
-                    메시지
-                </div>
-            </div>
+
+
+
+  <div id="side_menu" class="ui left vertical menu sidebar main-sidebar">
+    <div class="item">
+      <h1 class="ui center aligned container head-logo" id="logo_schedury">Schedury</h1>
+      <div class="user-profile">
+        <img class="ui small circular image center aligned container" id="profile_pic" src="/images/profile_default.png" alt="profile image">
+        <div class="ui center aligned container user-nickname">Nickname</div>
+        <div class="ui segment">
+          메시지
         </div>
-        <div class="item">
-            <div class="ui segment container">
-                일기 미리보기
-            </div>
-        </div>
-        <div class="ui sidebar-buttons">
-            <a href="" class="" data-tooltip="캘린더 동기화" data-position="bottom right">
-                <i class="big black sync icon styler"></i>
-            </a>
-            <a href="/schedule/settings" class="" data-tooltip="환경설정" data-position="bottom right">
-                <i class="big black cog icon styler"></i>
-            </a>
-        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="ui segment container">
+        일기 미리보기
+      </div>
+    </div>
+    <div class="ui sidebar-buttons">
+      <a href="" class="" data-tooltip="캘린더 동기화" data-position="bottom right">
+        <i class="big black sync icon styler"></i>
+      </a>
+      <a href="/schedule/settings" class="" data-tooltip="환경설정" data-position="bottom right">
+        <i class="big black cog icon styler"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="pusher noanim">
+
+    <div class="calendar-navi-back" onclick="calendarNavToggle(1)">
     </div>
 
-    <div class="pusher noanim">
+    <div class="calendar-navi-div">
+      <div class="calendar-navi-main">
+        <div class="ui card">
+          <div class="search-self">
 
-        <div class="calendar-navi-back" onclick="calendarNavToggle(1)">
+            <div class="ui input">
+              <input id="search_year" class="input-orange" type="number" onchange="changeSearchDateSelf(0)">
+            </div>
+            <div class="date-spacer">
+              -
+            </div>
+            <div class="ui input">
+              <input id="search_month" class="input-orange" type="number" onchange="changeSearchDateSelf(1)">
+            </div>
+            <div class="date-spacer">
+              -
+            </div>
+            <div class="ui input">
+              <input id="search_day" class="input-orange" type="number" onchange="changeSearchDateSelf(2)">
+            </div>
+
+          </div>
+
+          <div class="search-click">
+
+          </div>
+
         </div>
+      </div>
+    </div>
 
-        <div class="calendar-navi-div">
-            <div class="calendar-navi-main">
-                <div class="ui card">
-                    <div class="search-self">
+    <header>
+      <div class="button-menu">
+        <button class="ui labeled icon button white" onclick="onMenu();">
+          <i class="icon bars large"></i>
+          <h4 class="head-schedury small">Schedury</h4>
+        </button>
+      </div>
 
-                        <div class="ui input">
-                            <input id="search_year" class="input-orange" type="number" onchange="changeSearchDateSelf(0)">
-                        </div>
-                        <div class="date-spacer">
-                            -
-                        </div>
-                        <div class="ui input">
-                            <input id="search_month" class="input-orange" type="number" onchange="changeSearchDateSelf(1)">
-                        </div>
-                        <div class="date-spacer">
-                            -
-                        </div>
-                        <div class="ui input">
-                            <input id="search_day" class="input-orange" type="number" onchange="changeSearchDateSelf(2)">
-                        </div>
-
-                    </div>
-
-                    <div class="search-click">
-
-                    </div>
-
-                </div>
-            </div>
+      <div class="header-menu">
+        <div id="header_main_menu" class="ui pagination menu">
+          <a id="menu_schedule" class="item active" onclick="menuToggle(this.id);">
+            <i class="icon calendar check outline"></i>일정</a>
+          <a id="menu_diary" class="item" onclick="menuToggle(this.id);">
+            <i class="icon edit outline"></i>일기</a>
+          <a id="menu_pictures" class="item" onclick="menuToggle(this.id);">
+            <i class="icon images outline"></i>사진</a>
         </div>
+      </div>
 
-        <header>
-            <div class="button-menu">
-                <button class="ui labeled icon button white" onclick="onMenu();">
-                    <i class="icon bars large"></i>
-                    <h4 class="head-schedury small">Schedury</h4>
-                </button>
-            </div>
+    </header>
 
-            <div class="header-menu">
-                <div id="header_main_menu" class="ui pagination menu">
-                    <a id="menu_schedule" class="item active" onclick="menuToggle(this.id);">
-                        <i class="icon calendar check outline"></i>일정</a>
-                    <a id="menu_diary" class="item" onclick="menuToggle(this.id);">
-                        <i class="icon edit outline"></i>일기</a>
-                    <a id="menu_pictures" class="item" onclick="menuToggle(this.id);">
-                        <i class="icon images outline"></i>사진</a>
-                </div>
-            </div>
+    <div class="card-back"></div>
 
+    <div class="ui card info-card" id="info_card">
+      <div class="content">
+        <img class="ui small circular image center aligned container" id="profile_image" src="/images/profile_default.png" alt="profile image"
+        />
+        <div class="ui fluid input user-nickname">
+          <input id="nickname" type="text" value="Nickname" readonly>
+        </div>
+        <div class="ui fluid input user-msg">
+          <input id="user_message" type="text" value="메시지" readonly>
+        </div>
+        <div class="bottom-menu">
+          <div class="ui circular button" id="edit_button" data-tooltip="정보 수정" data-position="left center">Edit</div>
+          <div class="ui circular button" id="logout_button" onclick="location='/logout'" data-tooltip="로그아웃" data-position="right center">Logout</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="calendar-this">
+      <div class="calendar-menu">
+        <div class="ui pagination menu">
+          <a class="icon item" onclick="prevCalendar(2);">
+            <i class="left chevron icon"></i>
+          </a>
+
+          <a id="tbCalendarYM" class="item calendar title" onclick="calendarNavToggle(0); getDateForSearch();">
+          </a>
+
+          <a class="icon item" onclick="nextCalendar(2);">
+            <i class="right chevron icon"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 일정 - 캘린더 태그 -->
+      <table id="view_calendar" class="ui segment calendar">
+        <thead id="calendar_header">
+        </thead>
+        <tbody id="calendar_body" class="tbody-anim">
+        </tbody>
+      </table>
+
+      <!-- 일기 미리보기 태그 -->
+      <div id="view_diary_preview" class="height-fill">
+        <header class="search-diary">
+          <div id="searchbar_back" class="ui transparent left icon input" onmouseover="actionOnSearch(1)">
+            <input type="text" placeholder="검색" onfocus="actionOnSearch(1)">
+            <i class="search icon"></i>
+          </div>
+
+          <div id="searchbar" class="ui action input" onmouseout="actionOnSearch(0)" onmouseover="actionOnSearch(1)">
+            <input class="input-orange" type="text" placeholder="검색">
+            <select class="ui compact selection dropdown input-orange">
+              <option selected="" value="all">전체검색</option>
+              <option value="titleonly">제목만</option>
+              <option value="contentonly">내용만</option>
+            </select>
+            <div class="ui button yellow">Search</div>
+          </div>
         </header>
 
-        <div class="card-back"></div>
+        <article class="padding">
 
-        <div class="ui card info-card" id="info_card">
-            <div class="content">
-                <img class="ui small circular image center aligned container" id="profile_image" src="/images/profile_default.png" alt="profile image"
-                />
-                <div class="ui fluid input user-nickname">
-                    <input id="nickname" type="text" value="Nickname" readonly>
-                </div>
-                <div class="ui fluid input user-msg">
-                    <input id="user_message" type="text" value="메시지" readonly>
-                </div>
-                <div class="bottom-menu">
-                    <div class="ui circular button" id="edit_button" data-tooltip="정보 수정" data-position="left center">Edit</div>
-                    <div class="ui circular button" id="logout_button" onclick="location='/logout'" data-tooltip="로그아웃" data-position="right center">Logout</div>
-                </div>
+          <div class="article-element">
+            <div class="article-title">
+              <h1 class="ui header">글이 작품이 되는 공간, 브런치</h1>
+              <h4 class="ui header">1일 전</h4>
             </div>
-        </div>
-
-        <div class="calendar-this">
-            <div class="calendar-menu">
-                <div class="ui pagination menu">
-                    <a class="icon item" onclick="prevCalendar(2);">
-                        <i class="left chevron icon"></i>
-                    </a>
-
-                    <a id="tbCalendarYM" class="item calendar title" onclick="calendarNavToggle(0); getDateForSearch();">
-                    </a>
-
-                    <a class="icon item" onclick="nextCalendar(2);">
-                        <i class="right chevron icon"></i>
-                    </a>
+            <div class="ui two column stackable grid">
+              <div class="eleven wide column">
+                <div class="content">
+                  <span>
+                    브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을.
+                  </span>
                 </div>
-            </div>
+              </div>
 
-            <!-- 일정 - 캘린더 태그 -->
-            <table id="view_calendar" class="ui segment calendar">
-                <thead id="calendar_header">
-                </thead>
-                <tbody id="calendar_body" class="tbody-anim">
-                </tbody>
-            </table>
-
-            <!-- 일기 미리보기 태그 -->
-            <div id="view_diary_preview" class="height-fill">
-                <header class="search-diary">
-                    <div id="searchbar_back" class="ui transparent left icon input" onmouseover="actionOnSearch(1)">
-                        <input type="text" placeholder="검색" onfocus="actionOnSearch(1)">
-                        <i class="search icon"></i>
-                    </div>
-
-                    <div id="searchbar" class="ui action input" onmouseout="actionOnSearch(0)" onmouseover="actionOnSearch(1)">
-                        <input class="input-orange" type="text" placeholder="검색">
-                        <select class="ui compact selection dropdown input-orange">
-                            <option selected="" value="all">전체검색</option>
-                            <option value="titleonly">제목만</option>
-                            <option value="contentonly">내용만</option>
-                        </select>
-                        <div class="ui button yellow">Search</div>
-                    </div>
-                </header>
-
-                <article class="padding">
-
-                    <div class="article-element">
-                        <div class="article-title">
-                            <h1 class="ui header">글이 작품이 되는 공간, 브런치</h1>
-                            <h4 class="ui header">1일 전</h4>
-                        </div>
-                        <div class="ui two column stackable grid">
-                            <div class="eleven wide column">
-                                <div class="content">
-                                    <span>
-                                        브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을.
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="five wide column">
-                                <div class="content-image">
-                                    <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
-                                    <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
-                                    <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- divider -->
-                    <div class="divider-article-element"></div>
-
-                    <div class="article-element">
-                        <div class="article-title">
-                            <h1 class="ui header">글이 작품이 되는 공간, 브런치</h1>
-                            <h4 class="ui header">1일 전</h4>
-                        </div>
-                        <div class="ui two column stackable grid">
-                            <div class="eleven wide column">
-                                <div class="content">
-                                    <span>
-                                        브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을.
-                                        브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해
-                                        보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요.
-                                        서랍 속 간직하고 있는 글과 감성을.
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="five wide column">
-                                <div class="content-image">
-                                    <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
-                                    <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
-                                    <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- divider -->
-                    <div class="divider-article-element"></div>
-
-                    <div class="article-element">
-                        <div class="article-title">
-                            <h1 class="ui header">글이 작품이 되는 공간, 브런치</h1>
-                            <h4 class="ui header">1일 전</h4>
-                        </div>
-                        <div class="ui two column stackable grid">
-                            <div class="eleven wide column">
-                                <div class="content">
-                                    <span>
-                                        브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을.
-                                        브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해
-                                        보세요. 그리고 다시 꺼내 보세요.
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="five wide column">
-                                <div class="content-image">
-                                    <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
-                                    <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
-                                    <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- divider -->
-                    <div class="divider-article-element"></div>
-
-                    <div class="article-element">
-                        <div class="article-title">
-                            <h1 class="ui header">글이 작품이 되는 공간, 브런치</h1>
-                            <h4 class="ui header">1일 전</h4>
-                        </div>
-                        <div class="ui two column stackable grid">
-                            <div class="eleven wide column">
-                                <div class="content">
-                                    <span>
-                                        브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을.
-                                        브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해
-                                        보세요. 그리고 다시 꺼내 보세요.
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="five wide column">
-                                <div class="content-image">
-                                    <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
-                                    <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
-                                    <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-
-        <!-- 사진 미리보기 -->
-        <div id='view_pictures'>
-            <div id='view_pictures_layout'>
-                <div id='view_pictures_inner'>
-                    <div class='images_column'>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                    </div>
-                    <div class='images_column'>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                    </div>
-                    <div class='images_column'>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                    </div>
-                    <div class='images_column'>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                    </div>
-                    <div class='images_column'>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-                        <div class='pre_image_layout'>
-                            <img class='pre_image' src='images/pre_image.jpg'>
-                        </div>
-
-                    </div>
-                    
+              <div class="five wide column">
+                <div class="content-image">
+                  <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
+                  <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
+                  <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
                 </div>
+              </div>
             </div>
+          </div>
 
-        </div>
+          <!-- divider -->
+          <div class="divider-article-element"></div>
+
+          <div class="article-element">
+            <div class="article-title">
+              <h1 class="ui header">글이 작품이 되는 공간, 브런치</h1>
+              <h4 class="ui header">1일 전</h4>
+            </div>
+            <div class="ui two column stackable grid">
+              <div class="eleven wide column">
+                <div class="content">
+                  <span>
+                    브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을.
+                    브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요.
+                    서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을.
+                  </span>
+                </div>
+              </div>
+
+              <div class="five wide column">
+                <div class="content-image">
+                  <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
+                  <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
+                  <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- divider -->
+          <div class="divider-article-element"></div>
+
+          <div class="article-element">
+            <div class="article-title">
+              <h1 class="ui header">글이 작품이 되는 공간, 브런치</h1>
+              <h4 class="ui header">1일 전</h4>
+            </div>
+            <div class="ui two column stackable grid">
+              <div class="eleven wide column">
+                <div class="content">
+                  <span>
+                    브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을.
+                    브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요.
+                  </span>
+                </div>
+              </div>
+
+              <div class="five wide column">
+                <div class="content-image">
+                  <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
+                  <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
+                  <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- divider -->
+          <div class="divider-article-element"></div>
+
+          <div class="article-element">
+            <div class="article-title">
+              <h1 class="ui header">글이 작품이 되는 공간, 브런치</h1>
+              <h4 class="ui header">1일 전</h4>
+            </div>
+            <div class="ui two column stackable grid">
+              <div class="eleven wide column">
+                <div class="content">
+                  <span>
+                    브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을.
+                    브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요. 서랍 속 간직하고 있는 글과 감성을. 브런치에 담긴 아름다운 작품을 감상해 보세요. 그리고 다시 꺼내 보세요.
+                  </span>
+                </div>
+              </div>
+
+              <div class="five wide column">
+                <div class="content-image">
+                  <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
+                  <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
+                  <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
-    <!-- 모달 관련 태그 붙이는 곳 -->
-    <!-- 프로필 사진 수정 모달 -->
-    <div class="ui mini modal profpic-modal">
-        <div class="ui actions grid modal-cont">
-            <a class="centered row" href="">
-                <div>프로필 사진 변경</div>
-            </a>
-            <a class="centered row" href="">
-                <div>프로필 사진 삭제 (기본 이미지로 설정)</div>
-            </a>
-            <a class="centered row" href="">
-                <div>취소</div>
-            </a>
+      
+    <!-- 사진 미리보기 -->
+    <div id='view_pictures'>
+      <div id='view_pictures_layout'>
+      
+        <div class='images_column'>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
         </div>
-    </div>
-
-    <!-- 일기, 일정 모달 -->
-    <div id='mod' class="ui longer modal">
-        <div id="modal_content" class="ui two column stackable grid">
-            <div id="left_cont" class="four wide column">
-                <h2 id='modal_header_diary' class="ui center aligned header nanumsquare">7월 31일 화요일</h2>
-
-                <div id="list_of_schedules" class="nanumsquare">
-                    <table id="sched_table" class="ui stackable table">
-                        <thead style="display: none">
-                            <tr>
-                                <th class="three wide"></th>
-                                <th class="ten wide"></th>
-                                <th class="three wide"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="일정1">
-                                <td class="schedule-time">오전</td>
-                                <td>
-                                    일정 이름 ddddddddd
-                                    <br> 일정 장소
-                                    <br>
-                                </td>
-                                <td>아이콘</td>
-                            </tr>
-                            <tr class="일정2">
-                                <td class="schedule-time">오후</td>
-                                <td>
-                                    일정 이름
-                                    <br> 일정 장소
-                                    <br>
-                                </td>
-                                <td>아이콘</td>
-                            </tr>
-                        </tbody>
-                        <tfoot class="full-width">
-                            <tr style="padding: 0">
-                                <th colspan="3" style="padding: 0 !important">
-                                    <button id="newsched_button" class="fluid ui button">
-                                        <i class="plus icon"></i>
-                                        새 일정 추가
-                                    </button>
-                                </th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-
-            <div id="left_cont2" class="four wide column">
-                <div id="sched_name" class="ui input">
-                    <input type="text" class="nanumsquare" placeholder="일정 이름">
-                </div>
-
-                <span class="group-text nanumsquare">일정 시작
-                    <br>
-                </span>
-                <div style="display: flex">
-                    <div class="ui input">
-                        <input id="start_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
-                    </div>
-                    <div class="ui input">
-                        <input id="time1" placeholder="시간" class="nanumsquare">
-                    </div>
-                </div>
-
-                <span class="group-text nanumsquare">일정 종료
-                    <br>
-                </span>
-                <div style="display: flex">
-                    <div class="ui input">
-                        <input id="end_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
-                    </div>
-                    <div class="ui input">
-                        <input id="time2" placeholder="시간" class="nanumsquare">
-                    </div>
-                </div>
-
-                <div class="ui input">
-                    <input id="all_day" type="checkbox">
-                    <label for="all_day" class="nanumsquare">종일</label>
-                </div>
-
-            </div>
-
-            <div id="cont_divider" class="ui vertical divider" style="position: relative"></div>
-            <!-- 여기까지~~~~~~~~~~~~~~~~!~!~!~!~!~!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-            <div class="twelve wide column">
-                <div id='mod_right_content'>
-                    <i class="big close icon"></i>
-                    <div id='diary_hnc'>
-                        <!-- <h3 id='diary_head'></h3> 제목 -->
-                        <!-- <div id='diary_content'></div> 내용 -->
-                    </div>
-                    <div id='new_diary_hnc'>
-                        <h3 id='new_diary_head' class="nanumsquare">아직 오늘의 일기를 작성하지 않으셨나요?</h3>
-                        <button class='fluid ui button nanumsquare' id='new_diary_content'>+ 새 일기 작성</button>
-
-                    </div>
-                    <div id='write_diary'>
-                        <div id="title_layout">
-                            <input id="title" type="text" class="nanumsquare" placeholder="제목을 입력하세요">
-
-                            <div id="기분날씨">
-                                <div class="ui inline dropdown" id='emotion'>
-                                    <div class="text">
-                                        <img class="ui image default_emotion" src="/images/emotion/073-muted-1.png"> 기분
-                                    </div>
-                                    <i class="dropdown icon"></i>
-                                    <div class="menu">
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/073-muted-1.png"> 선택 안함
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/048-smile.png"> 좋아요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/021-sad.png"> 슬퍼요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/034-neutral.png"> 그저 그래요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/097-angry.png"> 화나요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/077-sick.png"> 아파요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/016-sleeping.png"> 졸려요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/008-tired.png"> 피곤해요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/013-smiling-1.png"> 즐거워요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/018-shocked-2.png"> 놀라워요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/029-puking.png"> 언짢아요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/040-laughing.png"> 웃겨요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/044-tongue-3.png"> 맛있어요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/079-kiss.png"> 설레요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/089-confused.png"> 당황스러워요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/099-angel.png"> 행복해요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/100-alien.png"> 이 세계가 싫어요
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image default_emotion" src="/images/emotion/090-clown-1.png"> 재밌어요
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="ui inline dropdown" id='weather'>
-                                    <div class="text">
-                                        <img class="ui image" src="/images/weather/021-sunrise.png"> 날씨
-                                    </div>
-                                    <i class="dropdown icon"></i>
-                                    <div class="menu">
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-sunrise.png"> 선택 안함
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-sun.png"> 맑음
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-cloudy.png"> 가끔 구름
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-cloud.png"> 바람구름
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-cloudy-1.png"> 구름
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-night.png"> 보름달
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-night-1.png"> 반달
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-rain.png"> 비
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-rain-1.png"> 가끔 비
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-rain-2.png"> 장마
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-snowflake.png"> 서리
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-snowing.png"> 가끔 눈
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-snowing-1.png"> 진눈깨비
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-snowing-2.png"> 눈
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-storm.png"> 번개
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-summer.png"> 폭염
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-sun.png"> 맑음
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-tornado.png"> 폭풍
-                                        </div>
-                                        <div class="item">
-                                            <img class="ui image" src="/images/weather/021-winter.png"> 혹한
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div id="toolbar-container">
-                            <span class="ql-formats">
-                                <select class="ql-header">
-                                    <option value="1">Heading</option>
-                                    <option value="2">Subheading</option>
-                                    <option selected>Normal</option>
-                                </select>
-                                <button class="ql-bold"></button>
-                                <button class="ql-italic"></button>
-                                <button class="ql-underline"></button>
-                                <button class="ql-strike"></button>
-                                <select class="ql-color">
-                                    <option selected></option>
-                                    <option value="red"></option>
-                                    <option value="orange"></option>
-                                    <option value="yellow"></option>
-                                    <option value="green"></option>
-                                    <option value="blue"></option>
-                                    <option value="purple"></option>
-                                </select>
-                                <select class="ql-background">
-                                    <option selected></option>
-                                    <option value="red"></option>
-                                    <option value="orange"></option>
-                                    <option value="yellow"></option>
-                                    <option value="green"></option>
-                                    <option value="blue"></option>
-                                    <option value="purple"></option>
-                                </select>
-                                <select class="ql-align">
-                                    <option selected></option>
-                                    <option value="center"></option>
-                                    <option value="right"></option>
-                                    <option value="justify"></option>
-                                </select>
-                                <button class="ql-clean"></button>
-                                <button class="ql-image"></button>
-                            </span>
-
-                        </div>
-
-                        <div id="editor-container" class="nanumsquare">
-
-                        </div>
-
-                        <div style="display:flex; justify-content: center;">
-                            <button class="ui yellow button nanumsquare" id='적용' type="button">완료</button>
-                            <button class="ui button nanumsquare" id='취소' type="button">취소</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class='images_column'>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
         </div>
-    </div>
-    </div>
+        <div class='images_column'>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
+        </div>
+        <div class='images_column'>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
+        </div>
+        <div class='images_column'>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='images/pre_image.jpg'>
+          </div>
 
-    <script src="javascripts/calendar.js"></script>
-    <script src="javascripts/schedule.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/calendar.css">
+        </div>
 
-    <script>
-        $('.ui.dropdown').dropdown();
-        buildCalendar(2);
-    </script>
+
+      </div>
+
+    </div>
+  </div>
+  <!-- 모달 관련 태그 붙이는 곳 -->
+  <!-- 프로필 사진 수정 모달 -->
+  <div class="ui mini modal profpic-modal">
+    <div class="ui actions grid modal-cont">
+      <a class="centered row" href="">
+        <div>프로필 사진 변경</div>
+      </a>
+      <a class="centered row" href="">
+        <div>프로필 사진 삭제 (기본 이미지로 설정)</div>
+      </a>
+      <a class="centered row" href="">
+        <div>취소</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- 일기, 일정 모달 -->
+  <div id='mod' class="ui longer modal">
+    <div id="modal_content" class="ui two column stackable grid">
+      <div id="left_cont" class="four wide column">
+        <h2 id='modal_header_diary' class="ui center aligned header nanumsquare">7월 31일 화요일</h2>
+
+        <div id="list_of_schedules" class="nanumsquare">
+          <table id="sched_table" class="ui stackable table">
+            <thead style="display: none">
+              <tr>
+                <th class="three wide"></th>
+                <th class="ten wide"></th>
+                <th class="three wide"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="일정1">
+                <td class="schedule-time">오전</td>
+                <td>
+                  일정 이름 ddddddddd
+                  <br> 일정 장소
+                  <br>
+                </td>
+                <td>아이콘</td>
+              </tr>
+              <tr class="일정2">
+                <td class="schedule-time">오후</td>
+                <td>
+                  일정 이름
+                  <br> 일정 장소
+                  <br>
+                </td>
+                <td>아이콘</td>
+              </tr>
+            </tbody>
+            <tfoot class="full-width">
+              <tr style="padding: 0">
+                <th colspan="3" style="padding: 0 !important">
+                  <button id="newsched_button" class="fluid ui button">
+                    <i class="plus icon"></i>
+                    새 일정 추가
+                  </button>
+                </th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div id="left_cont2" class="four wide column">
+        <div id="sched_name" class="ui input">
+          <input type="text" class="nanumsquare" placeholder="일정 이름">
+        </div>
+
+        <span class="group-text nanumsquare">일정 시작
+          <br>
+        </span>
+        <div style="display: flex">
+          <div class="ui input">
+            <input id="start_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
+          </div>
+          <div class="ui input">
+            <input id="time1" placeholder="시간" class="nanumsquare">
+          </div>
+        </div>
+
+        <span class="group-text nanumsquare">일정 종료
+          <br>
+        </span>
+        <div style="display: flex">
+          <div class="ui input">
+            <input id="end_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
+          </div>
+          <div class="ui input">
+            <input id="time2" placeholder="시간" class="nanumsquare">
+          </div>
+        </div>
+
+        <div class="ui input">
+          <input id="all_day" type="checkbox">
+          <label for="all_day" class="nanumsquare">종일</label>
+        </div>
+
+      </div>
+
+      <div id="cont_divider" class="ui vertical divider" style="position: relative"></div>
+      <!-- 여기까지~~~~~~~~~~~~~~~~!~!~!~!~!~!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+      <div class="twelve wide column">
+        <div id='mod_right_content'>
+          <i class="big close icon"></i>
+          <div id='diary_hnc'>
+            <!-- <h3 id='diary_head'></h3> 제목 -->
+            <!-- <div id='diary_content'></div> 내용 -->
+          </div>
+          <div id='new_diary_hnc'>
+            <h3 id='new_diary_head' class="nanumsquare">아직 오늘의 일기를 작성하지 않으셨나요?</h3>
+            <button class='fluid ui button nanumsquare' id='new_diary_content'>+ 새 일기 작성</button>
+
+          </div>
+          <div id='write_diary'>
+            <div id="title_layout">
+              <input id="title" type="text" class="nanumsquare" placeholder="제목을 입력하세요">
+
+              <div id="기분날씨">
+                <div class="ui inline dropdown" id='emotion'>
+                  <div class="text">
+                    <img class="ui image default_emotion" src="/images/emotion/073-muted-1.png"> 기분
+                  </div>
+                  <i class="dropdown icon"></i>
+                  <div class="menu">
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/073-muted-1.png"> 선택 안함
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/048-smile.png"> 좋아요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/021-sad.png"> 슬퍼요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/034-neutral.png"> 그저 그래요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/097-angry.png"> 화나요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/077-sick.png"> 아파요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/016-sleeping.png"> 졸려요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/008-tired.png"> 피곤해요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/013-smiling-1.png"> 즐거워요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/018-shocked-2.png"> 놀라워요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/029-puking.png"> 언짢아요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/040-laughing.png"> 웃겨요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/044-tongue-3.png"> 맛있어요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/079-kiss.png"> 설레요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/089-confused.png"> 당황스러워요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/099-angel.png"> 행복해요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/100-alien.png"> 이 세계가 싫어요
+                    </div>
+                    <div class="item">
+                      <img class="ui image default_emotion" src="/images/emotion/090-clown-1.png"> 재밌어요
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ui inline dropdown" id='weather'>
+                  <div class="text">
+                    <img class="ui image" src="/images/weather/021-sunrise.png"> 날씨
+                  </div>
+                  <i class="dropdown icon"></i>
+                  <div class="menu">
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-sunrise.png"> 선택 안함
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-sun.png"> 맑음
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-cloudy.png"> 가끔 구름
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-cloud.png"> 바람구름
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-cloudy-1.png"> 구름
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-night.png"> 보름달
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-night-1.png"> 반달
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-rain.png"> 비
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-rain-1.png"> 가끔 비
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-rain-2.png"> 장마
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-snowflake.png"> 서리
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-snowing.png"> 가끔 눈
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-snowing-1.png"> 진눈깨비
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-snowing-2.png"> 눈
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-storm.png"> 번개
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-summer.png"> 폭염
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-sun.png"> 맑음
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-tornado.png"> 폭풍
+                    </div>
+                    <div class="item">
+                      <img class="ui image" src="/images/weather/021-winter.png"> 혹한
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div id="toolbar-container">
+              <span class="ql-formats">
+                <select class="ql-header">
+                  <option value="1">Heading</option>
+                  <option value="2">Subheading</option>
+                  <option selected>Normal</option>
+                </select>
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <button class="ql-strike"></button>
+                <select class="ql-color">
+                  <option selected></option>
+                  <option value="red"></option>
+                  <option value="orange"></option>
+                  <option value="yellow"></option>
+                  <option value="green"></option>
+                  <option value="blue"></option>
+                  <option value="purple"></option>
+                </select>
+                <select class="ql-background">
+                  <option selected></option>
+                  <option value="red"></option>
+                  <option value="orange"></option>
+                  <option value="yellow"></option>
+                  <option value="green"></option>
+                  <option value="blue"></option>
+                  <option value="purple"></option>
+                </select>
+                <select class="ql-align">
+                  <option selected></option>
+                  <option value="center"></option>
+                  <option value="right"></option>
+                  <option value="justify"></option>
+                </select>
+                <button class="ql-clean"></button>
+                <button class="ql-image"></button>
+              </span>
+
+            </div>
+
+            <div id="editor-container" class="nanumsquare">
+
+            </div>
+
+            <div style="display:flex; justify-content: center;">
+              <button class="ui yellow button nanumsquare" id='적용' type="button">완료</button>
+              <button class="ui button nanumsquare" id='취소' type="button">취소</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script src="javascripts/calendar.js"></script>
+  <script src="javascripts/schedule.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/calendar.css">
+
+  <script>
+    $('.ui.dropdown').dropdown();
+    buildCalendar(2);
+  </script>
 </body>
 
 </html>
