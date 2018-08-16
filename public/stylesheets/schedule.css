@@ -351,6 +351,9 @@ article.padding {
 article::-webkit-scrollbar {
     display: none;
 }
+body::-webkit-scrollbar {
+    display: none;
+}
 
 article>.article-element {
     padding: 2px;
