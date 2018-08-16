@@ -127,3 +127,12 @@
 #기분날씨{
     margin-top:15px;
 }
+
+.cont_repeat{
+    display: flex;
+    flex-direction: column;
+}
+
+#number_of_repeat{
+    width: 40px;
+}    
