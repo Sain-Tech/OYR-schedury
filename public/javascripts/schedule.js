@@ -118,6 +118,7 @@ function menuToggle(x){
         $('.calendar-menu>.ui.pagination.menu').css('cssText', 'margin-top: ');
         $('#view_calendar').css({display: 'table'});
         $('#view_diary_preview').css({display: 'none', 'height': ''});
+        $('#view_pictures').css({display: 'none','height': ''});
 
         $('.calendar-menu').css({height: '96px', opacity: 1, visibility: 'visible'});
         $('.search-diary').css({'margin-top': '90px'});
@@ -127,6 +128,7 @@ function menuToggle(x){
         $('.height-fill').unbind('mousemove');
         $('article').unbind();
         $('#header_main_menu').unbind();
+        $('#view_pictures').css({display: 'none'});
     }
     else if(x == 'menu_diary') {
         activeItem = 1;
@@ -135,10 +137,15 @@ function menuToggle(x){
         $('.calendar-menu>.ui.pagination.menu').css('cssText', !mediaQueryFlag800 ? 'margin-top: 24px !important' : mediaQueryFlag512 ? 'margin-top: 22px !important': '');
         $('#view_calendar').css({display: 'none'});
         $('#view_diary_preview').css({display: 'block', 'height': '72px'});
+        $('#view_pictures').css({display: 'none'});
 
     }
     else if(x == 'menu_pictures') {
         activeItem = 2;
+        $('#view_calendar').css({display: 'none'});
+        $('#view_diary_preview').css({display: 'none'});
+        $('#view_pictures').css({display: 'block'});
+        
     }
 }
 
