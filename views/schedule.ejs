@@ -33,7 +33,7 @@
 
   <!-- Image libraries for Quill Editor -->
   <script src="/javascripts/image-resize.min.js"></script>
-  <script src="/javascripts/image-drop.min.js"></script>
+  <!-- <script src="/javascripts/image-drop.min.js"></script> -->
 
   <!-- 날짜 검색 라이브러리 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -536,6 +536,16 @@
       <div id="cont_divider" class="ui vertical divider" style="position: relative"></div>
       <!-- 여기까지~~~~~~~~~~~~~~~~!~!~!~!~!~!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
       <div class="twelve wide column">
+        <script>
+          function onTest(json, status) {
+            $('#write_diary').attr({'style':'display: none !important'});
+            console.log(json);
+            $('#mod_right_content').html(`<div class="ql-editor">`+json.contents+`</div>`);
+            for(var i = 0; i < $('.ql-editor>p>img').length; i++) {
+              $('#imgId_'+i).attr('src', json.images[i]);
+            }
+          }
+        </script>
         <div id='mod_right_content'>
           <i class="big close icon"></i>
           <div id='diary_hnc'>
@@ -549,7 +559,7 @@
           </div>
           <div id='write_diary'>
             <div id="title_layout">
-              <input id="title" type="text" class="nanumsquare" placeholder="제목을 입력하세요">
+              <input id="title" type="text" class="nanumsquare" placeholder="제목을 입력하세요" name="titleDiary" form="uploader_img_diary">
 
               <div id="기분날씨">
                 <div class="ui inline dropdown" id='emotion'>
@@ -730,7 +740,7 @@
             </div>
 
             <div style="display:flex; justify-content: center;">
-              <button class="ui yellow button nanumsquare" id='적용' type="button">완료</button>
+              <button class="ui yellow button nanumsquare" id='적용' type="button" form="uploader_img_diary" onclick="editorOK();">완료</button>
               <button class="ui button nanumsquare" id='취소' type="button">취소</button>
             </div>
           </div>
@@ -740,8 +750,11 @@
   </div>
   </div>
 
+  <form id="uploader_img_diary" name="actionUploadDiaryImg" action="/actionUpload_images" method="POST" enctype="multipart/form-data" style="width: 0; height: 0; display: none;"></form>
+
   <script src="javascripts/calendar.js"></script>
   <script src="javascripts/schedule.js"></script>
+  <script src="javascripts/quill-uploader.js"></script>
 
   <script>
     $('.ui.dropdown').dropdown();

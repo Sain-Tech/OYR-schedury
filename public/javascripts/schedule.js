@@ -500,25 +500,6 @@ $(document).ready(function(){
         enableTime: false,
         dateFormat: "Y.m.d"
     });
-    
-    var BackgroundClass = Quill.import('attributors/class/background');
-    var ColorClass = Quill.import('attributors/class/color');
-    var SizeStyle = Quill.import('attributors/style/size');
-    Quill.register(BackgroundClass, true);
-    Quill.register(ColorClass, true);
-    Quill.register(SizeStyle, true);
-    var quill = new Quill('#editor-container', {
-        modules: {
-            toolbar:'#toolbar-container' ,
-            imageResize: {
-                displaySize: true
-              },
-            imageDrop: true
-        },
-        placeholder: '오늘의 일기를 작성해주세요',
-        theme: 'snow'  // or 'bubble'
-      });
-      
 
     $('#취소').click(function(){
         $('#new_diary_hnc').attr({'style':'display: block !important'});

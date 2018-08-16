@@ -6,6 +6,7 @@ var pbkfd2Password = require('pbkdf2-password');
 var hasher = pbkfd2Password();
 var multer = require('multer');
 var upload = multer({ dest: 'uploads/profile/'})
+var uploadDiaryImg = multer({ dest: 'uploads/diary/'})
 var router = express.Router();
 
 //connectDB.query("CREATE DATABASE IF NOT EXISTS userInfo CHARACTER SET utf8 COLLATE utf8_general_ci;");
@@ -96,7 +97,9 @@ router.get('/signup', function(req, res) {
 router.post('/signup', upload.single('profimg'), function(req, res) {
   var id = req.body.id;
   var pw = req.body.passwd;
-  var email = req.body.email; var nickname = req.body.nickname; var intro = req.body.intro;
+  var email = req.body.email; 
+  var nickname = req.body.nickname; 
+  var intro = req.body.intro;
 
   if(req.file != undefined)
     var profimgfile = '../' + req.file.path;
@@ -252,4 +255,69 @@ router.get('/new_schedule', function(req, res){
 router.get('/schedule/diary', function(req, res){
   res.render('schedule_diary',{ title:'Schedule_diary'});
 });
+
+var quillContents;
+var imagefiles = [];
+
+router.post('/actionUpload_contents', function(req, res) {
+  quillContents = req.body.value;
+  console.log('contents! '+quillContents);
+  
+  for(var i = 0; i < req.body.imagefile.length; i++) {
+    imagefiles.push(req.body.imagefile[i]);
+  }
+
+  connectDB.query("INSERT INTO IMAGETEST VALUES('"+quillContents+"', 'undefined');");
+
+  res.send('request finished');
+});
+
+router.post('/actionUpload_images', upload.fields(imagefiles), function(req, res, next) {
+
+  var imageDirsRaw;
+  var cnt = 0;
+
+  for(var i in req.files) {
+    console.log(req.files[i][0].path);
+    if(cnt == 0) {
+      var tmp = req.files[i][0].path;
+      imageDirsRaw = tmp;
+    }
+    else {
+      var tmp = req.files[i][0].path;
+      imageDirsRaw += ',' + tmp;
+    }
+    cnt++;
+  }
+  connectDB.query("UPDATE IMAGETEST SET DIARYIMAGES='"+imageDirsRaw+"' WHERE CONTENTS='"+quillContents+"';");
+
+  result = connectDB.query("SELECT * FROM IMAGETEST WHERE CONTENTS='"+quillContents+"';")[0];
+  var imageDirRaw = result.DIARYIMAGES;
+  var conts = result.CONTENTS;
+  console.log(imageDirRaw);
+  var imagesDir = new Array();
+  imagesDir = imageDirRaw.split(',');
+  console.log(imagesDir);
+
+  res.send({
+    contents: conts,
+    images: imagesDir
+  });
+});
+
+router.get('/diarypreview', function(req, res) {
+  result = connectDB.query("SELECT * FROM IMAGETEST WHERE CONTENTS='"+quillContents+"';")[0];
+  var imageDirRaw = result.DIARYIMAGES;
+  var conts = result.CONTENTS;
+  console.log(imageDirRaw);
+  var imagesDir = new Array();
+  imagesDir = imageDirRaw.split(',');
+  console.log(imagesDir);
+
+  res.render('diary_preview', {
+    contents: conts,
+    images: imagesDir
+  });
+});
+
 module.exports = router;
