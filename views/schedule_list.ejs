@@ -21,13 +21,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/list.css" />
     <script src="/javascripts/schedule_list.js"></script>
 
-     <!-- Main Quill library -->
-     <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
-
-
-     <!-- Theme included stylesheets -->
-     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-     <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet"> 
+     
 
     <!-- 날짜 검색 라이브러리 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -82,141 +76,110 @@
                 </div>
 
                 <div id="left_cont2" class="four wide column">
-                    <div id="sched_name" class="ui input">
-                        <input type="text" class="nanumsquare" placeholder="일정 이름">
-                    </div>
-                    
-                    <span class="group-text nanumsquare">날짜<br></span>
-                    <div style="display: flex">
-                        <div class="ui input">
-                            <input id="start_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
+                    <form action="/new_schedule" method="post">
+                        <div id="sched_name" class="ui input">
+                            <input name="nameSched" type="text" class="nanumsquare" placeholder="일정 이름">
                         </div>
-                    </div>
-                    <div style="display: flex">
-                        <div class="ui input">
-                            <input id="time1" placeholder="시작 시간" class="nanumsquare">
-                        </div>
-                        <div class="ui input">
-                            <input id="time2" placeholder="종료 시간" class="nanumsquare">
-                        </div>
-                    </div>
-                    <div class="ui input">
-                        <input id="all_day" type="checkbox">
-                        <label for="all_day" class="nanumsquare">종일</label>
-                    </div>
-                    <div class="cont_repeat">
-                        <!-- <div class="ui accordion">
-                            <div class="title">
-                                <i class="dropdown icon"></i>
-                                <span class="repeat_sched nanumsquare">반복 일정</span>
+                        
+                        <span class="group-text nanumsquare">날짜<br></span>
+                        <div style="display: flex">
+                            <div class="ui input">
+                                <input name="dateSched" id="start_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
                             </div>
-                            <div class="content">
-                                <div class="ui form">
-                                    <div class="grouped fields">
-                                        <div class="field">
-                                            <div class="ui radio checkbox">
-                                                <input type="radio" name="period" value="pDay">
-                                                <label>매일</label>
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui radio checkbox">
-                                                <input type="radio" name="period" value="pWeek">
-                                                <label>매주</label>
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui radio checkbox">
-                                                <input type="radio" name="period" value="pMonth">
-                                                <label>매달</label>
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="ui radio checkbox">
-                                                <input type="radio" name="period" value="pYear">
-                                                <label>매년</label>
-                                            </div>
+                        </div>
+                        <div style="display: flex">
+                            <div class="ui input">
+                                <input name="startTime" id="time1" placeholder="시작 시간" class="nanumsquare">
+                            </div>
+                            <div class="ui input">
+                                <input name="endTime" id="time2" placeholder="종료 시간" class="nanumsquare">
+                            </div>
+                        </div>
+                        <div class="ui input">
+                            <input name="allDay" id="all_day" type="checkbox">
+                            <label for="all_day" class="nanumsquare">종일</label>
+                        </div>
+
+                        <!-- <div class="cont_repeat">                        
+                            <div class="ui accordion nanumsquare">
+                                <div class="title nanumsquare">
+                                    <i class="icon dropdown"></i>
+                                    반복 없음
+                                </div>
+                                <div class="content field">
+                                    <label class="transition hidden">일정 반복</label>
+                                    <div id="repeat_dropdown" class="ui selection dropdown nanumsquare">
+                                        <input id="p_repeat" type="hidden" name="repeat">
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text">일정 반복</div>
+                                        <div class="menu">
+                                            <div class="item" data-value="일">매일</div>
+                                            <div class="item" data-value="주">매주</div>
+                                            <div class="item" data-value="개월">매달</div>
+                                            <div class="item" data-value="년">매년</div>
                                         </div>
                                     </div>
-                                </div>    
-                            </div>
-                        </div> -->
-                        
-                        <div class="ui accordion nanumsquare">
-                            <div class="title">
-                                <i class="icon dropdown"></i>
-                                반복 없음
-                            </div>
-                            <div class="content field">
-                                <label class="transition hidden">일정 반복</label>
-                                <div class="ui selection dropdown nanumsquare">
-                                    <input type="hidden" name="repeat">
-                                    <i class="dropdown icon"></i>
-                                    <div class="default text">일정 반복</div>
-                                    <div class="menu">
-                                        <div class="item" data-value="0">매일</div>
-                                        <div class="item" data-value="1">매주</div>
-                                        <div class="item" data-value="2">매달</div>
-                                        <div class="item" data-value="3">매년</div>
+                                    <div class="ui right labeled input">
+                                        <input type="text" value="1" name="numberPeriod">
+                                        <div id="repeating_period" class="ui basic label">
+                                            일마다
+                                        </div>
+                                    </div>
+                                    <div style="display: flex">
+                                        <div class="ui input">
+                                            <input name="endRepeat" id="end_repeat" class="nanumsquare" type="text" placeholder="종료일" data-input>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="ui right labeled input">
-                                    <input type="text" value="1">
-                                    <div class="ui basic label">
+                            </div>
+                        </div> -->
+                        <div class="cont_repeat nanumsquare">
+                            <div>
+                                <label>일정 반복</label>
+                                <div id="repeat_dropdown" class="ui selection dropdown nanumsquare">
+                                    <input id="p_repeat" type="hidden" name="repeat">
+                                    <i class="dropdown icon"></i>
+                                    <div class="default text">반복 없음</div>
+                                    <div class="menu">
+                                        <div class="item active selected" data-value="0">반복 없음</div>
+                                        <div class="item" data-value="1">매일</div>
+                                        <div class="item" data-value="2">매주</div>
+                                        <div class="item" data-value="3">매달</div>
+                                        <div class="item" data-value="4">매년</div>
+                                    </div>
+                                </div>
+                                <div id="repeat_details" class="ui right labeled input">
+                                    <input id="number_of_repeat" type="text" value="1" name="numberPeriod">
+                                    <div id="repeating_period" class="ui basic label">
                                         일마다
                                     </div>
                                 </div>
-                                <div style="display: flex">
+                                <div id="repeat_details2">
                                     <div class="ui input">
-                                        <input id="end_repeat" class="nanumsquare" type="text" placeholder="종료일" data-input>
+                                        <input name="endRepeat" id="end_repeat" class="nanumsquare" type="text" placeholder="종료일" data-input>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-<!-- 
-                    <span class="group-text nanumsquare">일정 종료<br></span>
-                    <div style="display: flex">
-                        <div class="ui input">
-                            <input id="end_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
+                        <div id="sched_location" class="ui input nanumsquare">
+                            <label>장소<br></label>
+                            <input name="locationSched" type="text" class="nanumsquare" placeholder="일정 장소">
                         </div>
                         <div class="ui input">
-                            <input id="time2" placeholder="시간" class="nanumsquare">
+                            <input name="importantSched" id="important_schedule" type="checkbox">
+                            <label for="important_schedule" class="nanumsquare">중요</label>
                         </div>
-                    </div>  -->
-
+                        <div>
+                            <input class="ui button nanumsquare" id="submit-form" type="submit" value="일정 등록">
+                        </div>
+                    </form>
                 </div>
                 
                 <div id="cont_divider" class="ui vertical divider" style="position: relative"></div>
                 <!-- 여기까지~~~~~~~~~~~~~~~~!~!~!~!~!~!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
                 <div class="twelve wide column">
                     <div id='mod_right_content'>
-                        <i class="big close icon"></i>
-
-                        <div id='diary_hnc'>
-                            <h3 id='diary_head'>제목</h3>
-                            <div id='diary_content'>내용 오늘 동아리방에 왔는데 다들 공포영화를 보고 있었다. 
-                                그리고 과자를 먹었는데 목말라서 여준오빠한테 음료수 사달라고 했다가 가위바위보 져서 
-                                내가 지연언니한테 카톡으로 부탁했다. 그래서 요거프레서 쿠폰을 주셨는데 너무 멀어서 
-                                내일 여준오빠가 대신 갖다주기로 했다. 그 대신 컵안에 버블 가서 그린티 버블을 먹었다. 
-                                그리고 trigon 1600점을 찍었다. 너무 배부르다.</div>
-                        </div>
-                        <div id='new_diary_hnc'>
-                            <h3 id='new_diary_head'>아직 오늘의 일기를 작성하지 않으셨나요?</h3>
-                            <button class='fluid ui button' id='new_diary_content'>+ 새 일기 작성</button>
-                            
-                        </div>
-                        <div id='write_diary'>
-                            <div id="editor-container">
-                            </div>
-                                
-                            <div style="display:flex; justify-content: center;">
-                                <button class="ui yellow button nanumsquare" id='적용' type="button" >완료</button>
-                                <button class="ui button nanumsquare" id='취소' type="button">취소</button>
-                            </div>
-
-                        </div>
+                        
                     </div>
                 </div>
             </div>

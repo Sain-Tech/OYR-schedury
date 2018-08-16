@@ -35,9 +35,9 @@ $(document).ready(function(){
     });
     
     // var startDate = flatpickr('#start_date');
-    var endDate = flatpickr('#end_date');
-    var startTime = flatpickr('#time1');
-    var endTime = flatpickr('#time2');
+    // var endDate = flatpickr('#end_date');
+    // var startTime = flatpickr('#time1');
+    // var endTime = flatpickr('#time2');
 
     // flatpickr("#start_date", {
     //     enableTime: false,
@@ -74,6 +74,35 @@ $(document).ready(function(){
         });
 
     $('.ui.selection.dropdown').dropdown();
+
+    $('#repeat_dropdown').dropdown();
+    $('#repeat_details').hide();
+    $('#repeat_details2').hide();
+
+    $('#p_repeat').change(function(){
+        var pRepeat=$('#p_repeat').val();
+        $('#repeating_period').html(pRepeat+'마다');
+
+        console.log(pRepeat);
+
+        if(pRepeat == 0){
+            $('#repeat_details').hide();
+            $('#repeat_details2').hide();
+        } else {
+            $('#repeat_details').show();
+            $('#repeat_details2').show();
+
+            if(pRepeat == 1) {
+                $('#repeating_period').html('일마다');
+            } else if (pRepeat == 2) {
+                $('#repeating_period').html('주마다');
+            } else if (pRepeat ==3 ) {
+                $('#repeating_period').html('개월마다');
+            } else {
+                $('#repeating_period').html('년마다');
+            }
+        }
+    });
 
     // 채원이거 여기부터~~!~!
     $(".close").click(function(){

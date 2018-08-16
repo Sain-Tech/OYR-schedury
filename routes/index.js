@@ -167,6 +167,88 @@ router.get('/schedule/list', function(req, res){
   res.render('schedule_list');
 });
 
+router.post('/new_schedule', function(req, res){
+  var userID = req.session.userId;         //사용자 아이디 : CHAR(30) - 사용자 테이블과 조인(외래키)
+                                    //일정 고유번호(인덱스) : INDEX - 기본키
+  var schedName=req.body.nameSched; // 일정 이름 : TEXT
+  var schedDate=req.body.dateSched; // 시작일 종료일 : DATE
+  var startTime=req.body.startTime; // 시작 시간: TIME   [null]
+  var endTime=req.body.endTime; // 종료 시간: TIME       [null]
+  var allDay=req.body.allDay; // 종일 체크 여부 : BOOLEAN
+                              // 반복 여부 : BOOLEAN
+  var periodOfRepeat=req.body.repeat; // 초기값: 일정 반복 단위(일, 주, 월, 년) : INT           [null]
+  var numberRepeat=req.body.numberPeriod; //얼마마다 반복할건지 : INT   [null]
+  var endRepeat=req.body.endRepeat; // 반복 일정 종료일 : DATE          [null]
+  
+  if(schedDate == ''){
+    var startDate = '1970-01-01';
+    var endDate = '1970-01-01';
+  } else {
+    var startDate = schedDate.substring(0, 10);
+    var endDate = schedDate.substring(14, 24);
+  }
+  if(endRepeat == ''){
+    endRepeat = '1970-01-01';
+  }
+
+  var ampm1 = startTime.substring(startTime.length-2, startTime.length);
+  var ampm2 = endTime.substring(endTime.length-2, endTime.length);
+  var hour1 = startTime.substring(0, startTime.length-6); // '11:00 PM' 에서 '11'
+  var hour2 = endTime.substring(0, endTime.length-6); // '1:23 PM' 에서 '1'
+  var min1 = startTime.substring(startTime.length-6, startTime.length-3); // '12:00 PM' 에서 ':00'
+  var min2 = endTime.substring(endTime.length-6, endTime.length-3); // '1:20 AM' 에서 ':20'
+  if(ampm1 == 'PM'){
+    if(hour1 != '12'){
+      hour1 *= 1; // 문자열을 숫자형으로 변환
+      hour1 += 12;
+      hour1 += "";} // 문자열로 다시 변환
+  }
+  if((ampm1 == 'AM') && (hour1 =='12')){
+    hour1 *= 1;
+    hour1 += 12;
+    hour1 += "";
+  }
+  if(ampm2 == 'PM'){
+    if(hour2 != '12'){
+      hour2 *= 1;
+      hour2 += 12;
+      hour2 += "";}
+  }
+  if((ampm2 == 'AM') && (hour2 =='12')){
+    hour2 *= 1;
+    hour2 -= 12;
+    hour2 += "";
+  }
+  startTime = hour1 + min1;
+  endTime = hour2 + min2;
+  
+  if(allDay == undefined){
+    allDay = 0;
+  } else {
+    allDay = 1;
+  }
+  if(periodOfRepeat == ''){
+    periodOfRepeat = 0;
+  }
+  if(periodOfRepeat == 0){
+    var repeatBoolean = 0;
+  } else {
+    var repeatBoolean = 1;
+  }
+
+  connectDB.query("CREATE TABLE IF NOT EXISTS SCHEDULE(`index` INT NOT NULL AUTO_INCREMENT, userId CHAR(30), scheduleName TEXT, startDate DATE, endDate DATE, startTime TIME, endTime TIME, allDay BOOLEAN, repeatOrNot BOOLEAN, numRepeat INT, periodOfRepeat INT, endRepeatDate DATE, PRIMARY KEY(`index`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+  var addSchedule = "INSERT INTO SCHEDULE(userId, scheduleName, startDate, endDate, startTime, endTime, allDay, repeatOrNot, numRepeat, periodOfRepeat, endRepeatDate)";
+  addSchedule = addSchedule + "VALUES('"+userID+"', '"+schedName+"', '"+startDate+"', '"+endDate+"', '"+startTime+"', '"+endTime+"', '"+allDay+"', '"+repeatBoolean+"', '"+numberRepeat+"', '"+periodOfRepeat+"', '"+endRepeat+"');";
+  connectDB.query(addSchedule);
+
+});
+
+router.get('/new_schedule', function(req, res){
+  res.render('schedule_list');
+});
+
+
 router.get('/schedule/diary', function(req, res){
   res.render('schedule_diary',{ title:'Schedule_diary'});
 });
