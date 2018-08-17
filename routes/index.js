@@ -18,21 +18,23 @@ router.use(session({
 }));
 
 var connectDB = new mysql(dbinfo.getDBInfo());
-var result = null;
+var resultUser = null;
+var resultSchedule = null;
+var resultDiary = null;
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  connectDB.query("CREATE TABLE IF NOT EXISTS USERS(userId CHAR(30), userPw TEXT, pwSalt TEXT, userEmail TEXT, profileImageDir TEXT, userNickName TEXT, userMessate TEXT, PRIMARY KEY(userId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+  connectDB.query("CREATE TABLE IF NOT EXISTS USERS(userId CHAR(30), userPw TEXT, pwSalt TEXT, userEmail TEXT, profileImageDir TEXT, userNickName TEXT, userMessage TEXT, PRIMARY KEY(userId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
   console.log('테이블 생성됨');
   if(req.session.userId) {
-    res.redirect('/result/'+req.session.userId);
+    res.redirect('/schedule/'+req.session.userId);
   }
   else {
     res.render('loginmain', { title: '로그인'});
   }
 });
 
-router.get('/result/:id', function(req, res) {
+router.get('/schedule/:id', function(req, res) {
   if(!req.session.userId) {
     res.send('<script type="text/javascript">alert("권한이 없습니다. 다시 로그인 해주세요."); history.back();</script>');
   }
@@ -40,21 +42,23 @@ router.get('/result/:id', function(req, res) {
     res.send('<script type="text/javascript">alert("권한이 없는 사용자입니다."); history.back();</script>');
   }
   else {
-    res.render('result', {
+    res.render('schedule', {
       title: req.session.userId,
-      uid: result[0].userId,
-      uemail: result[0].userEmail,
-      uprofimg: result[0].profileImageDir
+      uid: resultUser[0].userId,
+      uemail: resultUser[0].userEmail,
+      uprofimg: resultUser[0].profileImageDir,
+      unickname: resultUser[0].userNickName,
+      umessage: resultUser[0].userMessage
     });
   }
 });
 
-router.get('/result', function(req, res) {
+router.get('/schedule', function(req, res) {
   if(!req.session.userId) {
     res.send('<script type="text/javascript">alert("권한이 없습니다. 다시 로그인 해주세요."); history.back();</script>');
   }
   else {
-    res.redirect('/result/'+req.session.userId);
+    res.redirect('/schedule/'+req.session.userId);
   }
 });
 
@@ -71,15 +75,15 @@ router.post('/signin', function(req, res) {
     res.send('<script type="text/javascript">alert("아이디와 비밀번호를 입력해주세요."); history.back();</script>');
   }
   else {
-    result = connectDB.query("SELECT * FROM USERS WHERE userId='"+id+"';");
-    if(result.length < 1) {
+    resultUser = connectDB.query("SELECT * FROM USERS WHERE userId='"+id+"';");
+    if(resultUser.length < 1) {
       res.send('<script type="text/javascript">alert("존재하지 않는 사용자입니다."); history.back();</script>');
     }
     else {
       hasher({password:pw, salt:connectDB.query("SELECT pwSalt FROM USERS WHERE userId='"+id+"';")[0].pwSalt}, function(err, pass, salt, hash) {
         if(hash === connectDB.query("SELECT userPw FROM USERS WHERE userId='"+id+"';")[0].userPw) {
           req.session.userId = id;
-          res.redirect('/result/'+req.session.userId);
+          res.redirect('/schedule/'+req.session.userId);
         }
         else {
           res.send('<script type="text/javascript">alert("비밀번호가 잘못되었습니다."); history.back();</script>');
@@ -126,10 +130,10 @@ router.post('/signup', upload.single('profimg'), function(req, res) {
 });
 
 router.get('/checkid/:id', function(req, res) {
-  var result = connectDB.query("SELECT userId FROM USERS WHERE userId='"+req.params.id+"';");
+  var resultUser = connectDB.query("SELECT userId FROM USERS WHERE userId='"+req.params.id+"';");
   var flag = false;
 
-  if(result.length > 0) {
+  if(resultUser.length > 0) {
     flag = true;
   }
   else {
@@ -140,10 +144,10 @@ router.get('/checkid/:id', function(req, res) {
 });
 
 router.get('/checkemail/:email', function(req, res) {
-  var result = connectDB.query("SELECT userId FROM USERS WHERE userEmail='"+req.params.email+"';");
+  var resultUser = connectDB.query("SELECT userId FROM USERS WHERE userEmail='"+req.params.email+"';");
   var flag = false;
 
-  if(result.length > 0) {
+  if(resultUser.length > 0) {
     flag = true;
   }
   else {
@@ -162,9 +166,9 @@ router.get('/sidebar', function(req,res){
   res.render('sidebar');
 });
 
-router.get('/schedule', function(req, res) {
-  res.render('schedule', { title: 'Main' });
-});
+// router.get('/schedule', function(req, res) {
+//   res.render('schedule', { title: 'Main' });
+// });
 
 router.get('/schedule/list', function(req, res){
   res.render('schedule_list');
@@ -272,7 +276,7 @@ router.post('/actionUpload_contents', function(req, res) {
   res.send('request finished');
 });
 
-router.post('/actionUpload_images', upload.fields(imagefiles), function(req, res, next) {
+router.post('/actionUpload_images', uploadDiaryImg.fields(imagefiles), function(req, res, next) {
 
   var imageDirsRaw;
   var cnt = 0;
@@ -291,9 +295,9 @@ router.post('/actionUpload_images', upload.fields(imagefiles), function(req, res
   }
   connectDB.query("UPDATE IMAGETEST SET DIARYIMAGES='"+imageDirsRaw+"' WHERE CONTENTS='"+quillContents+"';");
 
-  result = connectDB.query("SELECT * FROM IMAGETEST WHERE CONTENTS='"+quillContents+"';")[0];
-  var imageDirRaw = result.DIARYIMAGES;
-  var conts = result.CONTENTS;
+  resultDiary = connectDB.query("SELECT * FROM IMAGETEST WHERE CONTENTS='"+quillContents+"';")[0];
+  var imageDirRaw = resultDiary.DIARYIMAGES;
+  var conts = resultDiary.CONTENTS;
   console.log(imageDirRaw);
   var imagesDir = new Array();
   imagesDir = imageDirRaw.split(',');
@@ -306,9 +310,9 @@ router.post('/actionUpload_images', upload.fields(imagefiles), function(req, res
 });
 
 router.get('/diarypreview', function(req, res) {
-  result = connectDB.query("SELECT * FROM IMAGETEST WHERE CONTENTS='"+quillContents+"';")[0];
-  var imageDirRaw = result.DIARYIMAGES;
-  var conts = result.CONTENTS;
+  resultDiary = connectDB.query("SELECT * FROM IMAGETEST WHERE CONTENTS='"+quillContents+"';")[0];
+  var imageDirRaw = resultDiary.DIARYIMAGES;
+  var conts = resultDiary.CONTENTS;
   console.log(imageDirRaw);
   var imagesDir = new Array();
   imagesDir = imageDirRaw.split(',');

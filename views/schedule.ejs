@@ -8,18 +8,18 @@
   <meta name="theme-color" content="#FDC23E">
 
   <!-- Semantic UI -->
-  <link rel="stylesheet" type="text/css" href="dist/semantic.css">
+  <link rel="stylesheet" type="text/css" href="../dist/semantic.css">
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
-  <script src="dist/semantic.js"></script>
+  <script src="../dist/semantic.js"></script>
 
   <!-- Our stylesheets -->
-  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/schedule.css">
-  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/calendar.css">
-  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/color.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/schedule.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/calendar.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/color.css">
 
   <!-- JQuery touch library -->
-  <script src="javascripts/jquery.touchSwipe.min.js"></script>
+  <script src="../javascripts/jquery.touchSwipe.min.js"></script>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico|Shrikhand" rel="stylesheet">
@@ -32,7 +32,7 @@
   <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
   <!-- Image libraries for Quill Editor -->
-  <script src="/javascripts/image-resize.min.js"></script>
+  <script src="../javascripts/image-resize.min.js"></script>
   <!-- <script src="/javascripts/image-drop.min.js"></script> -->
 
   <!-- 날짜 검색 라이브러리 -->
@@ -50,10 +50,10 @@
     <div class="item">
       <h1 class="ui center aligned container head-logo" id="logo_schedury">Schedury</h1>
       <div class="user-profile">
-        <img class="ui small circular image center aligned container" id="profile_pic" src="/images/profile_default.png" alt="profile image">
-        <div class="ui center aligned container user-nickname">Nickname</div>
+        <img class="ui small circular image center aligned container" id="profile_pic" style="background-image: url('<%= uprofimg %>'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
+        <div class="ui center aligned container user-nickname"><%= unickname %></div>
         <div class="ui segment">
-          메시지
+          <%= umessage %>
         </div>
       </div>
     </div>
@@ -133,13 +133,12 @@
 
     <div class="ui card info-card" id="info_card">
       <div class="content">
-        <img class="ui small circular image center aligned container" id="profile_image" src="/images/profile_default.png" alt="profile image"
-        />
+          <img class="ui small circular image center aligned container" id="profile_image" style="background-image: url('<%= uprofimg %>'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
         <div class="ui fluid input user-nickname">
-          <input id="nickname" type="text" value="Nickname" readonly>
+          <input id="nickname" type="text" value="<%= unickname %>" readonly>
         </div>
         <div class="ui fluid input user-msg">
-          <input id="user_message" type="text" value="메시지" readonly>
+          <input id="user_message" type="text" value="<%= umessage %>" readonly>
         </div>
         <div class="bottom-menu">
           <div class="ui circular button" id="edit_button" data-tooltip="정보 수정" data-position="left center">Edit</div>
@@ -209,9 +208,9 @@
 
               <div class="five wide column">
                 <div class="content-image">
-                  <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
-                  <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
-                  <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
+                  <img class="ui tiny circular image first" src="../images/diaryimageprev1.png">
+                  <img class="ui tiny circular image second" src="../images/diaryimageprev2.png">
+                  <img class="ui tiny circular image third" src="../images/diaryimageprev3.png">
                 </div>
               </div>
             </div>
@@ -238,9 +237,9 @@
 
               <div class="five wide column">
                 <div class="content-image">
-                  <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
-                  <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
-                  <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
+                  <img class="ui tiny circular image first" src="../images/diaryimageprev1.png">
+                  <img class="ui tiny circular image second" src="../images/diaryimageprev2.png">
+                  <img class="ui tiny circular image third" src="../images/diaryimageprev3.png">
                 </div>
               </div>
             </div>
@@ -266,9 +265,9 @@
 
               <div class="five wide column">
                 <div class="content-image">
-                  <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
-                  <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
-                  <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
+                  <img class="ui tiny circular image first" src="../images/diaryimageprev1.png">
+                  <img class="ui tiny circular image second" src="../images/diaryimageprev2.png">
+                  <img class="ui tiny circular image third" src="../images/diaryimageprev3.png">
                 </div>
               </div>
             </div>
@@ -294,9 +293,9 @@
 
               <div class="five wide column">
                 <div class="content-image">
-                  <img class="ui tiny circular image first" src="images/diaryimageprev1.png">
-                  <img class="ui tiny circular image second" src="images/diaryimageprev2.png">
-                  <img class="ui tiny circular image third" src="images/diaryimageprev3.png">
+                  <img class="ui tiny circular image first" src="../images/diaryimageprev1.png">
+                  <img class="ui tiny circular image second" src="../images/diaryimageprev2.png">
+                  <img class="ui tiny circular image third" src="../images/diaryimageprev3.png">
                 </div>
               </div>
             </div>
@@ -311,54 +310,54 @@
       
         <div class='images_column'>
           <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
           </div>
           <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
           </div>
           <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
-          </div>
-        </div>
-        <div class='images_column'>
-          <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
-          </div>
-          <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
-          </div>
-          <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
           </div>
         </div>
         <div class='images_column'>
           <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
           </div>
           <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
           </div>
           <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
-          </div>
-        </div>
-        <div class='images_column'>
-          <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
-          </div>
-          <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
-          </div>
-          <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
           </div>
         </div>
         <div class='images_column'>
           <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
           </div>
           <div class='pre_image_layout'>
-            <img class='pre_image' src='images/pre_image.jpg'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
+          </div>
+        </div>
+        <div class='images_column'>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
+          </div>
+        </div>
+        <div class='images_column'>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
+          </div>
+          <div class='pre_image_layout'>
+            <img class='pre_image' src='../images/pre_image.jpg'>
           </div>
 
         </div>
@@ -752,9 +751,9 @@
 
   <form id="uploader_img_diary" name="actionUploadDiaryImg" action="/actionUpload_images" method="POST" enctype="multipart/form-data" style="width: 0; height: 0; display: none;"></form>
 
-  <script src="javascripts/calendar.js"></script>
-  <script src="javascripts/schedule.js"></script>
-  <script src="javascripts/quill-uploader.js"></script>
+  <script src="../javascripts/calendar.js"></script>
+  <script src="../javascripts/schedule.js"></script>
+  <script src="../javascripts/quill-uploader.js"></script>
 
   <script>
     $('.ui.dropdown').dropdown();
