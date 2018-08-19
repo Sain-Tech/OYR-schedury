@@ -301,12 +301,229 @@ function calendarNavToggle(arg) {
 
 var startDate = 0;
 
-function calendarDayOnClick(year, month, day) {
+async function calendarDayOnClick(year, month, day) {
     //alert('Your choice: '+year+'년 '+month+'월 '+day+'일 ');
+
+    $('#sched_table>tbody').html(`<div class="ui active inverted dimmer">
+    <div class="ui text loader">Loading</div>
+  </div>
+  <p></p>
+`);
+
     today = new Date(year, month-1, day);
 
     $('.ui.longer.modal').modal('show');
     $('#modal_header_diary').html(month+'월 '+day+'일 '+getDayNameOfWeek(today.getDay())+'요일');
+
+    var currentDate = pad(year, 4)+'-'+pad(month, 2)+'-'+pad(day, 2);
+
+    var scheduleDatas = await getScheduleDatas(currentDate, currentDate);
+    var html = ``;
+    for(var i = 0; i < scheduleDatas.length; i++) {
+       html += `<tr id=schedule_`+i+`>
+                    <td class="schedule-time">`+(scheduleDatas[i].startDate>12?'오후':'오전')+`</td>
+                    <td>`+scheduleDatas[i].scheduleName+` 자세히`+i+` <br> 일정 장소`+i+` <br></td>
+                    <td>아이콘`+i+`</td>
+                </tr>`;
+    }
+
+    $('#sched_table>tbody').html(html);
+}
+
+async function dateDecorator() {
+
+    var scheduleDatas = await getScheduleDatas('def', 'def');
+    console.log(scheduleDatas);
+
+    for(var i = 0; i < $('#view_calendar>tbody>tr>td').length; i++) {
+        var currentDate = $('#calendar_body>tr>td').eq(i).attr('id').substring(2, 6)+'-'+$('#calendar_body>tr>td').eq(i).attr('id').substring(7, 9)+'-'+$('#calendar_body>tr>td').eq(i).attr('id').substring(10, 12);
+        var currentId = $('#calendar_body>tr>td').eq(i).attr('id');
+
+        console.log(currentDate);
+       // console.log('emptydiv'+emptyDivCnt);
+
+        for(var j = 0; j < scheduleDatas.length; j++) {
+            //console.log(scheduleDatas[j].startDate.substring(0, 10));
+            if(scheduleDatas[j].startDate.substring(0, 10) == currentDate) {
+                console.log('yes!');
+                var emptyDivCnt = $('#view_calendar>tbody>tr>#'+currentId+'>div').length;
+
+                $('#calendar_body>tr>#'+currentId).append(`<div class='deco-schedule-name'><p class='dec_schedule_`+i+`'>`+scheduleDatas[j].scheduleName+`</p></div>`);
+                
+                var start = new Date(scheduleDatas[j].startDate.substring(0, 10));
+                var end = new Date(scheduleDatas[j].endDate.substring(0, 10));
+
+                var loop = new Date(start);
+                
+                var cnt = 0;
+
+                while(loop <= end){
+                    var datestring = '#c_'+pad(loop.getFullYear(), 4)+'_'+pad(loop.getMonth()+1, 2)+'_'+pad(loop.getDate(), 2);
+
+                    console.log(datestring);
+
+                    console.log(emptyDivCnt);
+                    console.log(scheduleDatas[j].scheduleName);
+
+               
+                    if(getFirstDayPosition(loop.getDay(), startDate) == 0) {
+                        if(cnt > 0) {
+                            $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name'><p class='dec_schedule_`+j+`'>`+scheduleDatas[j].scheduleName+`</p></div>`);
+                        }
+                        emptyDivCnt = 0;
+                    }
+
+                    else {
+                        for(var fill = 0; fill < emptyDivCnt; fill++) {
+                            if($('#calendar_body>tr>'+datestring+'>div').eq(fill).length == 0) {
+                                $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-empty'></div>`);
+                            }
+                        }
+                        if(cnt > 0) {
+                            $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name continuous'></div>`);
+                        }
+                    }
+            
+
+                    // if(getFirstDayPosition(loop.getDay(), startDate) == 0) {
+                    //     if(cnt > 0) {
+                    //         $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name'><p class='dec_schedule_`+i+`'>`+scheduleDatas[j].scheduleName+`</p></div>`);
+                    //     } else {
+                    //         $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name continuous'></div>`);
+                    //     }
+                    // }
+
+                    // for(var fill = 0; fill < emptyDivCnt; fill++) {
+                    //     $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-empty'></div>`);
+                    // }
+
+                    // if(cnt > 0) {
+                       
+                    // }
+
+                    // if(getFirstDayPosition(loop.getDay(), startDate) == 0) {
+                    //     if(cnt > 0) {
+                    //         $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name'><p class='dec_schedule_`+i+`'>`+scheduleDatas[j].scheduleName+`</p></div>`);
+                    //     }
+                    //     if(getFirstDayPosition(start.getDay(), startDate) != 0) {
+                    //         emptyDivCnt = 0;
+                    //     }
+                    // }
+                    // else {
+                    //     for(var fill = 0; fill < emptyDivCnt; fill++) {
+                    //         $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-empty'></div>`);
+                    //     }
+
+                    //     if(cnt > 0) {
+                    //         $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name continuous'></div>`);
+                    //     }
+                    // }
+            
+                    var newDate = loop.setDate(loop.getDate() + 1);
+                    loop = new Date(newDate);
+                    cnt++;
+                }
+                //emptyDivCnt++;
+            }
+        }
+    }
+
+    console.log(scheduleDatas.map(a => a.startDate));
+    
+    // for(var i = 0; i < scheduleDatas.length; i++) {
+    //     var id = '#c_' + scheduleDatas[i].startDate.replace(/-/g, '_').substring(0, 10);
+    //     console.log(id);
+    //     $('#calendar_body>tr>'+id).append(`<div class='deco-schedule-name'><p class='dec_schedule_`+i+`'>`+scheduleDatas[i].scheduleName+`</p></div>`);
+        
+    //     var start = new Date(scheduleDatas[i].startDate.substring(0, 10));
+    //     var end = new Date(scheduleDatas[i].endDate.substring(0, 10));
+    //     var loop = new Date(start);
+
+    //     var width = 100;
+    //     var cnt = 0;
+    //     var widthCnt = 0;
+
+    //     while(loop <= end){
+
+    //         var datestring = '#c_'+pad(loop.getFullYear(), 4)+'_'+pad(loop.getMonth()+1, 2)+'_'+pad(loop.getDate(), 2);
+
+    //         //console.log('divider this ' + datestring);
+
+    //         //console.log('div count: '+ $('#calendar_body>tr>'+id+'>div').length);
+
+    //         if(widthCnt > 0) {
+    //             for(var c = 0; c < $('#calendar_body>tr>'+id+'>div').length-1; c++) {
+    //                 //console.log('test!!!');
+    //                 $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-empty'></div>`);
+    //             }
+    //             //console.log('append!!!');
+    //             if(getFirstDayPosition(loop.getDay(), startDate) == 0) {
+    //                 $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name'><p class='dec_schedule_`+i+`'>`+scheduleDatas[i].scheduleName+`</p></div>`);
+    //                 widthCnt = 0;
+    //             }
+    //             else {
+    //                 $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name continuous'></div>`);
+    //             }
+    //         }
+
+    //         console.log('cvt : '+$('#calendar_body>tr>'+datestring+'>div>').filter($('.dec_schedule_'+i)).eq(4).html());
+    //         //$('#calendar_body>tr>td>div>').filter($('.dec_schedule_'+i)).eq(0).html('3453');
+    //         //$('#calendar_body>tr>td>div>').filter($('.dec_schedule_'+i)).css('cssText', 'width:'+width+'% !important')
+
+    //         //console.log(getFirstDayPosition(loop.getDay(), startDate));
+
+    //         //console.log('datestring: ' + datestring);
+
+    //         var newDate = loop.setDate(loop.getDate() + 1);
+    //         loop = new Date(newDate);
+    //         cnt++;
+    //         widthCnt++;
+    //         width = (100 * widthCnt) + ((widthCnt-1) * 16);
+
+    //         //$('#calendar_body>tr>'+datestring+'>div>p').css('cssText', 'width:'+width+'% !important');
+            
+    //         console.log(width);
+    //     }
+
+    //     //$('#calendar_body>tr>'+id+'>div>').filter($('.dec_schedule_'+i)).css('cssText', 'width:'+width+'% !important');
+
+    // }
+}
+
+function getScheduleDatas(start, end) {
+    return new Promise(function(resolve, reject) {
+        var sStartDate;
+        var sEndDate;
+
+        if(start == 'def' || end == 'def') {
+            sStartDate = $('#calendar_body>tr>td').eq(0).attr('id').substring(2, 6)+'-'+$('#calendar_body>tr>td').eq(0).attr('id').substring(7, 9)+'-'+$('#calendar_body>tr>td').eq(0).attr('id').substring(10, 12);
+            sEndDate = $('#calendar_body>tr>td').eq($('#calendar_body>tr>td').length-1).attr('id').substring(2, 6)+'-'+$('#calendar_body>tr>td').eq($('#calendar_body>tr>td').length-1).attr('id').substring(7, 9)+'-'+$('#calendar_body>tr>td').eq($('#calendar_body>tr>td').length-1).attr('id').substring(10, 12);
+        }
+        else {
+            sStartDate = start;
+            sEndDate = end;
+        }
+    
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/getschedules', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                ///console.log(JSON.parse(xhr.responseText));
+                if(xhr.responseText != undefined) {
+                    resolve(JSON.parse(xhr.responseText));
+                }
+                else {
+                    reject(Error('error'));
+                }
+            }
+        }
+    
+        xhr.send(JSON.stringify({
+            mStartDate: sStartDate,
+            mEndDate: sEndDate
+        }));
+    });
 }
 
 function getFirstDayPosition(doMonthGetDay, argStartDateOpt) {
@@ -375,32 +592,6 @@ function getDayNameOfWeek(dayArg) {
         return '금';
     else if(dayArg == 6)
         return '토';
-}
-
-function dateDecorator() {
-
-    for(var i = 0; i < $('#calendar_body>tr>td').length; i++) {
-        console.log('calendar cell ' + i);
-        var dtYear = $('#calendar_body>tr>td').eq(i).attr('id').substring(2, 6);
-        var dtMonth = $('#calendar_body>tr>td').eq(i).attr('id').substring(7, 9);
-        var dtDay = $('#calendar_body>tr>td').eq(i).attr('id').substring(10, 12);
-
-        console.log('date of cell : ' + dtYear + '-' +dtMonth+ '-' +dtDay)
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", '/getschedules', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onreadystatechange = function () {
-            if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-                console.log(xhr.responseText);
-            }
-        }
-        xhr.send(JSON.stringify({
-            mYear: parseInt(dtYear),
-            mMonth: parseInt(dtMonth),
-            mDay: parseInt(dtDay)
-        }));
-    }
 }
 
 function pad(n, width) {

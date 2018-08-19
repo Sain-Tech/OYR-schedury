@@ -150,14 +150,14 @@
     <div class="calendar-this">
       <div class="calendar-menu">
         <div class="ui pagination menu">
-          <a class="icon item" onclick="prevCalendar(2);">
+          <a class="icon item" onclick="prevCalendar(2); dateDecorator();">
             <i class="left chevron icon"></i>
           </a>
 
           <a id="tbCalendarYM" class="item calendar title" onclick="calendarNavToggle(0); getDateForSearch();">
           </a>
 
-          <a class="icon item" onclick="nextCalendar(2);">
+          <a class="icon item" onclick="nextCalendar(2); dateDecorator();">
             <i class="right chevron icon"></i>
           </a>
         </div>

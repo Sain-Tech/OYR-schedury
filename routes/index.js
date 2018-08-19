@@ -329,12 +329,15 @@ router.get('/diarypreview', function(req, res) {
 });
 
 router.post('/getschedules', function(req, res) {
-  dtYear = req.body.mYear;
-  dtMonth = req.body.mMonth;
-  dtDay = req.body.mDay;
-  console.log(dtYear + ', ' + dtMonth);
-  resultSchedule = connectDB.query("SELECT * FROM SCHEDULE WHERE userId='"+req.session.userId+"' AND YEAR(startDate) = "+dtYear+" AND MONTH(startDate)="+dtMonth+" AND DAY(startDate)="+dtDay+";");
-  console.log(resultSchedule);
+
+  var startDate = req.body.mStartDate;
+  var endDate = req.body.mEndDate;
+
+  console.log(startDate);
+  console.log(endDate);
+
+  resultSchedule = connectDB.query("SELECT * FROM SCHEDULE WHERE userId='"+req.session.userId+"' AND startDate BETWEEN '"+startDate+"' AND '"+endDate+"';");
+  console.log(startDate + ' to ' + endDate);
   res.send(resultSchedule);
 });
 

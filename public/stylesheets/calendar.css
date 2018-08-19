@@ -153,6 +153,45 @@ h3 {
     height: 69px;
 }
 
+.deco-schedule-empty {
+    width: 100%;
+    height: 16px;
+    margin-bottom: 4px;
+    position: relative;
+}
+
+.deco-schedule-name {
+    background-color: skyblue;
+    border-radius: 3px;
+    width: calc(100% + 16px);
+    height: 16px;
+    margin-left: -8px;
+    margin-bottom: 4px;
+    position: relative;
+    cursor: pointer;
+}
+
+.deco-schedule-name.continuous {
+    width: calc(100% + 28px);
+    margin-left: -20px;
+}
+
+.deco-schedule-name>p {
+    padding: 0px 0px 0px 2px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.deco-schedule-name.important {
+    background-color: red;
+    color: white;
+}
+
 @media only screen and (max-width: 800px)  {
     .calendar-navi-main>.ui.card {
         top: 128px;
