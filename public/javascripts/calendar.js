@@ -120,7 +120,7 @@ function buildCalendar(arg){//현재 달 달력 만들기
     //테이블에 정확한 날짜 찍는 변수
     //innerHTML : js 언어를 HTML의 권장 표준 언어로 바꾼다
     //new를 찍지 않아서 month는 +1을 더해줘야 한다. 
-    tbCalendarYM.innerHTML = `<span><h3>` + (today.getMonth() + 1) + `</h3></span>` + today.getFullYear();
+    tbCalendarYM.innerHTML = `<span><h3>` + (today.getMonth() + 1) + `</h3></span>` + `<div>` + today.getFullYear() + `</div>`;
 
     if (arg == 0) {
         tbCalendarHeader.innerHTML = `
@@ -189,7 +189,7 @@ function buildCalendar(arg){//현재 달 달력 만들기
         cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
         cell.innerHTML = i;//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
         cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
-        cell.setAttribute('id', 'c_'+today.getFullYear()+'_'+(today.getMonth()+1)+'_'+i);
+        cell.setAttribute('id', 'c_'+today.getFullYear()+'_'+pad((today.getMonth()+1), 2)+'_'+pad(i, 2));
         cell.setAttribute('onclick', 'calendarDayOnClick('+today.getFullYear()+', '+(today.getMonth()+1)+', '+i+')');
 
         /* 토요일 시작 */
@@ -267,7 +267,7 @@ function buildCalendar(arg){//현재 달 달력 만들기
     for(var i = 0; i < lastFillCnt; i++) {
         cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
         cell.innerHTML = "<font color=#bdbdbd>" + (i + 1);
-        cell.setAttribute('id', 'c_'+today.getFullYear()+'_'+(today.getMonth()+2)+'_'+(i+1));
+        cell.setAttribute('id', 'c_'+today.getFullYear()+'_'+pad((today.getMonth()+2), 2)+'_'+pad((i+1), 2));
         cell.setAttribute('onclick', 'calendarDayOnClick('+today.getFullYear()+', '+(today.getMonth()+2)+', '+(i+1)+')');
     }
 
@@ -283,7 +283,7 @@ function doFillFirstCnt() {
     for(var i = 0; i < firstFillCnt2; i++) {
         var x = tbCalendar.rows[0].cells;
         x[i].innerHTML = "<font color=#bdbdbd>" + (lastDate.getDate() - ((firstFillCnt2 - 1) - i));
-        x[i].setAttribute('id', 'c_'+today.getFullYear()+'_'+today.getMonth()+'_'+(lastDate.getDate() - ((firstFillCnt2 - 1) - i)));
+        x[i].setAttribute('id', 'c_'+today.getFullYear()+'_'+pad(today.getMonth(), 2)+'_'+pad((lastDate.getDate() - ((firstFillCnt2 - 1) - i)), 2));
         x[i].setAttribute('onclick', 'calendarDayOnClick('+today.getFullYear()+', '+today.getMonth()+', '+(lastDate.getDate() - ((firstFillCnt2 - 1) - i))+')');
     }
 }
@@ -375,4 +375,35 @@ function getDayNameOfWeek(dayArg) {
         return '금';
     else if(dayArg == 6)
         return '토';
+}
+
+function dateDecorator() {
+
+    for(var i = 0; i < $('#calendar_body>tr>td').length; i++) {
+        console.log('calendar cell ' + i);
+        var dtYear = $('#calendar_body>tr>td').eq(i).attr('id').substring(2, 6);
+        var dtMonth = $('#calendar_body>tr>td').eq(i).attr('id').substring(7, 9);
+        var dtDay = $('#calendar_body>tr>td').eq(i).attr('id').substring(10, 12);
+
+        console.log('date of cell : ' + dtYear + '-' +dtMonth+ '-' +dtDay)
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", '/getschedules', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                console.log(xhr.responseText);
+            }
+        }
+        xhr.send(JSON.stringify({
+            mYear: parseInt(dtYear),
+            mMonth: parseInt(dtMonth),
+            mDay: parseInt(dtDay)
+        }));
+    }
+}
+
+function pad(n, width) {
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
 }

@@ -271,6 +271,8 @@ router.post('/actionUpload_contents', function(req, res) {
     imagefiles.push(req.body.imagefile[i]);
   }
 
+  //다이어리 테이블 생성(이름: DIARY)
+  //DIARY 테이블에 이미지 경로를 제외한 데이터 추가(INSERT 이용), 이미지 경로는 우선 'undefined'로 추가
   connectDB.query("INSERT INTO IMAGETEST VALUES('"+quillContents+"', 'undefined');");
 
   res.send('request finished');
@@ -293,6 +295,8 @@ router.post('/actionUpload_images', uploadDiaryImg.fields(imagefiles), function(
     }
     cnt++;
   }
+
+  //DIARY 테이블에 이미지 경로를 'undefined'에서 imageDirsRaw로 변경(UPDATE 이용), WHERE 조건으로 사용자 아이디와 날짜 비교
   connectDB.query("UPDATE IMAGETEST SET DIARYIMAGES='"+imageDirsRaw+"' WHERE CONTENTS='"+quillContents+"';");
 
   resultDiary = connectDB.query("SELECT * FROM IMAGETEST WHERE CONTENTS='"+quillContents+"';")[0];
@@ -322,6 +326,16 @@ router.get('/diarypreview', function(req, res) {
     contents: conts,
     images: imagesDir
   });
+});
+
+router.post('/getschedules', function(req, res) {
+  dtYear = req.body.mYear;
+  dtMonth = req.body.mMonth;
+  dtDay = req.body.mDay;
+  console.log(dtYear + ', ' + dtMonth);
+  resultSchedule = connectDB.query("SELECT * FROM SCHEDULE WHERE userId='"+req.session.userId+"' AND YEAR(startDate) = "+dtYear+" AND MONTH(startDate)="+dtMonth+" AND DAY(startDate)="+dtDay+";");
+  console.log(resultSchedule);
+  res.send(resultSchedule);
 });
 
 module.exports = router;
