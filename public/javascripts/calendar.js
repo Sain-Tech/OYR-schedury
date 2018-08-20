@@ -330,106 +330,117 @@ async function calendarDayOnClick(year, month, day) {
     $('#sched_table>tbody').html(html);
 }
 
+function cvIdtoDate(ids) {
+    var mYear = ids.substring(2, 6);
+    var mMonth = ids.substring(7, 9);
+    var mDate = ids.substring(10, 12);
+
+    return mYear+'-'+mMonth+'-'+mDate;
+}
+
+function cvDatetoId(datas) {
+    return 'c_'+datas.replace(/-/g, '_');
+}
+
+function cvRawDatetoId(rawDatas) {
+    return cvDatetoId(pad(rawDatas.getFullYear(), 4)+'-'+pad(rawDatas.getMonth()+1, 2)+'-'+pad(rawDatas.getDate(), 2));
+}
+
 async function dateDecorator() {
 
     var scheduleDatas = await getScheduleDatas('def', 'def');
+
+    if(scheduleDatas.length > 1) {
+        scheduleDatas.sort(function(a, b) {
+            return a.startDate < b.startDate ? -1 : a.startDate > b.startDate ? 1 : 0;
+        });
+    }
+
     console.log(scheduleDatas);
+    console.error("don't bother me anymore!!")
 
-    for(var i = 0; i < $('#view_calendar>tbody>tr>td').length; i++) {
-        var currentDate = $('#calendar_body>tr>td').eq(i).attr('id').substring(2, 6)+'-'+$('#calendar_body>tr>td').eq(i).attr('id').substring(7, 9)+'-'+$('#calendar_body>tr>td').eq(i).attr('id').substring(10, 12);
-        var currentId = $('#calendar_body>tr>td').eq(i).attr('id');
+    for(var i = 0; i < scheduleDatas.length; i++) {
+        var currentStartDate = scheduleDatas[i].startDate.substring(0, 10);
+        var currentEndDate = scheduleDatas[i].endDate.substring(0, 10);
 
-        console.log(currentDate);
-       // console.log('emptydiv'+emptyDivCnt);
+        var start = new Date(currentStartDate);
+        var end = new Date(currentEndDate);
+        var loop = new Date(start);
 
-        for(var j = 0; j < scheduleDatas.length; j++) {
-            //console.log(scheduleDatas[j].startDate.substring(0, 10));
-            if(scheduleDatas[j].startDate.substring(0, 10) == currentDate) {
-                console.log('yes!');
-                var emptyDivCnt = $('#view_calendar>tbody>tr>#'+currentId+'>div').length;
+        var cnt = 0;
+        console.log(scheduleDatas[i].index+' 인덱스 일정에 대한 내용을 등록하는 위치 입니다.');
 
-                $('#calendar_body>tr>#'+currentId).append(`<div class='deco-schedule-name'><p class='dec_schedule_`+i+`'>`+scheduleDatas[j].scheduleName+`</p></div>`);
-                
-                var start = new Date(scheduleDatas[j].startDate.substring(0, 10));
-                var end = new Date(scheduleDatas[j].endDate.substring(0, 10));
-
-                var loop = new Date(start);
-                
-                var cnt = 0;
-
-                while(loop <= end){
-                    var datestring = '#c_'+pad(loop.getFullYear(), 4)+'_'+pad(loop.getMonth()+1, 2)+'_'+pad(loop.getDate(), 2);
-
-                    console.log(datestring);
-
-                    console.log(emptyDivCnt);
-                    console.log(scheduleDatas[j].scheduleName);
-
-               
-                    if(getFirstDayPosition(loop.getDay(), startDate) == 0) {
-                        if(cnt > 0) {
-                            $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name'><p class='dec_schedule_`+j+`'>`+scheduleDatas[j].scheduleName+`</p></div>`);
-                        }
-                        emptyDivCnt = 0;
-                    }
-
-                    else {
-                        for(var fill = 0; fill < emptyDivCnt; fill++) {
-                            if($('#calendar_body>tr>'+datestring+'>div').eq(fill).length == 0) {
-                                $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-empty'></div>`);
-                            }
-                        }
-                        if(cnt > 0) {
-                            $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name continuous'></div>`);
-                        }
-                    }
-            
-
-                    // if(getFirstDayPosition(loop.getDay(), startDate) == 0) {
-                    //     if(cnt > 0) {
-                    //         $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name'><p class='dec_schedule_`+i+`'>`+scheduleDatas[j].scheduleName+`</p></div>`);
-                    //     } else {
-                    //         $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name continuous'></div>`);
-                    //     }
-                    // }
-
-                    // for(var fill = 0; fill < emptyDivCnt; fill++) {
-                    //     $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-empty'></div>`);
-                    // }
-
-                    // if(cnt > 0) {
-                       
-                    // }
-
-                    // if(getFirstDayPosition(loop.getDay(), startDate) == 0) {
-                    //     if(cnt > 0) {
-                    //         $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name'><p class='dec_schedule_`+i+`'>`+scheduleDatas[j].scheduleName+`</p></div>`);
-                    //     }
-                    //     if(getFirstDayPosition(start.getDay(), startDate) != 0) {
-                    //         emptyDivCnt = 0;
-                    //     }
-                    // }
-                    // else {
-                    //     for(var fill = 0; fill < emptyDivCnt; fill++) {
-                    //         $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-empty'></div>`);
-                    //     }
-
-                    //     if(cnt > 0) {
-                    //         $('#calendar_body>tr>'+datestring).append(`<div class='deco-schedule-name continuous'></div>`);
-                    //     }
-                    // }
-            
-                    var newDate = loop.setDate(loop.getDate() + 1);
-                    loop = new Date(newDate);
-                    cnt++;
+        while(loop <= end) {
+            if(cnt > 0) {
+                //다음거 출력할 때 처음날짜 셀에 있는 div 개수를 알아내서 다음거 출력시 div 위치를 잡아준다.
+                if(cnt == 1) {
+                    var tmpdate = new Date(loop);
+                    tmpdate.setDate(tmpdate.getDate() - 1);
+                    //console.log(tmpdate);
+                    var count = $('#view_calendar>tbody>tr>#'+cvRawDatetoId(tmpdate)+'>div').length;
+                    console.log(count);
                 }
-                //emptyDivCnt++;
             }
+            $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='deco-schedule-name'><p>`+scheduleDatas[i].scheduleName+`</p></div>`);
+            var newDate = loop.setDate(loop.getDate() + 1);
+            loop = new Date(newDate);
+            cnt++;
         }
     }
 
-    console.log(scheduleDatas.map(a => a.startDate));
-    
+    // for(var i = 0; i < $('#view_calendar>tbody>tr').length; i++) {
+    //     for(var j = 0; j < 7; j++) {
+    //         var cls = $('#view_calendar>tbody>tr').eq(i);
+    //         var currentCellDate = cvIdtoDate(cls.children().eq(j).attr('id'));
+
+    //         for(var k = 0; k < scheduleDatas.length; k++) {
+
+    //             var currentStartDate = scheduleDatas[k].startDate.substring(0, 10);
+    //             var currentEndDate = scheduleDatas[k].endDate.substring(0, 10);
+    //             if(currentCellDate == currentStartDate) {
+            
+    //                 var start = new Date(currentStartDate);
+    //                 var end = new Date(currentEndDate);
+    //                 var loop = new Date(start);
+
+    //                 var cnt = 0;
+    //                 while(loop <= end) {
+                        
+    //                     if(cnt < 1) {
+    //                         //최초 표시에는 레이블 붙이기
+    //                         console.log(cvRawDatetoId(loop));
+    //                         $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='deco-schedule-name'><p class='dec_schedule_`+i+`'>`+scheduleDatas[k].scheduleName+`</p></div>`);
+    //                     }
+    //                     else if(cnt > 0) {
+    //                         //두번째 부터는 EndDate까지 루프를 톨면서 줄 잇기
+    //                         //단 루프의 날짜가 달력상에서 줄바꿈이 일어나면 레이블 붙이기
+    //                         if(getFirstDayPosition(loop.getDay(), startDate) == 0) {
+    //                             $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='deco-schedule-name'><p class='dec_schedule_`+i+`'>`+scheduleDatas[k].scheduleName+`</p></div>`);
+    //                         }
+    //                         else {
+    //                             $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='deco-schedule-name continuous'></div>`);
+    //                         }
+    //                     }
+
+    //                     var newDate = loop.setDate(loop.getDate() + 1);
+    //                     loop = new Date(newDate);
+    //                     cnt++;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     console.log(i);
+    // }
+
+    // for(var i = 0; i < $('#view_calendar>tbody>tr>td').length; i++) {
+    //     var currentDate = $('#calendar_body>tr>td').eq(i).attr('id').substring(2, 6)+'-'+$('#calendar_body>tr>td').eq(i).attr('id').substring(7, 9)+'-'+$('#calendar_body>tr>td').eq(i).attr('id').substring(10, 12);
+    //     var currentId = $('#calendar_body>tr>td').eq(i).attr('id');
+
+    //     console.log(currentDate);
+    //    // console.log('emptydiv'+emptyDivCnt);
+
+    //     for(var j = 0; j < scheduleDatas.length; j++) {
+    //     }
     // for(var i = 0; i < scheduleDatas.length; i++) {
     //     var id = '#c_' + scheduleDatas[i].startDate.replace(/-/g, '_').substring(0, 10);
     //     console.log(id);
