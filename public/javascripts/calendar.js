@@ -301,6 +301,8 @@ function calendarNavToggle(arg) {
 
 var startDate = 0;
 
+$('#modal_content>#left_cont').append(`<div id="fakeDate" style="width:0; height:0; display:none"></div>`);
+
 async function calendarDayOnClick(year, month, day) {
     //alert('Your choice: '+year+'년 '+month+'월 '+day+'일 ');
 
@@ -313,6 +315,7 @@ async function calendarDayOnClick(year, month, day) {
     today = new Date(year, month-1, day);
 
     $('.ui.longer.modal').modal('show');
+    $('#modal_content>#left_cont>#fakeDate').html(+year+`-`+pad(month, 2)+`-`+pad(day, 2));
     $('#modal_header_diary').html(month+'월 '+day+'일 '+getDayNameOfWeek(today.getDay())+'요일');
 
     var currentDate = pad(year, 4)+'-'+pad(month, 2)+'-'+pad(day, 2);
@@ -382,23 +385,30 @@ async function dateDecorator() {
                     divcount = $('#view_calendar>tbody>tr>#'+cvRawDatetoId(tmpdate)+'>div').length - $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)+'>div').length;
                     console.log(divcount);
                 }
-                // else {
-                    if(getFirstDayPosition(loop.getDay(), startDate) != 0) {
-                        for(var j = 0; j < divcount-1; j++) {
-                            $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='deco-schedule-empty'></div>`);
-                        }
+                if(getFirstDayPosition(loop.getDay(), startDate) != 0) {
+                    for(var j = 0; j < divcount-1; j++) {
+                        $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='deco-schedule-empty'></div>`);
                     }
-                    else{
-                        divcount = 0;
-                    }
-                // }
+                    $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='schdId`+i+`'><div class='deco-schedule-name continuous'></div></div>`);
+                }
+                else{
+                    divcount = 0;
+                    $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='schdId`+i+`'><div class='deco-schedule-name'><p>`+scheduleDatas[i].scheduleName+`</p></div></div>`);
+                }   
             }
-            
-            $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='deco-schedule-name'><p>`+scheduleDatas[i].scheduleName+`</p></div>`);
+            else if(cnt < 1) {
+                $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='schdId`+i+`'><div class='deco-schedule-name'><p>`+scheduleDatas[i].scheduleName+`</p></div></div>`);
+            }
             var newDate = loop.setDate(loop.getDate() + 1);
             loop = new Date(newDate);
             cnt++;
         }
+    }
+
+    for(var i = 0; i < $('#view_calendar>tbody>tr>td').length; i++) {
+        var emptyDivs = $('#view_calendar>tbody>tr>td').eq(i);
+        emptyDivs = emptyDivs.children().filter('.deco-schedule-empty').length;
+        console.log('androidandroid '+ emptyDivs);
     }
 }
 

@@ -512,3 +512,70 @@ $(document).ready(function(){
     });
     
 });
+
+function submitProf(arg){
+    if(arg == undefined) {
+        var idx = $(this).parent().parent().index();
+        var frm = document.getElementById('change_profile_image');
+        frm.method = 'POST';
+        frm.enctype = 'multipart/form-data';
+        console.log('help me');
+        var formData = new FormData(frm);
+        $.ajax({
+            type: "POST",
+            url: '/change_profile_img',
+            data:formData,
+            async:false,
+            cache:false,
+            contentType:false,
+            processData:false,
+            success: uploadSuccess,
+            error: uploadError
+        });
+    }
+    else if(arg == 1) {
+        $.ajax({
+            url: '/set_default_profile',
+            method: "POST",
+            data: '',
+            dataType: "html",
+            success: uploadSuccess,
+            error: uploadError
+        });
+    }
+}
+
+function uploadSuccess(json, status){
+    console.log(json);
+
+    $('#profile_pic').css('background-image', 'url("'+json+'")');
+    $('#profile_image').css('background-image', 'url("'+json+'")');
+}
+
+function uploadError(){
+    alert('error!');
+}
+
+function getProfImage() {
+    var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/getprofimagedir', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                console.log(xhr.responseText+'');
+                $('#profile_pic').css('background-image', 'url("'+xhr.responseText+'")');
+                $('#profile_image').css('background-image', 'url("'+xhr.responseText+'")');
+            }
+        }
+    
+        xhr.send();
+}
+
+function close_modal(){
+    $('.profpic-modal').modal('hide');
+}
+
+function resetProfpic(){
+    //$('#profileImage').val('profile_default.png');
+    submitProf(1);
+}

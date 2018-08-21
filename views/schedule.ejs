@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <link rel='icon' type='images/png' href='/images/headLogo.png'>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -371,15 +372,12 @@
   <!-- 프로필 사진 수정 모달 -->
   <div class="ui mini modal profpic-modal">
     <div class="ui actions grid modal-cont">
-      <a class="centered row" href="">
-        <div>프로필 사진 변경</div>
-      </a>
-      <a class="centered row" href="">
-        <div>프로필 사진 삭제 (기본 이미지로 설정)</div>
-      </a>
-      <a class="centered row" href="">
-        <div>취소</div>
-      </a>
+      <button class="centered row" onclick="$('#profileImage').click()">프로필 사진 변경</button>
+      <button class="centered row" onclick="resetProfpic()">프로필 사진 삭제 (기본 이미지로 설정)</button>
+      <button class="centered row" onclick="close_modal()">취소</button>
+      <form action="/change_profile_img" id="change_profile_image" method="post" enctype="multipart/form-data">
+        <input accept="image/jpeg, image/png" name="profileImage" id="profileImage" type="file" style="display: none" onchange="submitProf()">
+      </form>
     </div>
   </div>
 
@@ -558,12 +556,12 @@
           </div>
           <div id='write_diary'>
             <div id="title_layout">
-              <input id="title" type="text" class="nanumsquare" placeholder="제목을 입력하세요" name="titleDiary" form="uploader_img_diary">
+              <input id="title" type="text" class="nanumsquare" placeholder="제목을 입력하세요" form="uploader_img_diary">
 
               <div id="기분날씨">
                 <div class="ui inline dropdown" id='emotion'>
                   <div class="text">
-                    <img class="ui image default_emotion" src="/images/emotion/073-muted-1.png"> 기분
+                    <img class="ui image default_emotion" id='sel_emotion' src="/images/emotion/073-muted-1.png"> 기분
                   </div>
                   <i class="dropdown icon"></i>
                   <div class="menu">
@@ -626,7 +624,7 @@
 
                 <div class="ui inline dropdown" id='weather'>
                   <div class="text">
-                    <img class="ui image" src="/images/weather/021-sunrise.png"> 날씨
+                    <img class="ui image" id='sel_weather' src="/images/weather/021-sunrise.png"> 날씨
                   </div>
                   <i class="dropdown icon"></i>
                   <div class="menu">
@@ -758,6 +756,7 @@
   <script>
     $('.ui.dropdown').dropdown();
     buildCalendar(2);
+    getProfImage();
     dateDecorator();
   </script>
 </body>

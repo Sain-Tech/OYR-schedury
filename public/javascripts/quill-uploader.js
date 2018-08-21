@@ -181,7 +181,15 @@ function editorOK() {
             });  
         }
     }
+    var selDate = $('#modal_content>#left_cont>#fakeDate').html();
+    var selectWeather= $('#sel_emotion').attr('src');
+    var selectEmotion= $('#sel_weather').attr('src');
+    var title = $('#title').val();
     xhr.send(JSON.stringify({
+        date: selDate,
+        emotion: selectWeather,
+        weather: selectEmotion,
+        valuetitle: title,
         value: datas,
         imagefile: imageFields
     }));

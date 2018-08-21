@@ -170,7 +170,7 @@ router.get('/sidebar', function(req,res){
 //   res.render('schedule', { title: 'Main' });
 // });
 
-router.get('/schedule/list', function(req, res){
+router.get('/list', function(req, res){
   res.render('schedule_list');
 });
 
@@ -270,9 +270,28 @@ router.post('/actionUpload_contents', function(req, res) {
   for(var i = 0; i < req.body.imagefile.length; i++) {
     imagefiles.push(req.body.imagefile[i]);
   }
+  
+  console.log('contents1 '+quillContents);
 
+  connectDB.query("CREATE TABLE IF NOT EXISTS DIARY (`index` int(11) AUTO_INCREMENT, `id` char(30), `date` date, `title` text, `diary` longtext, `weather` text, `emotion` text, `time` time, `images` mediumtext, PRIMARY KEY(`index`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+  console.log('DIARY 테이블 생성됨');
   //다이어리 테이블 생성(이름: DIARY)
-  //DIARY 테이블에 이미지 경로를 제외한 데이터 추가(INSERT 이용), 이미지 경로는 우선 'undefined'로 추가
+
+  console.log('contents2 '+quillContents);
+
+  var title=req.body.valuetitle;
+  var indate=req.body.date;
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  var time=  h + ":" + m + ":" + s;
+
+  console.log('contents3 '+quillContents);
+  quillContents = req.body.value; //일기 내용
+  connectDB.query("INSERT INTO DIARY(id, date, title, diary, weather, emotion, time, images) VALUES('"+userID+"','"+indate+"','"+title+"','"+quillContents+"','"+weather+"','"+emotion+"','"+time+"','undefined')");
+  console.log('content4 '+quillContents);
+  //DIARY 테이블에 이미지 경로를 제외한 데이터 추가(INSERT 이용), 이미지 경로는 우선 'undefined'로 추가 
+
   connectDB.query("INSERT INTO IMAGETEST VALUES('"+quillContents+"', 'undefined');");
 
   res.send('request finished');
@@ -351,6 +370,30 @@ router.post('/getschedules', function(req, res) {
     console.log(startDate + ' to ' + endDate);
   }
   res.send(resultSchedule);
+});
+
+router.post('/change_profile_img', upload.single('profileImage'), function(req, res){
+  console.log(req.file.path);
+  if(req.file != undefined){
+    var profileImageF = '../' + req.file.path;
+  } else {
+    var profileImageF = '../images/profile_default.png';
+  }
+  
+  connectDB.query("UPDATE USERS SET profileImageDir='"+profileImageF+"' WHERE userId='"+req.session.userId+"'");
+  res.send(profileImageF);
+
+});
+
+router.post('/getprofimagedir', function(req, res) {
+  res.send(connectDB.query("SELECT profileImageDir FROM USERS WHERE userId='"+req.session.userId+"'")[0].profileImageDir);
+});
+
+router.post('/set_default_profile', function(req, res) {
+  var defProfImage = '../images/profile_default.png';
+  connectDB.query("UPDATE USERS SET profileImageDir='"+defProfImage+"' WHERE userId='"+req.session.userId+"'");
+  console.log('default prof updated!');
+  res.send(defProfImage);
 });
 
 module.exports = router;
