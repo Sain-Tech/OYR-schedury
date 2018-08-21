@@ -263,36 +263,35 @@ router.get('/schedule/diary', function(req, res){
 var quillContents;
 var imagefiles = [];
 
+var indate = null;
+
 router.post('/actionUpload_contents', function(req, res) {
   quillContents = req.body.value;
-  console.log('contents! '+quillContents);
+
   
   for(var i = 0; i < req.body.imagefile.length; i++) {
     imagefiles.push(req.body.imagefile[i]);
   }
   
-  console.log('contents1 '+quillContents);
 
   connectDB.query("CREATE TABLE IF NOT EXISTS DIARY (`index` int(11) AUTO_INCREMENT, `id` char(30), `date` date, `title` text, `diary` longtext, `weather` text, `emotion` text, `time` time, `images` mediumtext, PRIMARY KEY(`index`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
   console.log('DIARY 테이블 생성됨');
   //다이어리 테이블 생성(이름: DIARY)
 
-  console.log('contents2 '+quillContents);
-
   var title=req.body.valuetitle;
-  var indate=req.body.date;
-  var h = today.getHours();
-  var m = today.getMinutes();
-  var s = today.getSeconds();
-  var time=  h + ":" + m + ":" + s;
+  indate=req.body.date;
+  var time=req.body.time;
+  var emotion=req.body.emotion;
+  var weather=req.body.weather;
 
-  console.log('contents3 '+quillContents);
   quillContents = req.body.value; //일기 내용
-  connectDB.query("INSERT INTO DIARY(id, date, title, diary, weather, emotion, time, images) VALUES('"+userID+"','"+indate+"','"+title+"','"+quillContents+"','"+weather+"','"+emotion+"','"+time+"','undefined')");
-  console.log('content4 '+quillContents);
+
+
+  connectDB.query("INSERT INTO DIARY(id, date, title, diary, weather, emotion, time, images) VALUES('"+req.session.userId+"','"+indate+"','"+title+"','"+quillContents+"','"+weather+"','"+emotion+"','"+time+"','undefined')");
+
   //DIARY 테이블에 이미지 경로를 제외한 데이터 추가(INSERT 이용), 이미지 경로는 우선 'undefined'로 추가 
 
-  connectDB.query("INSERT INTO IMAGETEST VALUES('"+quillContents+"', 'undefined');");
+  //connectDB.query("INSERT INTO IMAGETEST VALUES('"+quillContents+"', 'undefined');");
 
   res.send('request finished');
 });
@@ -314,18 +313,23 @@ router.post('/actionUpload_images', uploadDiaryImg.fields(imagefiles), function(
     }
     cnt++;
   }
-
+ 
   //DIARY 테이블에 이미지 경로를 'undefined'에서 imageDirsRaw로 변경(UPDATE 이용), WHERE 조건으로 사용자 아이디와 날짜 비교
-  connectDB.query("UPDATE IMAGETEST SET DIARYIMAGES='"+imageDirsRaw+"' WHERE CONTENTS='"+quillContents+"';");
+  connectDB.query("UPDATE DIARY SET images='"+imageDirsRaw+"' WHERE id='"+req.session.userId+"' AND date='"+indate+"';");
+  
+  resultDiary = connectDB.query("SELECT * FROM DIARY WHERE diary='"+quillContents+"';")[0];
+  
+  var imageDirRaw = resultDiary.images;
+  var conts = resultDiary.diary;
+  
+  console.log(imageDirRaw); //undefined
 
-  resultDiary = connectDB.query("SELECT * FROM IMAGETEST WHERE CONTENTS='"+quillContents+"';")[0];
-  var imageDirRaw = resultDiary.DIARYIMAGES;
-  var conts = resultDiary.CONTENTS;
-  console.log(imageDirRaw);
   var imagesDir = new Array();
-  imagesDir = imageDirRaw.split(',');
-  console.log(imagesDir);
 
+  imagesDir = imageDirRaw.split(','); //error
+
+  console.log(imagesDir);
+  
   res.send({
     contents: conts,
     images: imagesDir

@@ -182,16 +182,27 @@ function editorOK() {
         }
     }
     var selDate = $('#modal_content>#left_cont>#fakeDate').html();
-    var selectWeather= $('#sel_emotion').attr('src');
-    var selectEmotion= $('#sel_weather').attr('src');
+    var selectWeather= $('.text>.ui.image.default_weather').attr('src');
+    var selectEmotion= $('.text>.ui.image.default_emotion').attr('src');
+    console.log(selectWeather);
+    console.log(selectEmotion);
+    
     var title = $('#title').val();
+    var today=new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    var time=  h + ":" + m + ":" + s;
+
     xhr.send(JSON.stringify({
         date: selDate,
         emotion: selectWeather,
         weather: selectEmotion,
         valuetitle: title,
         value: datas,
-        imagefile: imageFields
+        imagefile: imageFields,
+        time:time
+        //새변수(서버):원래여기 있던거(client)
     }));
 }
 
