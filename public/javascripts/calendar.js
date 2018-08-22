@@ -464,6 +464,36 @@ function getScheduleDatas(start, end, arg) {
     });
 }
 
+var diarydata = getDiaryDatas();
+var diarydata = getDiaryDatas();
+var diarydata = getDiaryDatas();
+
+function getDiaryDatas(start, end, arg){
+    return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/getdiarys', true); //데이터 베이스에서 가져옴
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if(this.readyState == XMLHttpRequest.DONE && this.status == 200) { //this 가 xhr 이다
+                if(xhr.responseText != undefined) { //undefined 가 아니면, 결과값이 있으면
+                    resolve(JSON.parse(xhr.responseText));
+                    // document.getElementById("demo").innerHTML = this.responseText;
+                }
+                else {
+                    reject(Error('error'));
+                }
+            }
+        }
+    });
+
+    var date=$('#modal_content>#left_cont>#fakeDate').html();
+
+
+    xhr.send(JSON.stringify({
+        DATE:date
+    }));
+}
+
 function getFirstDayPosition(doMonthGetDay, argStartDateOpt) {
     if(argStartDateOpt == 2) {
         if(doMonthGetDay == 0)

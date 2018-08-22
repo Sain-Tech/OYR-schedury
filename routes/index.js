@@ -305,11 +305,13 @@ router.post('/actionUpload_images', uploadDiaryImg.fields(imagefiles), function(
     console.log(req.files[i][0].path);
     if(cnt == 0) {
       var tmp = req.files[i][0].path;
-      imageDirsRaw = tmp;
+      var teee= "../" + tmp;
+      imageDirsRaw = teee;
     }
     else {
       var tmp = req.files[i][0].path;
-      imageDirsRaw += ',' + tmp;
+      var teee= ",../" + tmp;
+      imageDirsRaw += + teee;
     }
     cnt++;
   }
@@ -374,6 +376,18 @@ router.post('/getschedules', function(req, res) {
     console.log(startDate + ' to ' + endDate);
   }
   res.send(resultSchedule);
+});
+
+//채원
+router.post('/getdiarys', function(req, res) {
+  var ID = req.session.userId;
+  resultDiary=connectDB.query(`
+  SELECT * FROM DIARY
+  WHERE id='`+ID+`'
+  AND date = '`+req.body.DATE+`'
+  `);
+
+  res.send(resultDiary);
 });
 
 router.post('/change_profile_img', upload.single('profileImage'), function(req, res){
