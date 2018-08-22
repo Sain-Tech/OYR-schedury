@@ -309,7 +309,6 @@ async function calendarDayOnClick(year, month, day) {
     $('#sched_table>tbody').html(`<div class="ui active inverted dimmer">
     <div class="ui text loader">Loading</div>
   </div>
-  <p></p>
 `);
 
     today = new Date(year, month-1, day);
@@ -350,6 +349,11 @@ function cvRawDatetoId(rawDatas) {
 }
 
 async function dateDecorator() {
+
+    $('.calendar-this>#view_calendar').append(`<div class="ui active inverted dimmer">
+    <div class="ui text loader">Loading</div>
+  </div>
+`);
 
     var scheduleDatas = await getScheduleDatas('def', 'def', true);
 
@@ -397,19 +401,29 @@ async function dateDecorator() {
                 }   
             }
             else if(cnt < 1) {
-                $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='schdId`+i+`'><div class='deco-schedule-name'><p>`+scheduleDatas[i].scheduleName+`</p></div></div>`);
+                $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='schdId`+i+`'><div class='deco-schedule-name startend'><p>`+scheduleDatas[i].scheduleName+`</p></div></div>`);
             }
+
+            if(loop + '' == end + '') {
+                $('#view_calendar>tbody>tr>#'+cvRawDatetoId(end)+'>.schdId'+i+'>.deco-schedule-name.continuous').addClass('end');
+            }
+
             var newDate = loop.setDate(loop.getDate() + 1);
             loop = new Date(newDate);
             cnt++;
         }
+
+        console.log(i+'인덱스 등록 끝!!');
     }
 
-    for(var i = 0; i < $('#view_calendar>tbody>tr>td').length; i++) {
-        var emptyDivs = $('#view_calendar>tbody>tr>td').eq(i);
+    for(var a = 0; a < $('#view_calendar>tbody>tr>td').length; a++) {
+        var emptyDivs = $('#view_calendar>tbody>tr>td').eq(a);
         emptyDivs = emptyDivs.children().filter('.deco-schedule-empty').length;
         console.log('androidandroid '+ emptyDivs);
     }
+
+
+    $('.calendar-this>#view_calendar>.ui.active.inverted.dimmer').remove();
 }
 
 function getScheduleDatas(start, end, arg) {

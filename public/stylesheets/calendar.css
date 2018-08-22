@@ -164,7 +164,7 @@ h3 {
     background-color: skyblue;
     border-radius: 3px;
     width: calc(100% + 10px);
-    margin-left: -5px;
+    margin-left: -8px;
     height: 16px;
     margin-bottom: 4px;
     position: relative;
@@ -176,14 +176,14 @@ h3 {
     margin-left: -20px;
 }
 
-.deco-schedule-name.start {
-    width: calc(100% + 28px);
-    margin-left: -20px;
+.deco-schedule-name.startend {
+    width: calc(100% + 8px);
+    margin-left: -4px;
 }
 
 .deco-schedule-name.end {
     width: calc(100% + 28px);
-    margin-left: -20px;
+    margin-left: -24px;
 }
 
 .deco-schedule-name>p {
