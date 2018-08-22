@@ -192,6 +192,10 @@ $(document).ready(function(){
     var editFlag=0;
 
     $('#edit_button').click(function(){
+        if($('#edit_button').text() == 'Save'){
+            reloadUserInfo();
+        }
+
         if(editFlag==0){
             uNickname.attr('readonly', false);
             uMessage.attr('readonly', false);
@@ -578,4 +582,32 @@ function close_modal(){
 function resetProfpic(){
     //$('#profileImage').val('profile_default.png');
     submitProf(1);
+}
+
+function reloadUserInfo(arg){
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/edit_userinfo');
+    xhr.onreadystatechange = function(){
+        if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            var data = JSON.parse(xhr.responseText);
+            $('#nickname').val(data.userNickName);
+            $('#user_message').val(data.userMessage);
+            $('#nicknamee').html(data.userNickName);
+            $('#messagee').html(data.userMessage);
+        }
+    }
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    var nickname = $('#nickname').val();
+    var mess = $('#user_message').val();
+
+    if(arg == 1) {
+        nickname = undefined;
+        mess = undefined;
+    }
+
+    xhr.send(JSON.stringify({
+        nickname: nickname,
+        mess: mess
+    }));
 }

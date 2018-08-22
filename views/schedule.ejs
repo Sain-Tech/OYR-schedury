@@ -52,10 +52,8 @@
       <h1 class="ui center aligned container head-logo" id="logo_schedury">Schedury</h1>
       <div class="user-profile">
         <img class="ui small circular image center aligned container" id="profile_pic" style="background-image: url('<%= uprofimg %>'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
-        <div class="ui center aligned container user-nickname"><%= unickname %></div>
-        <div class="ui segment">
-          <%= umessage %>
-        </div>
+        <div id="nicknamee" class="ui center aligned container user-nickname"></div>
+        <div id="messagee" class="ui segment"></div>
       </div>
     </div>
     <div class="item">
@@ -134,12 +132,12 @@
 
     <div class="ui card info-card" id="info_card">
       <div class="content">
-          <img class="ui small circular image center aligned container" id="profile_image" style="background-image: url('<%= uprofimg %>'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
+        <img class="ui small circular image center aligned container" id="profile_image" style="background-image: url('<%= uprofimg %>'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
         <div class="ui fluid input user-nickname">
-          <input id="nickname" type="text" value="<%= unickname %>" readonly>
+          <input id="nickname" name="nickname" type="text" value="<%= unickname %>" readonly>
         </div>
         <div class="ui fluid input user-msg">
-          <input id="user_message" type="text" value="<%= umessage %>" readonly>
+          <input id="user_message" name="userMessage" type="text" value="<%= umessage %>" readonly>
         </div>
         <div class="bottom-menu">
           <div class="ui circular button" id="edit_button" data-tooltip="정보 수정" data-position="left center">Edit</div>
@@ -759,6 +757,7 @@
     buildCalendar(2);
     getProfImage();
     dateDecorator();
+    reloadUserInfo(1);
   </script>
 </body>
 

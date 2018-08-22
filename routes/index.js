@@ -400,4 +400,15 @@ router.post('/set_default_profile', function(req, res) {
   res.send(defProfImage);
 });
 
+router.post('/edit_userinfo', function(req, res){
+  var changedName = req.body.nickname;
+  var changedMessage = req.body.mess;
+
+  if((changedName != undefined)&&(changedMessage != undefined)){
+    connectDB.query("UPDATE USERS SET userNickName='"+changedName+"', userMessage='"+changedMessage+"' WHERE userId='"+req.session.userId+"'");
+  }
+  
+  res.send((connectDB.query("SELECT userNickName, userMessage FROM USERS WHERE userId='"+req.session.userId+"'")[0]));
+});
+
 module.exports = router;
