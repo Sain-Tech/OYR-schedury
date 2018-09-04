@@ -348,8 +348,11 @@ function cvRawDatetoId(rawDatas) {
     return cvDatetoId(pad(rawDatas.getFullYear(), 4)+'-'+pad(rawDatas.getMonth()+1, 2)+'-'+pad(rawDatas.getDate(), 2));
 }
 
-async function dateDecorator() {
+function emptyCalendar() {
+    $('#calendar_body').html('');
+}
 
+async function dateDecorator(appSettings) {
     $('.calendar-this>#view_calendar').append(`<div class="ui active inverted dimmer">
     <div class="ui text loader">Loading</div>
   </div>
@@ -416,6 +419,88 @@ async function dateDecorator() {
         console.log(i+'인덱스 등록 끝!!');
     }
 
+    if(appSettings == 1) {
+        var gCalDatas = await getGoogleCalDatas('def', 'def', true);
+        gCalDatas = gCalDatas.items;
+
+        console.log('before sort: ');
+        console.log(gCalDatas[5].summary);
+
+        if(gCalDatas.length > 1) {
+            gCalDatas.sort(function(a, b) {
+                return a.start.dateTime != undefined ? (a.start.dateTime < b.start.dateTime ? -1 : a.start.dateTime > b.start.dateTime ? 1 : 0) : (a.start.date < b.start.date ? -1 : a.start.date > b.start.date ? 1 : 0);
+            });
+        }
+        console.log('after sort: ');
+        console.log(gCalDatas[5].summary);
+
+        for(var i = 0; i < gCalDatas.length; i++) {
+            console.log(gCalDatas[i].start.dateTime);
+            if(gCalDatas[i].start.dateTime == undefined) {
+                var currentStartDate = gCalDatas[i].start.date.substring(0, 10);
+            }
+            else {
+                var currentStartDate = gCalDatas[i].start.dateTime.substring(0, 10);
+            }
+
+            if(gCalDatas[i].end.dateTime == undefined) {
+                var currentEndDate = gCalDatas[i].end.date.substring(0, 10);
+                var tmp = new Date(currentEndDate);
+                var newDate = tmp.setDate(tmp.getDate() - 1);
+                tmp = new Date(newDate);
+                currentEndDate = pad(tmp.getFullYear(), 4)+'-'+pad(tmp.getMonth()+1, 2)+'-'+pad(tmp.getDate(), 2);
+            }
+            else {
+                var currentEndDate = gCalDatas[i].end.dateTime.substring(0, 10);
+            }
+
+            var start = new Date(currentStartDate);
+            var end = new Date(currentEndDate);
+            var loop = new Date(start);
+
+            var cnt = 0;
+            console.log(gCalDatas[i].id+' 인덱스 일정에 대한 내용을 등록하는 위치 입니다.');
+            var divcount = 0;
+            while(loop <= end) {
+                
+                if(cnt > 0) {
+                    //다음거 출력할 때 처음날짜 셀에 있는 div 개수를 알아내서 다음거 출력시 div 위치를 잡아준다.
+                    if(cnt >= 1) {
+                        var tmpdate = new Date(loop);
+                        tmpdate.setDate(tmpdate.getDate() - 1);
+                        //console.log(tmpdate);
+                    
+                        divcount = $('#view_calendar>tbody>tr>#'+cvRawDatetoId(tmpdate)+'>div').length - $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)+'>div').length;
+                        console.log(divcount);
+                    }
+                    if(getFirstDayPosition(loop.getDay(), startDate) != 0) {
+                        for(var j = 0; j < divcount-1; j++) {
+                            $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='deco-schedule-empty'></div>`);
+                        }
+                        $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='schdId`+i+`'><div class='deco-schedule-name continuous gcal'></div></div>`);
+                    }
+                    else{
+                        divcount = 0;
+                        $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='schdId`+i+`'><div class='deco-schedule-name gcal'><p>`+(gCalDatas[i].summary==undefined?'제목없음':gCalDatas[i].summary)+`</p></div></div>`);
+                    }   
+                }
+                else if(cnt < 1) {
+                    $('#view_calendar>tbody>tr>#'+cvRawDatetoId(loop)).append(`<div class='schdId`+i+`'><div class='deco-schedule-name startend gcal'><p>`+(gCalDatas[i].summary==undefined?'제목없음':gCalDatas[i].summary)+`</p></div></div>`);
+                }
+
+                if(loop + '' == end + '') {
+                    $('#view_calendar>tbody>tr>#'+cvRawDatetoId(end)+'>.schdId'+i+'>.deco-schedule-name.continuous').addClass('end');
+                }
+
+                var newDate = loop.setDate(loop.getDate() + 1);
+                loop = new Date(newDate);
+                cnt++;
+            }
+
+            console.log(i+'인덱스 등록 끝!!');
+        }
+    }
+
     for(var a = 0; a < $('#view_calendar>tbody>tr>td').length; a++) {
         var emptyDivs = $('#view_calendar>tbody>tr>td').eq(a);
         emptyDivs = emptyDivs.children().filter('.deco-schedule-empty').length;
@@ -461,6 +546,58 @@ function getScheduleDatas(start, end, arg) {
             mEndDate: sEndDate,
             mBoolPeriod: arg
         }));
+    });
+}
+
+function getGoogleCalDatas(start, end, arg) {
+    $.toast('<h4>알림!</h4> 2초간 알려드립니다.', {
+        duration: 2000,
+        type: 'info'
+      });
+    return new Promise(function(resolve, reject) {
+        var gStartDate;
+        var gEndDate;
+
+        if(start == 'def' || end == 'def') {
+            gStartDate = '1970-01-01';
+            gEndDate = '9999-12-31';
+            arg = true;
+        }
+        else {
+            gStartDate = start;
+            gEndDate = end;
+        }
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+            //console.log(xhttp.responseText);
+            if(xhttp.responseText == '') {
+                document.location.href='/auth/google';
+            }
+            else {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if(this.readyState == 4 && this.status == 200) {
+                        var googleCalendarDatas = JSON.parse(xhr.responseText);
+                        console.log(googleCalendarDatas);
+                        resolve(googleCalendarDatas);
+                    }
+                    else if(this.status == 401) {
+                        document.location.href='/auth/google';
+                    }
+                }
+                xhr.open('GET', xhttp.responseText, true);
+                xhr.send();
+            }
+        }
+        else {
+            //document.location.href='/auth/google';
+        }
+    };
+        xhttp.open('POST', '/auth/getUriWithAccessToken', true);
+        xhttp.send();
     });
 }
 
@@ -561,6 +698,11 @@ function getDayNameOfWeek(dayArg) {
     else if(dayArg == 6)
         return '토';
 }
+
+$(document).ready(function() {
+    $.toast.config.align = 'right';
+    $.toast.config.width = 400;
+});
 
 function pad(n, width) {
     n = n + '';

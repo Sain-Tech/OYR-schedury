@@ -611,3 +611,47 @@ function reloadUserInfo(arg){
         mess: mess
     }));
 }
+
+function callBackMethod() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          console.log(xhttp.responseText);
+          if(xhttp.responseText == '') {
+              document.location.href='/auth/google';
+          }
+          else {
+              var xhr = new XMLHttpRequest();
+              xhr.onreadystatechange = function() {
+                  if(this.readyState == 4 && this.status == 200) {
+                      var googleCalendarDatas = JSON.parse(xhr.responseText);
+                      console.log(googleCalendarDatas);
+                  }
+              }
+              xhr.open('GET', xhttp.responseText, true);
+              xhr.send();
+          }
+      }
+    };
+    xhttp.open('POST', '/auth/getUriWithAccessToken', true);
+    xhttp.send();
+}
+
+function callAppSettings() {
+    return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/getAppSettings', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function() {
+            if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                if(xhr.responseText != undefined) {
+                    resolve(JSON.parse(xhr.responseText));
+                }
+                else {
+                    reject(Error('error'));
+                }
+            }
+        }
+        xhr.send();
+    });    
+}

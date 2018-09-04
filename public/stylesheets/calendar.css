@@ -171,6 +171,11 @@ h3 {
     cursor: pointer;
 }
 
+.gcal {
+    background-color: rgb(36, 113, 255) !important;
+    color: white;
+}
+
 .deco-schedule-name.continuous {
     width: calc(100% + 28px);
     margin-left: -20px;

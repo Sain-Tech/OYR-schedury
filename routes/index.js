@@ -5,8 +5,11 @@ var dbinfo = require('../database.js');
 var pbkfd2Password = require('pbkdf2-password');
 var hasher = pbkfd2Password();
 var multer = require('multer');
-var upload = multer({ dest: 'uploads/profile/'})
-var uploadDiaryImg = multer({ dest: 'uploads/diary/'})
+var upload = multer({ dest: 'uploads/profile/'});
+var uploadDiaryImg = multer({ dest: 'uploads/diary/'});
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var passport = require('passport');
+var gcal = require('google-calendar');
 var router = express.Router();
 
 //connectDB.query("CREATE DATABASE IF NOT EXISTS userInfo CHARACTER SET utf8 COLLATE utf8_general_ci;");
@@ -17,10 +20,65 @@ router.use(session({
     saveUninitialized: true
 }));
 
+router.use(passport.initialize());
+
+var googleId;
+var gcalAccessUri;
+
 var connectDB = new mysql(dbinfo.getDBInfo());
 var resultUser = null;
 var resultSchedule = null;
 var resultDiary = null;
+var resultSettings = null;
+
+passport.use(new GoogleStrategy({
+  clientID: '530520426576-li1h90ql8r1biju1t22i1uqpa7lrqoca.apps.googleusercontent.com',
+  clientSecret: 'YKcF8wRsSZzFGcS6OUDNA2_c',
+  callbackURL: "http://schedury.cf:3000/auth/google/callback",
+  scope: ['openid', 'email', 'https://www.googleapis.com/auth/calendar.readonly'] 
+},
+function(accessToken, refreshToken, profile, done) {
+  profile.accessToken = accessToken;
+  googleId = profile.emails[0].value;
+  console.log(googleId);
+  return done(null, profile);
+}));
+
+router.get('/auth/google', passport.authenticate('google', { session: false }));
+
+var toastAlert = 0;
+var toastMsg = '';
+
+router.get('/auth/google/callback', 
+  passport.authenticate('google', { session: false, failureRedirect: '/auth/google/canceled' }),
+  function(req, res) { 
+    req.session.access_token = req.user.accessToken;
+    console.log(req.session.access_token);
+    gcalAccessUri = 'https://www.googleapis.com/calendar/v3/calendars/'+googleId+'/events?access_token='+req.session.access_token;
+    if(gCalSyncFlag == true) {
+      toastAlert = 1;
+      toastMsg = '동기화가 해제되었습니다.';
+      connectDB.query("UPDATE SETTINGS SET gCalSync=1 WHERE userId='"+resultUser[0].userId+"'");
+      res.redirect('/schedule/app:settings');
+      gCalSyncFlag = false;
+    }
+    else {
+      res.redirect('/');
+    }
+  });
+
+router.post('/auth/getUriWithAccessToken', function(req, res){
+    res.send(gcalAccessUri);
+});
+
+router.get('/auth/google/canceled', function(req, res){
+  res.send(`
+  <script>
+    alert('사용자가 권한 허용을 취소했습니다.');
+    document.location.replace('/');
+  </script>
+  `);
+});
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -34,9 +92,37 @@ router.get('/', function(req, res) {
   }
 });
 
+var gCalSyncFlag = false;
+
 router.get('/schedule/:id', function(req, res) {
   if(!req.session.userId) {
     res.send('<script type="text/javascript">alert("권한이 없습니다. 다시 로그인 해주세요."); history.back();</script>');
+  }
+  else if(req.params.id == 'app:settings') {
+    //환경설정 테이블 만듦
+    var createSetting = "CREATE TABLE IF NOT EXISTS SETTINGS(userId char(30), startDateOpt int, displayOpt int, gCalSync int, nCalSync int, PRIMARY KEY(userId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+    connectDB.query(createSetting);
+
+    //현재 사용자로 환경설정 값들 조회하기
+    resultSettings = connectDB.query("SELECT * FROM SETTINGS WHERE userId='"+resultUser[0].userId+"'");
+    
+    //환경설정 테이블에 현재 로그인한 사용자가 없다면 생성
+    if(resultSettings.length < 1) {
+      connectDB.query("INSERT INTO SETTINGS VALUES('"+resultUser[0].userId+"', "+1+", "+0+", "+0+", "+0+")");
+      //생성 후 재 조회
+      resultSettings = connectDB.query("SELECT * FROM SETTINGS WHERE userId='"+resultUser[0].userId+"'");
+    }
+    res.render('settings', { title: 'Settings', startDateOpt: resultSettings[0].startDateOpt, displayOpt: resultSettings[0].displayOpt, gCalSync: resultSettings[0].gCalSync, nCalSync: resultSettings[0].nCalSync, toastAlert: toastAlert, toastMsg: toastMsg});
+    toastAlert = 0;
+    toastMsg = '';
+  }
+  else if(req.params.id == 'app:googleSync') {
+    gCalSyncFlag = true;
+    res.redirect('/auth/google');
+  }
+  else if(req.params.id == 'app:googleUnsync') {
+    connectDB.query("UPDATE SETTINGS SET gCalSync=0 WHERE userId='"+resultUser[0].userId+"'");
+    res.redirect('/schedule/app:settings')
   }
   else if(req.session.userId != req.params.id) {
     res.send('<script type="text/javascript">alert("권한이 없는 사용자입니다."); history.back();</script>');
@@ -155,11 +241,6 @@ router.get('/checkemail/:email', function(req, res) {
   }
 
   res.send(flag);
-});
-
-router.get('/schedule/settings', function(req, res) {
-  res.render('settings', { title: 'Settings' });
-  
 });
 
 router.get('/sidebar', function(req,res){
@@ -423,6 +504,10 @@ router.post('/edit_userinfo', function(req, res){
   }
   
   res.send((connectDB.query("SELECT userNickName, userMessage FROM USERS WHERE userId='"+req.session.userId+"'")[0]));
+});
+
+router.post('/getAppSettings', function(req, res) {
+  res.send(connectDB.query("SELECT * FROM SETTINGS WHERE userId='"+req.session.userId+"'")[0]);
 });
 
 module.exports = router;

@@ -57,19 +57,21 @@
               <div class='content nanumsquare'> 달력에 시작할 날짜를 선택해 주세요</div>
               <p>
                 <div class='segment'>
-                  <div class="ui selection dropdown">
+                  <div id='dropdown_startdate' class="ui selection dropdown">
                     <input type="hidden" name="day">
                     <i class="dropdown icon"></i>
                     <div class="default text nanumsquare">Day</div>
                     <div class="menu">
-                      <div class="item nanumsquare" data-value="토">토요일</div>
-                      <div class="item nanumsquare" data-value="일">일요일</div>
-                      <div class="item nanumsquare" data-value="월">월요일</div>
+                      <div class="item nanumsquare" data-value="0">토요일</div>
+                      <div class="item nanumsquare" data-value="1">일요일</div>
+                      <div class="item nanumsquare" data-value="2">월요일</div>
                     </div>
                   </div>
                 </div>
               </p>
             </div>
+
+            
             
             <div id=pwdChangeDes style="display:none !important;">
               <p class='content nanumsquare'>현재 비밀번호를 입력해 주세요.</p>
@@ -110,19 +112,19 @@
               </div>
 
               <p class='content nanumsquare'>월이 표시될 방식을 선택하세요.</p>
-              <div class="ui selection dropdown">
+              <div id='dropdown_displaymonth' class="ui selection dropdown">
                 <input type="hidden" name="day">
                 <i class="dropdown icon"></i>
                 <div class="default text nanumsquare">Month</div>
                 <div class="menu">
-                  <div class="item nanumsquare" data-value="Num">Number(1,2,3...)</div>
-                  <div class="item nanumsquare" data-value="English">English(January, February...)</div>
+                  <div class="item nanumsquare" data-value="0">Number(1,2,3...)</div>
+                  <div class="item nanumsquare" data-value="1">English(January, February...)</div>
                 </div>
               </div>
             </div>
 
             <div id=syncDes style="display:none">
-              <button class="ui button fluid nanumsquare" id='google' type="button">구글캘린더와 동기화</button>
+              <button class="ui button fluid nanumsquare" id='google' type="button" onclick="document.location.href='/auth/google'">구글캘린더와 동기화</button>
               <button class="ui button fluid nanumsquare" id='naver' type="button">네이버캘린더와 동기화</button>
             </div>
 
@@ -135,5 +137,23 @@
     </div><!-- layout 끝  -->
 
     <script src="/javascripts/settings.js"></script>
+
+    <script>
+      $('#dropdown_startdate').dropdown('set selected', '<%= startDateOpt %>');
+      $('#dropdown_displaymonth').dropdown('set selected', '<%= displayOpt %>');
+
+      if('<%= gCalSync %>' == 1) {
+        console.log(true);
+        $('#google').css({'background-color':'#D0E1FE', 'color':'#274555'});
+        $('#google').attr('onclick', "document.location.href='/schedule/app:googleUnsync'");
+        $('#google').html('구글 캘린더 동기화 해제');
+      }
+      else {
+        console.log(false);
+        $('#google').css({'background-color':'#4285F4', 'color':'white'});
+        $('#google').attr('onclick', "document.location.href='/schedule/app:googleSync'");
+        $('#google').html('구글 캘린더와 동기화');
+      }
+    </script>
   </body>
 </html>

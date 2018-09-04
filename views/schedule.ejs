@@ -62,10 +62,10 @@
       </div>
     </div>
     <div class="ui sidebar-buttons">
-      <a href="" class="" data-tooltip="캘린더 동기화" data-position="bottom right">
+      <a id="btn_cal_sync" class="" data-tooltip="캘린더 동기화" data-position="bottom right" onclick="">
         <i class="big black sync icon styler"></i>
       </a>
-      <a href="/schedule/settings" class="" data-tooltip="환경설정" data-position="bottom right">
+      <a href="/schedule/app:settings" class="" data-tooltip="환경설정" data-position="bottom right">
         <i class="big black cog icon styler"></i>
       </a>
     </div>
@@ -748,16 +748,26 @@
 
   <form id="uploader_img_diary" name="actionUploadDiaryImg" action="/actionUpload_images" method="POST" enctype="multipart/form-data" style="width: 0; height: 0; display: none;"></form>
 
+  <script src="//rawgit.com/Soldier-B/jquery.toast/master/jquery.toast/jquery.toast.min.js"></script>
   <script src="../javascripts/calendar.js"></script>
   <script src="../javascripts/schedule.js"></script>
   <script src="../javascripts/quill-uploader.js"></script>
 
   <script>
+    async function setup() {
+      var settings = await callAppSettings();
+      console.log(settings);
+      dateDecorator(settings.gCalSync);
+      $('#btn_cal_sync').attr('onclick', 'emptyCalendar();buildCalendar(2);dateDecorator('+settings.gCalSync+');');
+    }
+    
     $('.ui.dropdown').dropdown();
     buildCalendar(2);
     getProfImage();
-    dateDecorator();
     reloadUserInfo(1);
+    setup();
+    
+    //getGoogleCalDatas('def', 'def', false);
   </script>
 </body>
 

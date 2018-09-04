@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#FDC23E">
+    <link rel="stylesheet" type="text/css" href="../public/dist/semantic.css">
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="../public/dist/semantic.js"></script>
+    <script src="../public/javascripts/jquery.touchSwipe.min.js"></script>
+
+    <title><%= title %></title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="../public/stylesheets/section_diary_in_schedule.final.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../public/stylesheets/color.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico|Shrikhand" rel="stylesheet">
+</head>
+<body>
+    <div id="side_menu" class="ui left vertical menu sidebar main-sidebar">
+        <div class="item"> 
+            <h1 class="ui center aligned container head-logo" id="logo_schedury">Schedury</h1>
+            <div class="user-profile">
+                <img class="ui small circular image center aligned container" id="profile_pic" src="../public/images/profile_default.png" alt="profile image">
+                <div class="ui center aligned container user-nickname">Nickname</div>
+                <div class="ui segment">
+                    메시지
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ui segment container">
+                일기 미리보기
+            </div>
+        </div>
+        <div class="ui sidebar-buttons">
+            <a href="" class="" data-tooltip="캘린더 동기화" data-position="bottom right"><i class="big black sync icon styler"></i></a>
+            <a href="/schedule/settings" class="" data-tooltip="환경설정" data-position="bottom right"><i class="big black cog icon styler"></i></a>
+        </div>
+    </div>
+
+    <div class="pusher noanim">
+
+        <div class="calendar-navi-back" onclick="calendarNavToggle(1)">
+        </div>
+
+        <div class="calendar-navi-div">
+            <div class="calendar-navi-main">
+                <div class="ui card">
+                    <div class="search-self">
+
+                        <div class="ui input">
+                            <input id="search_year" class="input-orange" type="number" onchange="changeSearchDateSelf(0)">
+                        </div>
+                        <div class="date-spacer">
+                            -
+                        </div>
+                        <div class="ui input">
+                            <input id="search_month" class="input-orange" type="number" onchange="changeSearchDateSelf(1)">
+                        </div>
+                        <div class="date-spacer">
+                            -
+                        </div>
+                        <div class="ui input">
+                            <input id="search_day" class="input-orange" type="number" onchange="changeSearchDateSelf(2)">
+                        </div>
+
+                    </div>
+
+                    <div class="search-click">
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div> 
+
+        <header>
+            <div class="button-menu">
+                <button class="ui labeled icon button white" onclick="onMenu();">
+                    <i class="icon bars large"></i>
+                    <h4 class="head-schedury small">Schedury</h4>
+                </button>
+            </div>
+
+            <div class="header-menu">
+                <div class="ui pagination menu">
+                    <a id="menu_schedule" class="item active" onclick="menuToggle(this.id);"><i class="icon calendar check outline"></i>일정</a>
+                    <a id="menu_diary" class="item" onclick="menuToggle(this.id);"><i class="icon edit outline"></i>일기</a>
+                </div>
+            </div>
+            
+            <div class="calendar-menu">
+                <div class="ui pagination menu">
+                    <a class="icon item" onclick="prevCalendar(2);">
+                        <i class="left chevron icon"></i>
+                    </a>
+
+                    <a id="tbCalendarYM" class="item calendar title" onclick="calendarNavToggle(0); getDateForSearch();">
+                    </a>
+
+                    <a class="icon item" onclick="nextCalendar(2);">
+                        <i class="right chevron icon"></i>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <div class="card-back"></div>
+
+        <div class="ui card info-card" id="info_card">
+            <div class="content">
+                <img class="ui small circular image center aligned container" id="profile_image" src="/images/profile_default.png" alt="profile image" />
+                <div class="ui fluid input user-nickname">
+                    <input id="nickname" type="text" value="Nickname" readonly>
+                </div>
+                <div class="ui fluid input user-msg">
+                    <input id="user_message" type="text" value="메시지" readonly>
+                </div>
+                <div class="bottom-menu">
+                    <div class="ui circular button" id="edit_button" data-tooltip="정보 수정" data-position="left center">Edit</div>
+                    <div class="ui circular button" id="logout_button" onclick="location='/logout'" data-tooltip="로그아웃" data-position="right center">Logout</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="calendar-this">
+            
+
+            <table class="ui segment calendar">
+                <thead id="calendar_header">
+                </thead>
+                <tbody id="calendar_body" class="tbody-anim">      
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 모달 관련 태그 붙이는 곳 -->
+    <!-- 프로필 사진 수정 모달 -->
+    <div class="ui mini modal profpic-modal">
+        <div class="ui actions grid modal-cont">
+            <a class="centered row" href=""><div>프로필 사진 변경</div></a>
+            <a class="centered row" href=""><div>프로필 사진 삭제 (기본 이미지로 설정)</div></a>
+            <a class="centered row" href=""><div>취소</div></a>
+        </div>
+    </div>
+
+    <!-- 일기, 일정 모달 -->
+    <div id='mod' class="ui longer modal">
+        <div id='modal_header_diary' class="header">7월 31일 화요일</div>
+        <div class="scrolling">
+            <div id='content_layout'>    
+            <div id="mod_left">
+                Very long content goes here
+            </div>
+            <div id='mod_right'>
+                Very long content goes here
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../public/javascripts/calendar.js"></script>
+    <script src="../public/javascripts/section_diary_in_schedule.final.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../public/stylesheets/calendar.css" />
+
+    <script>
+        buildCalendar(2);
+    </script>
+</body>
+</html>
