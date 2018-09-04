@@ -429,10 +429,25 @@
       </div>
 
       <div id="left_cont2" class="four wide column">
+        <h2 id='modal_header_diary2' class="ui center aligned header nanumsquare">7월 31일 화요일</h2>
         <form action="/new_schedule" method="post">
             <div id="sched_name" class="ui input">
                 <input name="nameSched" type="text" class="nanumsquare" placeholder="일정 이름">
             </div>
+
+            <div class="ui accordion" id="schedicon_accordion">
+                <div class="title">
+                  <i class="caret down icon"></i>
+                  <img class="ui image" id="selected_schedicon" src="/images/043-calendar.png" style="opacity: 0.5; filter: alpha(opacity=50); width: 28px; height: 28px;">
+                </div>
+                <div class="content" id="icon_cont">
+                  <div class="icon_wrapper">
+                    <% for(var j = 0; j<scheduleIcons.length; j++){ %>
+                      <img class="sched_icons" id="sched_icon<%=j%>" src="/images/schedule/<%=scheduleIcons[j]%>" alt="">
+                    <% } %>
+                  </div>
+                </div>
+              </div>
             
             <span class="group-text nanumsquare">날짜<br></span>
             <div style="display: flex">
@@ -524,6 +539,7 @@
             </div>
             <div>
                 <input class="ui button nanumsquare" id="submit-form" type="submit" value="일정 등록">
+                <input class="ui button nanumsquare" id="cancel_newsched" type="button" value="취소">
             </div>
         </form>
     </div>

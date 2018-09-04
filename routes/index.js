@@ -95,6 +95,14 @@ router.get('/', function(req, res) {
 var gCalSyncFlag = false;
 
 router.get('/schedule/:id', function(req, res) {
+  const schedIconFolder = './public/images/schedule';
+  const fs = require('fs');
+  var schedIcons=[];
+
+  fs.readdirSync(schedIconFolder).forEach(file => {
+    schedIcons.push(file);
+  });
+
   if(!req.session.userId) {
     res.send('<script type="text/javascript">alert("권한이 없습니다. 다시 로그인 해주세요."); history.back();</script>');
   }
@@ -134,7 +142,8 @@ router.get('/schedule/:id', function(req, res) {
       uemail: resultUser[0].userEmail,
       uprofimg: resultUser[0].profileImageDir,
       unickname: resultUser[0].userNickName,
-      umessage: resultUser[0].userMessage
+      umessage: resultUser[0].userMessage,
+      scheduleIcons: schedIcons
     });
   }
 });
@@ -420,7 +429,7 @@ router.post('/actionUpload_images', uploadDiaryImg.fields(imagefiles), function(
 });
 
 router.get('/diarypreview', function(req, res) {
-  resultDiary = connectDB.query("SELECT * FROM IMAGETEST WHERE CONTENTS='"+quillContents+"';")[0];
+  resultDiary = connectDB.query("SELECT * F`ROM IMAGETEST WHERE CONTENTS='"+quillContents+"';")[0];
   var imageDirRaw = resultDiary.DIARYIMAGES;
   var conts = resultDiary.CONTENTS;
   console.log(imageDirRaw);

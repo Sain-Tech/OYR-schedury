@@ -316,6 +316,7 @@ async function calendarDayOnClick(year, month, day) {
     $('.ui.longer.modal').modal('show');
     $('#modal_content>#left_cont>#fakeDate').html(+year+`-`+pad(month, 2)+`-`+pad(day, 2));
     $('#modal_header_diary').html(month+'월 '+day+'일 '+getDayNameOfWeek(today.getDay())+'요일');
+    $('#modal_header_diary2').html(month+'월 '+day+'일 '+getDayNameOfWeek(today.getDay())+'요일');
 
     var currentDate = pad(year, 4)+'-'+pad(month, 2)+'-'+pad(day, 2);
 

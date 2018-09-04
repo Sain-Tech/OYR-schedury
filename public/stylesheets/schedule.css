@@ -502,7 +502,7 @@ article>.article-element>div>div>.content{
     padding: 0 !important;
 }
 
-#modal_header_diary{
+#modal_header_diary, #modal_header_diary2{
     margin: 20px;
 }
 
@@ -649,4 +649,27 @@ article>.article-element>div>div>.content{
 .images_column{
     display: flex;
     line-height:0px !important;
+}
+.schedule_icons{
+    display: flex;
+}
+#schedicon_accordion{
+    width:100%;
+}
+.sched_icons{
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 5px;
+}
+#icon_cont{
+    display: inline-block;
+    width: 100%;
+    overflow:hidden;
+}
+.icon_wrapper{
+    height: 200px;
+    overflow-y: scroll;
+    text-align: center;
 }
