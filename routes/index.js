@@ -47,6 +47,7 @@ function(accessToken, refreshToken, profile, done) {
 router.get('/auth/google', passport.authenticate('google', { session: false }));
 
 var toastAlert = 0;
+var toastTitle = '';
 var toastMsg = '';
 
 router.get('/auth/google/callback', 
@@ -57,7 +58,8 @@ router.get('/auth/google/callback',
     gcalAccessUri = 'https://www.googleapis.com/calendar/v3/calendars/'+googleId+'/events?access_token='+req.session.access_token;
     if(gCalSyncFlag == true) {
       toastAlert = 1;
-      toastMsg = '동기화가 해제되었습니다.';
+      toastTitle = '구글 캘린더';
+      toastMsg = '동기화가 설정되었습니다.';
       connectDB.query("UPDATE SETTINGS SET gCalSync=1 WHERE userId='"+resultUser[0].userId+"'");
       res.redirect('/schedule/app:settings');
       gCalSyncFlag = false;
@@ -104,7 +106,7 @@ router.get('/schedule/:id', function(req, res) {
   });
 
   if(!req.session.userId) {
-    res.send('<script type="text/javascript">alert("권한이 없습니다. 다시 로그인 해주세요."); history.back();</script>');
+    res.send('<script type="text/javascript">alert("권한이 없습니다. 다시 로그인 해주세요."); document.location.replace(`/`);</script>');
   }
   else if(req.params.id == 'app:settings') {
     //환경설정 테이블 만듦
@@ -120,8 +122,9 @@ router.get('/schedule/:id', function(req, res) {
       //생성 후 재 조회
       resultSettings = connectDB.query("SELECT * FROM SETTINGS WHERE userId='"+resultUser[0].userId+"'");
     }
-    res.render('settings', { title: 'Settings', startDateOpt: resultSettings[0].startDateOpt, displayOpt: resultSettings[0].displayOpt, gCalSync: resultSettings[0].gCalSync, nCalSync: resultSettings[0].nCalSync, toastAlert: toastAlert, toastMsg: toastMsg});
+    res.render('settings', { title: 'Settings', startDateOpt: resultSettings[0].startDateOpt, displayOpt: resultSettings[0].displayOpt, gCalSync: resultSettings[0].gCalSync, nCalSync: resultSettings[0].nCalSync, toastAlert: toastAlert, toastTitle: toastTitle, toastMsg: toastMsg});
     toastAlert = 0;
+    toastTitle = '';
     toastMsg = '';
   }
   else if(req.params.id == 'app:googleSync') {
@@ -130,12 +133,16 @@ router.get('/schedule/:id', function(req, res) {
   }
   else if(req.params.id == 'app:googleUnsync') {
     connectDB.query("UPDATE SETTINGS SET gCalSync=0 WHERE userId='"+resultUser[0].userId+"'");
+    toastAlert = 1;
+    toastTitle = '구글 캘린더';
+    toastMsg = '동기화가 해제되었습니다.';
     res.redirect('/schedule/app:settings')
   }
   else if(req.session.userId != req.params.id) {
     res.send('<script type="text/javascript">alert("권한이 없는 사용자입니다."); history.back();</script>');
   }
   else {
+    resultSettings = connectDB.query("SELECT * FROM SETTINGS WHERE userId='"+resultUser[0].userId+"'");
     res.render('schedule', {
       title: req.session.userId,
       uid: resultUser[0].userId,
@@ -143,7 +150,11 @@ router.get('/schedule/:id', function(req, res) {
       uprofimg: resultUser[0].profileImageDir,
       unickname: resultUser[0].userNickName,
       umessage: resultUser[0].userMessage,
-      scheduleIcons: schedIcons
+      scheduleIcons: schedIcons,
+      startDateOpt: resultSettings[0].startDateOpt,
+      displayOpt: resultSettings[0].displayOpt,
+      gCalSync: resultSettings[0].gCalSync,
+      nCalSync: resultSettings[0].nCalSync
     });
   }
 });
@@ -517,6 +528,39 @@ router.post('/edit_userinfo', function(req, res){
 
 router.post('/getAppSettings', function(req, res) {
   res.send(connectDB.query("SELECT * FROM SETTINGS WHERE userId='"+req.session.userId+"'")[0]);
+});
+
+router.post('/saveSettings', function(req, res) {
+  var startDateOpt = req.body.startDateOpt;
+  var displayOpt = req.body.displayOpt;
+  var changedPW = req.body.changedPW;
+
+  connectDB.query("UPDATE SETTINGS SET startDateOpt="+startDateOpt+", displayOpt="+displayOpt+" WHERE userId='"+resultUser[0].userId+"'");
+  resultSettings = connectDB.query("SELECT * FROM SETTINGS WHERE userId='"+resultUser[0].userId+"'");
+
+  if(changedPW != undefined) {
+    hasher({password:changedPW}, function(err, pass, salt, hash) {
+      //Change password
+      connectDB.query("UPDATE USERS SET userPw='"+hash+"', pwSalt='"+salt+"' WHERE userId='"+req.session.userId+"'");
+      
+      //Update current userinfo from DB.
+      resultUser = connectDB.query("SELECT * FROM USERS WHERE userId='"+req.session.userId+"';");
+      res.redirect('/');
+    });
+  }
+  else
+    res.redirect('/');
+});
+
+router.post('/checkcurrpwd', function(req, res) {
+  hasher({password:req.body.currpwd, salt:resultUser[0].pwSalt}, function(err, pass, salt, hash) {
+    if(hash === resultUser[0].userPw) {
+      res.send(true);
+    }
+    else {
+      res.send(false);
+    }
+  });
 });
 
 module.exports = router;

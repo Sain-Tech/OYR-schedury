@@ -522,6 +522,7 @@ function submitProf(arg){
             error: uploadError
         });
     }
+    close_modal();
 }
 
 function uploadSuccess(json, status){

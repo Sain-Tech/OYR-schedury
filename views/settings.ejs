@@ -21,6 +21,8 @@
       crossorigin="anonymous"></script>
     <script src="../dist/semantic.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
   </head>
 
@@ -71,30 +73,28 @@
               </p>
             </div>
 
-            
-            
             <div id=pwdChangeDes style="display:none !important;">
               <p class='content nanumsquare'>현재 비밀번호를 입력해 주세요.</p>
               <div class="segment nanumsquare">
                 <label style="display:none">Password</label>
-                <div class="ui left icon large input">
-                  <input id="input_passwd" type="password" name="passwd" placeholder="Password">
+                <div class="ui left icon large input" id="div_passwd_current">
+                  <input class="" id="input_passwd_current" type="password" name="passwdcurrent" oninput="checkPassword()" placeholder="Password">
                   <i class="lock icon"></i>
                 </div>
               </div>
 
               <p class='content nanumsquare'>변경할 비밀번호를 입력해 주세요.</p>
                 <div class='segment'>
-                  <div class="ui left icon large input" id="pass" data-tooltip="비밀번호는 문자, 숫자 조합 6자리 이상 만들어주세요." data-position="bottom left">
-                      <input class="input-orange nanumsquare" id="pass_input" name="passwd" type="password" placeholder="비밀번호" onfocus="inputOnFocus(1);" onblur="checkFocus('pass_ico', 'key')" oninput="checkPassword();">
+                  <div class="ui left icon large input" id="div_passwd_changed">
+                      <input class="" id="input_passwd_changed" name="passwdchanged" type="password" placeholder="비밀번호" oninput="checkPassword();">
                       <i class="key icon" id="pass_ico"></i>
                   </div>
                 </div>
 
               <p class='content nanumsquare'>변경할 비밀번호를 다시 한 번 입력해 주세요.</p>
                 <div class='segment'>
-                  <div class="ui right icon large input" id="pass2">
-                      <input class="input-orange nanumsquare" id="pass2_input" name="passwdconfm" type="password" placeholder="비밀번호 확인" onfocus="inputOnFocus(3);" onblur="checkFocus('pass2_ico', '')" oninput="checkPassword();">
+                  <div class="ui right icon large input" id="div_passwd_confirm">
+                      <input class="" id="input_passwd_confirm" name="passwdconfm" type="password" placeholder="비밀번호 확인" oninput="checkPassword();">
                   </div>
                 </div>
             </div>
@@ -131,8 +131,8 @@
           </div>
       </div>
       <div style="display:flex; justify-content: center;">
-        <button class="ui yellow button fluid nanumsquare" id='적용' type="button" >적용</button>
-        <button class="ui button fluid nanumsquare" id='취소' type="button" onclick="history.back();">취소</button>
+        <button class="ui yellow button fluid nanumsquare" id='적용' type="button">적용</button>
+        <button class="ui button fluid nanumsquare" id='취소' type="button" onclick="document.location.replace('/');">취소</button>
       </div>
     </div><!-- layout 끝  -->
 
@@ -153,6 +153,18 @@
         $('#google').css({'background-color':'#4285F4', 'color':'white'});
         $('#google').attr('onclick', "document.location.href='/schedule/app:googleSync'");
         $('#google').html('구글 캘린더와 동기화');
+      }
+
+      if('<%= toastAlert %>' == 1) {
+        toastr.options = {
+          closeButton: false,
+          progressBar: false,
+          positionClass: "toast-bottom-right",
+          showMethod: 'fadeIn',
+          hideMethod: 'fadeOut',
+          timeOut: 3000
+        };
+        toastr.success('<%= toastMsg %>', '<%= toastTitle %>');
       }
     </script>
   </body>

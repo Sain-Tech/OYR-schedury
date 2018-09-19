@@ -41,6 +41,10 @@
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
 
+  <!-- 토스트 라이브러리 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
   <title>
     <%= title %>
   </title>
@@ -149,14 +153,14 @@
     <div class="calendar-this">
       <div class="calendar-menu">
         <div class="ui pagination menu">
-          <a class="icon item" onclick="prevCalendar(2); dateDecorator();">
+          <a class="icon item" onclick="prevCalendar('<%= startDateOpt %>'); dateDecorator();">
             <i class="left chevron icon"></i>
           </a>
 
           <a id="tbCalendarYM" class="item calendar title" onclick="calendarNavToggle(0); getDateForSearch();">
           </a>
 
-          <a class="icon item" onclick="nextCalendar(2); dateDecorator();">
+          <a class="icon item" onclick="nextCalendar('<%= startDateOpt %>'); dateDecorator();">
             <i class="right chevron icon"></i>
           </a>
         </div>
@@ -774,11 +778,11 @@
       var settings = await callAppSettings();
       console.log(settings);
       dateDecorator(settings.gCalSync);
-      $('#btn_cal_sync').attr('onclick', 'emptyCalendar();buildCalendar(2);dateDecorator('+settings.gCalSync+');');
+      $('#btn_cal_sync').attr('onclick', 'emptyCalendar();buildCalendar(`<%= startDateOpt %>`);dateDecorator('+settings.gCalSync+');');
     }
     
     $('.ui.dropdown').dropdown();
-    buildCalendar(2);
+    buildCalendar('<%= startDateOpt %>');
     getProfImage();
     reloadUserInfo(1);
     setup();

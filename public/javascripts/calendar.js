@@ -354,6 +354,18 @@ function emptyCalendar() {
 }
 
 async function dateDecorator(appSettings) {
+    toastr.options = {
+        closeButton: false,
+        progressBar: false,
+        positionClass: "toast-bottom-right",
+        preventOpenDuplicates: true,
+        preventDuplicates: true,
+        showMethod: 'fadeIn',
+        hideMethod: 'fadeOut',
+        timeOut: 3000
+      };
+      toastr.info('일정 동기화 중...', '알림');
+
     $('.calendar-this>#view_calendar').append(`<div class="ui active inverted dimmer">
     <div class="ui text loader">Loading</div>
   </div>
@@ -510,6 +522,18 @@ async function dateDecorator(appSettings) {
 
 
     $('.calendar-this>#view_calendar>.ui.active.inverted.dimmer').remove();
+    toastr.clear();
+    toastr.options = {
+        closeButton: false,
+        progressBar: false,
+        positionClass: "toast-bottom-right",
+        preventOpenDuplicates: true,
+        preventDuplicates: true,
+        showMethod: 'fadeIn',
+        hideMethod: 'fadeOut',
+        timeOut: 3000
+      };
+      toastr.success('동기화 완료!', '알림');
 }
 
 function getScheduleDatas(start, end, arg) {
