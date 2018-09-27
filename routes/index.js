@@ -162,7 +162,19 @@ router.get('/schedule/:id', function(req, res) {
     res.send('<script type="text/javascript">alert("권한이 없는 사용자입니다."); history.back();</script>');
   }
   else {
+    var createSetting = "CREATE TABLE IF NOT EXISTS SETTINGS(userId char(30), startDateOpt int, displayOpt int, gCalSync int, nCalSync int, PRIMARY KEY(userId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+    connectDB.query(createSetting);
+
+    //현재 사용자로 환경설정 값들 조회하기
     resultSettings = connectDB.query("SELECT * FROM SETTINGS WHERE userId='"+resultUser[0].userId+"'");
+    
+    //환경설정 테이블에 현재 로그인한 사용자가 없다면 생성
+    if(resultSettings.length < 1) {
+      connectDB.query("INSERT INTO SETTINGS VALUES('"+resultUser[0].userId+"', "+1+", "+0+", "+0+", "+0+")");
+      //생성 후 재 조회
+      resultSettings = connectDB.query("SELECT * FROM SETTINGS WHERE userId='"+resultUser[0].userId+"'");
+    }
+
     res.render('schedule', {
       title: req.session.userId,
       uid: resultUser[0].userId,
@@ -432,7 +444,7 @@ router.post('/actionUpload_images', uploadDiaryImg.fields(imagefiles), function(
     else {
       var tmp = req.files[i][0].path;
       var teee= ",../" + tmp;
-      imageDirsRaw += + teee;
+      imageDirsRaw += teee;
     }
     cnt++;
   }
@@ -441,12 +453,14 @@ router.post('/actionUpload_images', uploadDiaryImg.fields(imagefiles), function(
   connectDB.query("UPDATE DIARY SET images='"+imageDirsRaw+"' WHERE id='"+req.session.userId+"' AND date='"+indate+"';");
   
   resultDiary = connectDB.query("SELECT * FROM DIARY WHERE diary='"+quillContents+"';")[0];
+
+  console.log(resultDiary);
   
   var imageDirRaw = resultDiary.images;
   var conts = resultDiary.diary;
 
   var imagesDir = new Array();
-
+  
   res.send({
     contents: conts,
     images: imagesDir
@@ -454,7 +468,7 @@ router.post('/actionUpload_images', uploadDiaryImg.fields(imagefiles), function(
 });
 
 router.get('/diarypreview', function(req, res) {
-  resultDiary = connectDB.query("SELECT * F`ROM IMAGETEST WHERE CONTENTS='"+quillContents+"';")[0];
+  resultDiary = connectDB.query("SELECT * FROM IMAGETEST WHERE CONTENTS='"+quillContents+"';")[0];
   var imageDirRaw = resultDiary.DIARYIMAGES;
   var conts = resultDiary.CONTENTS;
   console.log(imageDirRaw);
@@ -495,7 +509,8 @@ router.post('/getdiarys', function(req, res) {
   resultDiary=connectDB.query(`
   SELECT * FROM DIARY
   WHERE id='`+ID+`'
-  AND date = '`+req.body.DATE+`'
+  AND date >= '`+req.body.startDate+`'
+  AND date <= '`+req.body.endDate+`'
   `);
 
   res.send(resultDiary);

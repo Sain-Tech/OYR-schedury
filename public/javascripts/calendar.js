@@ -631,7 +631,7 @@ function getGoogleCalDatas(start, end, arg) {
 
 var diarydata = getDiaryDatas();
 
-function getDiaryDatas(date){
+function getDiaryDatas(start, end, arg){
     return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/getdiarys', true); //데이터 베이스에서 가져옴
@@ -647,10 +647,78 @@ function getDiaryDatas(date){
                 }
             }
         }
+        xhr.send(JSON.stringify({
+            startDate: (arg==1?start:click_date),
+            endDate: (arg==1?end:click_date)
+        }));
     });
-    xhr.send(JSON.stringify({
-        DATE:date
-    }));
+}
+
+async function setDiarySummary() {
+    var year = $("#tbCalendarYM>div").html();
+    var month = $("#tbCalendarYM>span>h3").html();
+    var tmp = new Date(year, month, 0);
+    var startDate = year + '-' + month + '-' + 1;
+    var endDate = tmp.getFullYear() + '-' + (tmp.getMonth() + 1) + '-' + tmp.getDate();
+    
+    var diarySummary = await getDiaryDatas(startDate, endDate, 1);
+    console.log(diarySummary);
+
+    for(var i = 0; i < diarySummary.length; i++) {
+        var title = diarySummary[i]['title'];
+        var contents = diarySummary[i]['diary'];
+        var imgArr = new Array();
+        imgArr = diarySummary[i]['images'].split(',');
+        var wDate = diarySummary[i]['date'];
+        var wTime = diarySummary[i]['time'];
+
+        if(imgArr[0] == undefined || imgArr[0] == 'undefined')
+            imgArr[0] = '../images/img_not_loaded.png';
+        if(imgArr[1] == undefined || imgArr[1] == '')
+            imgArr[1] = '../images/img_not_loaded.png';
+        if(imgArr[2] == undefined || imgArr[2] == '')
+            imgArr[2] = '../images/img_not_loaded.png';
+
+        var currentDate = new Date();
+        var diaryDate = new Date(wDate);
+        diaryDate.setHours(wTime.substring(0, 2));
+        diaryDate.setMinutes(wTime.substring(3, 5));
+        diaryDate.setSeconds(wTime.substring(6, 8));
+
+        var html = `<div class="article-element" onclick="dSumClick("`+wDate+`")">
+            <div class="article-title">
+            <h1 class="ui header">`+title+`</h1>
+            <h4 class="ui header">`+dateTimePrintEngine(currentDate, diaryDate)+`</h4>
+            </div>
+            <div class="ui two column stackable grid">
+            <div class="eleven wide column">
+                <div class="content">
+                <span id=a_span_`+i+`>
+                    `+contents+`
+                </span>
+                </div>
+            </div>
+
+            <div class="five wide column">
+                <div class="content-image">
+                <img class="ui tiny circular image first" style="background-image: url('`+imgArr[0]+`')";>
+                <img class="ui tiny circular image second" style="background-image: url('`+imgArr[1]+`')";>
+                <img class="ui tiny circular image third" style="background-image: url('`+imgArr[2]+`')";>
+                </div>
+            </div>
+            </div>
+        </div>`;
+
+        if(i != diarySummary.length - 1)
+            html += `<!-- divider -->
+            <div class="divider-article-element"></div>`;
+
+        $('#diary_summary').append(html);
+
+        $('#a_span_'+i).html(document.getElementById('a_span_'+i).textContent);
+    
+    }
+
 }
 
 function getFirstDayPosition(doMonthGetDay, argStartDateOpt) {
@@ -729,4 +797,24 @@ $(document).ready(function() {
 function pad(n, width) {
     n = n + '';
     return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+}
+
+function dateTimePrintEngine(current, writed) {
+    var elapsed = (current.getTime() - writed.getTime())/1000;
+    console.log(elapsed);
+
+    if(elapsed < 60.0)
+        return '방금 전';
+    else if(elapsed >= 60 && elapsed < 60 * 60)
+        return Math.floor((elapsed / 60)) + '분 전';
+    else if(elapsed >= 60 * 60 && elapsed < 60 * 60 * 24)
+        return Math.floor((elapsed / (60 * 60))) + '시간 전';
+    else if(elapsed >= 60 * 60 * 24 && elapsed < 60 * 60 * 24 * 7)
+        return Math.floor((elapsed / (60 * 60 * 24))) + '일 전';
+    else {
+        if(current.getFullYear() == writed.getFullYear())
+            return (writed.getMonth() + 1) + '월 ' + writed.getDate() + '일';
+        else
+            return writed.getFullYear() + '년 ' + (writed.getMonth() + 1) + '월 ' + writed.getDate() + '일';
+    }
 }
