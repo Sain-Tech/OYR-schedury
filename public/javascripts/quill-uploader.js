@@ -16,6 +16,10 @@ var quill = new Quill('#editor-container', {
     theme: 'snow'  // or 'bubble'
     });
 
+    $(".ql-toolbar").find('button').attr('tabindex', '-1');
+    $(".ql-toolbar").find('span').attr('tabindex', '-1');
+    
+
 var isFileSelectorOpened = false;
 var isFileSelected = false;
 
@@ -184,8 +188,6 @@ function editorOK() {
     var selDate = $('#modal_content>#left_cont>#fakeDate').html();
     var selectWeather= $('.text>.ui.image.default_weather').attr('src');
     var selectEmotion= $('.text>.ui.image.default_emotion').attr('src');
-    console.log(selectWeather);
-    console.log(selectEmotion);
     
     var title = $('#title').val();
     var today=new Date();

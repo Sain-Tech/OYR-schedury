@@ -50,6 +50,26 @@ var toastAlert = 0;
 var toastTitle = '';
 var toastMsg = '';
 
+router.post('/load_diary',function(req,res,next){
+  var today_compare=req.body.date;
+  var content=connectDB.query("SELECT * FROM DIARY WHERE id ='"+req.session.userId+"',date='"+today_compare+"';")[0];
+  var diary_title=req.body.title;
+  var diary_diary=req.body.diary;
+
+  if(content){
+    $('old_diary_hnc').attr({'style':'display:block !important'});
+    $('new_diary_hnc').attr({'style':'display:none !important'});
+  }else{
+    $('old_diary_hnc').attr({'style':'display:none !important'});
+    $('new_diary_hnc').attr({'style':'display:block !important'});
+  };
+  res.send({
+    load_title : diary_title,
+    load_diary : diary_diary
+  });
+});
+
+
 router.get('/auth/google/callback', 
   passport.authenticate('google', { session: false, failureRedirect: '/auth/google/canceled' }),
   function(req, res) { 
@@ -383,7 +403,7 @@ router.post('/actionUpload_contents', function(req, res) {
   indate=req.body.date;
   var time=req.body.time;
   var emotion=req.body.emotion;
-  var weather=req.body.weather;
+  var weather=req.body.weather; //quill-uqloader.js 200번째줄
 
   quillContents = req.body.value; //일기 내용
 
@@ -424,15 +444,9 @@ router.post('/actionUpload_images', uploadDiaryImg.fields(imagefiles), function(
   
   var imageDirRaw = resultDiary.images;
   var conts = resultDiary.diary;
-  
-  console.log(imageDirRaw); //undefined
 
   var imagesDir = new Array();
 
-  imagesDir = imageDirRaw.split(','); //error
-
-  console.log(imagesDir);
-  
   res.send({
     contents: conts,
     images: imagesDir
@@ -460,9 +474,6 @@ router.post('/getschedules', function(req, res) {
   var endDate = req.body.mEndDate;
   var checkPeriod = req.body.mBoolPeriod;
 
-  console.log(startDate);
-  console.log(endDate);
-
   if(!checkPeriod) {
     resultSchedule = connectDB.query(`
       SELECT * FROM SCHEDULE
@@ -470,7 +481,6 @@ router.post('/getschedules', function(req, res) {
       AND startDate <= '`+startDate+`'
       AND endDate >= '`+startDate+`'
     `);
-    console.log(' only ' + endDate);
   }
   else {
     resultSchedule = connectDB.query("SELECT * FROM SCHEDULE WHERE userId='"+req.session.userId+"' AND startDate BETWEEN '"+startDate+"' AND '"+endDate+"';");

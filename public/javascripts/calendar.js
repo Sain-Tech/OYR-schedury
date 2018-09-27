@@ -1,6 +1,6 @@
 var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 var date = new Date();//today의 Date를 세어주는 역할
-
+var click_date=$('#modal_content>#left_cont>#fake_date').html();
 function prevCalendar(arg) {//이전 달
     // 이전 달을 today에 값을 저장하고 달력에 today를 넣어줌
     //today.getFullYear() 현재 년도//today.getMonth() 월  //today.getDate() 일 
@@ -331,6 +331,9 @@ async function calendarDayOnClick(year, month, day) {
     }
 
     $('#sched_table>tbody').html(html);
+
+    var diaryDatas = await getDiaryDatas(click_date);
+    console.log(diaryDatas);
 }
 
 function cvIdtoDate(ids) {
@@ -371,7 +374,7 @@ async function dateDecorator(appSettings) {
   </div>
 `);
 
-    var scheduleDatas = await getScheduleDatas('def', 'def', true);
+    var scheduleDatas = await getScheduleDatas('def', 'def', true); //메인페이지에서 스케쥴 불러오기
 
     if(scheduleDatas.length > 1) {
         scheduleDatas.sort(function(a, b) {
@@ -627,10 +630,8 @@ function getGoogleCalDatas(start, end, arg) {
 }
 
 var diarydata = getDiaryDatas();
-var diarydata = getDiaryDatas();
-var diarydata = getDiaryDatas();
 
-function getDiaryDatas(start, end, arg){
+function getDiaryDatas(date){
     return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/getdiarys', true); //데이터 베이스에서 가져옴
@@ -647,10 +648,6 @@ function getDiaryDatas(start, end, arg){
             }
         }
     });
-
-    var date=$('#modal_content>#left_cont>#fakeDate').html();
-
-
     xhr.send(JSON.stringify({
         DATE:date
     }));

@@ -549,13 +549,13 @@
     </div>
 
       <div id="cont_divider" class="ui vertical divider" style="position: relative"></div>
-      <!-- 여기까지~~~~~~~~~~~~~~~~!~!~!~!~!~!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
       <div class="twelve wide column">
         <script>
           function onTest(json, status) {
             $('#write_diary').attr({'style':'display: none !important'});
             console.log(json);
-            $('#mod_right_content').html(`<div class="ql-editor">`+json.contents+`</div>`);
+            $('#mod_right_content').html(`<div class="ql-editor">`+json.load_title+json.load_diary+`</div>`);
             for(var i = 0; i < $('.ql-editor>p>img').length; i++) {
               $('#imgId_'+i).attr('src', json.images[i]);
             }
