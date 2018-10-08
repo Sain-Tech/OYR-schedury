@@ -508,6 +508,8 @@ article>.article-element>div>div>.content{
 #left_cont2{
     display: none !important;
     padding: 0 !important;
+    height: inherit !important;
+    overflow-y: scroll;
 }
 
 #modal_header_diary, #modal_header_diary2{
@@ -535,8 +537,9 @@ article>.article-element>div>div>.content{
 
 #sched_name{
     margin: 10px auto !important;
-    width: 70% !important;
-    display: block;
+    width: 90% !important;
+    display: flex;
+    flex-direction: column;
 }
 
 .group-text{
@@ -544,8 +547,10 @@ article>.article-element>div>div>.content{
     margin: 5px;
 }
 
-#start_date, #end_date{
-    width: 120px;
+#start_date{
+    flex: none;
+    width: 90%;
+    margin: 0 auto;
 }
 
 #time1, #time2{
@@ -661,9 +666,6 @@ article>.article-element>div>div>.content{
 .schedule_icons{
     display: flex;
 }
-#schedicon_accordion{
-    width:100%;
-}
 .sched_icons{
     width: 28px;
     height: 28px;
@@ -680,4 +682,21 @@ article>.article-element>div>div>.content{
     height: 200px;
     overflow-y: scroll;
     text-align: center;
+}
+#all_day, #important_schedule{
+    flex: none;
+}
+#repeat_dropdown{
+    width: 90%; 
+    margin: 5px 5%
+}
+#sched_location{
+    display: flex;
+    flex-direction: column;
+}
+#selected_schedicon{
+    opacity: 0.5; 
+    filter: alpha(opacity=50); 
+    width: 28px; 
+    height: 28px;
 }

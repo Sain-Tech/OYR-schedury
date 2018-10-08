@@ -399,6 +399,7 @@ $(document).ready(function(){
         $('#left_cont2').hide();
         $('#left_cont').css('cssText','display : block !important');
     })
+    $('#schedicon_accordion').accordion();
     $('.sched_icons').click(function(){
         // var selected_icon = $(this).attr('id');
         var new_src = $(this).attr('src');
@@ -406,7 +407,7 @@ $(document).ready(function(){
         console.log(new_src);
         $('#selected_schedicon').css('opacity', '1.0');
         $('#schedicon_accordion').css({'height': 'fit-content', 'overflow-y': 'unset'});
-        $('#schedicon_accordion').accordion('close', 0);
+        $('#schedicon_accordion').accordion('toggle', 0);
     });
 
     $("#start_date").flatpickr({
@@ -554,15 +555,6 @@ function getProfImage() {
 function close_modal(){
     $('.profpic-modal').modal('hide');
 }
-
-function open_accordion(){
-    $('#schedicon_accordion').accordion('toggle', '0');
-    if($('#schedicon_accordion').css('height') !='300px'){
-        $('#schedicon_accordion').css({'height': '300px', 'overflow-y': 'scroll'});
-    } else {
-        $('#schedicon_accordion').css({'height': 'fit-content', 'overflow-y': 'unset'});
-    }
-};
 
 function resetProfpic(){
     //$('#profileImage').val('profile_default.png');

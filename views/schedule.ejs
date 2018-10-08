@@ -325,41 +325,27 @@
       <div id="left_cont2" class="four wide column">
         <h2 id='modal_header_diary2' class="ui center aligned header nanumsquare">7월 31일 화요일</h2>
         <form action="/new_schedule" method="post">
-            <div id="sched_name" class="ui input">
+            <div id="sched_name" class="ui input nanumsquare">
+                <label style="width: 90%; margin: 10px 0">일정 이름</label>
                 <input name="nameSched" type="text" class="nanumsquare" placeholder="일정 이름">
             </div>
-
-            <div class="ui accordion" id="schedicon_accordion">
-                <div class="title">
-                  <i class="caret down icon"></i>
-                  <img class="ui image" id="selected_schedicon" src="/images/043-calendar.png" style="opacity: 0.5; filter: alpha(opacity=50); width: 28px; height: 28px;">
-                </div>
-                <div class="content" id="icon_cont">
-                  <div class="icon_wrapper">
-                    <% for(var j = 0; j<scheduleIcons.length; j++){ %>
-                      <img class="sched_icons" id="sched_icon<%=j%>" src="/images/schedule/<%=scheduleIcons[j]%>" alt="">
-                    <% } %>
-                  </div>
-                </div>
-              </div>
             
-            <span class="group-text nanumsquare">날짜<br></span>
-            <div style="display: flex">
-                <div class="ui input">
-                    <input name="dateSched" id="start_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
-                </div>
+            <div class="ui input nanumsquare" style="width: 100%; display: flex; flex-direction: column;">
+              <label style="width: 90%; margin: 10px 5%">날짜</label>
+              <input name="dateSched" id="start_date" class="nanumsquare" type="text" placeholder="날짜" data-input>
             </div>
-            <div style="display: flex">
-                <div class="ui input">
-                    <input name="startTime" id="time1" placeholder="시작 시간" class="nanumsquare">
-                </div>
-                <div class="ui input">
-                    <input name="endTime" id="time2" placeholder="종료 시간" class="nanumsquare">
-                </div>
-            </div>
-            <div class="ui input">
+
+            <div class="ui input" style="width: 90%; margin: 10px 5%">
                 <input name="allDay" id="all_day" type="checkbox">
                 <label for="all_day" class="nanumsquare">종일</label>
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <div class="ui input" style="margin: 2px; width: 45%">
+                    <input name="startTime" id="time1" placeholder="시작 시간" class="nanumsquare">
+                </div>
+                <div class="ui input" style="margin: 2px; width: 45%">
+                    <input name="endTime" id="time2" placeholder="종료 시간" class="nanumsquare">
+                </div>
             </div>
 
             <!-- <div class="cont_repeat">                        
@@ -397,7 +383,7 @@
             </div> -->
             <div class="cont_repeat nanumsquare">
                 <div>
-                    <label>일정 반복</label>
+                    <label style="width: 90%; margin: 0 5%; line-height: 2">일정 반복</label>
                     <div id="repeat_dropdown" class="ui selection dropdown nanumsquare">
                         <input id="p_repeat" type="hidden" name="repeat">
                         <i class="dropdown icon"></i>
@@ -424,14 +410,30 @@
                 </div>
             </div>
             <div id="sched_location" class="ui input nanumsquare">
-                <label>장소<br></label>
-                <input name="locationSched" type="text" class="nanumsquare" placeholder="일정 장소">
+                <label style="width: 90%; margin: 5px 5%">장소</label>
+                <input name="locationSched" type="text" class="nanumsquare" placeholder="일정 장소" style="width: 90%; margin: 5px 5%">
             </div>
-            <div class="ui input">
+            <div class="ui input" style="width: 90%; margin: 7px 5%">
                 <input name="importantSched" id="important_schedule" type="checkbox">
                 <label for="important_schedule" class="nanumsquare">중요</label>
             </div>
-            <div>
+
+            <label class="nanumsquare" style="line-height: 2; margin: 0 5%">아이콘 선택</label>
+            <div class="ui accordion" id="schedicon_accordion">
+                <div class="title" style="margin: 0 5%">
+                  <i class="caret down icon"></i>
+                  <img class="ui image" id="selected_schedicon" src="/images/043-calendar.png">
+                </div>
+                <div class="content" id="icon_cont">
+                  <div class="transition hidden icon_wrapper">
+                    <% for(var j = 0; j<scheduleIcons.length; j++){ %>
+                      <img class="sched_icons" id="sched_icon<%=j%>" src="/images/schedule/<%=scheduleIcons[j]%>" alt="">
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+
+            <div style="display: flex; justify-content: center; margin-top: 10px;">
                 <input class="ui button nanumsquare" id="submit-form" type="submit" value="일정 등록">
                 <input class="ui button nanumsquare" id="cancel_newsched" type="button" value="취소">
             </div>
