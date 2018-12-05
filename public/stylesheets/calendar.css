@@ -186,6 +186,11 @@ h3 {
     margin-left: -4px;
 }
 
+.deco-schedule-name.startend.full {
+    width: calc(100% + 12px);
+    margin-left: -8px;
+}
+
 .deco-schedule-name.end {
     width: calc(100% + 28px);
     margin-left: -24px;
@@ -203,7 +208,7 @@ h3 {
 }
 
 .deco-schedule-name.important {
-    background-color: red;
+    background-color: #E0387D;
     color: white;
 }
 

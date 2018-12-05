@@ -525,6 +525,10 @@ article>.article-element>div>div>.content{
     border-radius: 0;
 }
 
+.schedule-time {
+    text-align: center !important;
+}
+
 #cont_divider, #cont_divider::after, #cont_divider::before {
     height: 100% !important;
     border-right: none;
@@ -550,7 +554,7 @@ article>.article-element>div>div>.content{
 #start_date{
     flex: none;
     width: 90%;
-    margin: 0 auto;
+    margin: 0 auto 10px auto;
 }
 
 #time1, #time2{

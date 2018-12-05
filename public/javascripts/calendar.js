@@ -197,14 +197,14 @@ function buildCalendar(arg){//현재 달 달력 만들기
             if (cnt % 7 == 1) {/*토요일 계산*/
                 //1주일이 7일 이므로 토요일 구하기
                 //월화수목금토일을 7로 나눴을때 나머지가 1이면 cnt가 1번째에 위치함을 의미한다
-                cell.innerHTML = "<font color=skyblue>" + i
+                cell.innerHTML = "<font color=#2599DF>" + i
                 //1번째의 cell에만 색칠
             }
 
             if (cnt % 7 == 2) {/*일요일 계산*/
                 //1주일이 7일 이므로 일요일 구하기
                 //월화수목금토일을 7로 나눴을때 나머지가 2이면 cnt가 2번째에 위치함을 의미한다
-                cell.innerHTML = "<font color=#F79DC2>" + i
+                cell.innerHTML = "<font color=#E0387D>" + i
                 //1번째의 cell에만 색칠
             }
 
@@ -219,13 +219,13 @@ function buildCalendar(arg){//현재 달 달력 만들기
             if (cnt % 7 == 1) {/*일요일 계산*/
                 //1주일이 7일 이므로 일요일 구하기
                 //월화수목금토일을 7로 나눴을때 나머지가 1이면 cnt가 1번째에 위치함을 의미한다
-                cell.innerHTML = "<font color=#F79DC2>" + i
+                cell.innerHTML = "<font color=#E0387D>" + i
                 //1번째의 cell에만 색칠
             }
 
             if (cnt % 7 == 0){/* 1주일이 7일 이므로 토요일 구하기*/
                 //월화수목금토일을 7로 나눴을때 나머지가 0이면 cnt가 7번째에 위치함을 의미한다
-                cell.innerHTML = "<font color=skyblue>" + i
+                cell.innerHTML = "<font color=#2599DF>" + i
                 //7번째의 cell에만 색칠
                 row = tbCalendar.insertRow();
                 //토요일 다음에 올 셀을 추가
@@ -237,13 +237,13 @@ function buildCalendar(arg){//현재 달 달력 만들기
             if (cnt % 7 == 6) {/*토요일 계산*/
                 //1주일이 7일 이므로 토요일 구하기
                 //월화수목금토일을 6로 나눴을때 나머지가 1이면 cnt가 6번째에 위치함을 의미한다
-                cell.innerHTML = "<font color=skyblue>" + i
+                cell.innerHTML = "<font color=#2599DF>" + i
                 //1번째의 cell에만 색칠
             }
 
             if (cnt % 7 == 0){/* 1주일이 7일 이므로 일요일 구하기*/
                 //월화수목금토일을 7로 나눴을때 나머지가 0이면 cnt가 7번째에 위치함을 의미한다
-                cell.innerHTML = "<font color=#F79DC2>" + i
+                cell.innerHTML = "<font color=#E0387D>" + i
                 //7번째의 cell에만 색칠
                 row = tbCalendar.insertRow();
                 //일요일 다음에 올 셀을 추가
@@ -303,6 +303,112 @@ var startDate = 0;
 
 $('#modal_content>#left_cont').append(`<div id="fakeDate" style="width:0; height:0; display:none"></div>`);
 
+async function viewSched(schedid) {
+    console.log(schedid);
+    //var index = parseInt(schedid.substring())
+    var datas = await schedDataWithId(parseInt(schedid));
+    datas = datas[0];
+    console.log(datas);
+
+    //ui 작업
+    $('#submit-form').hide();
+    $('#cancel_newsched').before('<input class="ui button yellow nanumsquare" id="modif_sched" type="button" value="수정" onclick="modifySched(1, '+schedid+')">')
+    .before('<input class="ui button nanumsquare" id="delete_sched" type="button" value="삭제" onclick="deleteSched('+schedid+')">');
+
+    $('#left_cont').hide();
+    $('#left_cont2').css('cssText','display : block !important');
+    var fdate = $('#fakeDate').html();
+    var year = fdate.substring(0, 4);
+    var month = fdate.substring(5, 7);
+    var day = fdate.substring(8, 10);
+
+    $('#input_sched_name').val(datas.scheduleName);
+    $('#start_date').val(datas.startDate == datas.endDate ? datas.startDate.substring(0, 10) : datas.startDate.substring(0, 10) + ' to ' + datas.endDate.substring(0, 10));
+    
+    if(datas.allDay == 1) {
+        $('#all_day').prop('checked', datas.allDay == 1 ? true : false);
+        $('#time1').css('display', 'none');
+        $('#time2').css('display', 'none');
+    }
+    else {
+        $('#time1').val(datas.startTime.substring(0, 2) + ':' +datas.startTime.substring(3, 5) + (parseInt(datas.startTime.substring(0, 2)) < 12 ? 'AM':'PM'));
+        $('#time2').val(datas.endTime.substring(0, 2) + ':' +datas.endTime.substring(3, 5) + (parseInt(datas.endTime.substring(0, 2)) < 12 ? 'AM':'PM'));
+        $('#time1').css('display', 'block');
+        $('#time2').css('display', 'block');
+    }
+
+    $('#important_schedule').prop('checked', datas.isImportant == 1 ? true : false);
+    $('#selected_schedicon').attr('src', (datas.icoImageDir == 'null' || datas.icoImageDir == undefined)? '/images/043-calendar.png' : datas.icoImageDir);
+
+    if(datas.repeatOrNot == 1) {
+        $('#repeat_dropdown').dropdown('set selected', datas.periodOfRepeat);
+        $('#number_of_repeat').val(datas.numRepeat);
+        $('#end_repeat').val(datas.endRepeatDate.substring(0, 10));
+    }
+
+    //데이터베이스 일정 테이블에 장소 항목 필요함!!!
+}
+
+function modifySched(isMod, idx) {
+    var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/new_schedule', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function() {
+            if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                console.log("right!");
+                $('#left_cont2').hide();
+                $('#left_cont').css('cssText','display : block !important');
+                var fdate = $('#fakeDate').html();
+                var year = parseInt(fdate.substring(0, 4));
+                var month = parseInt(fdate.substring(5, 7));
+                var day = parseInt(fdate.substring(8, 10));
+                calendarDayOnClick(year, month, day);
+                dateDecorator();
+                initSchedForm();
+            }
+        }
+
+        xhr.send(JSON.stringify({
+            nameSched: $('#input_sched_name').val(), //일정 이름
+            dateSched: $('#start_date').val(), //날짜
+            startTime: $('#time1').val(), //(종일 아닐 시) 시작 시간
+            endTime: $('#time2').val(), //종일 아닐 시 종료 시간
+            allDay: ($('#all_day').prop('checked') == true ? 'on' : ''), //종일 [0 , 1]
+            repeat: $('#p_repeat').val(), //반복 단위(없음, 일, 주, 월, 년) [0 , 1 , 2 , 3 , 4]
+            numberPeriod: $('#number_of_repeat').val(), //반복 값
+            endRepeat: $('#end_repeat').val(), //반복 종료 날짜
+            place: $('#loc_sched').val(),
+            important: ($('#important_schedule').prop('checked') == true ? 'on' : ''), //중요 [0 , 1]
+            iconImage: new_src, //일정 이미지 경로
+            isMod: isMod,
+            idx: idx
+        }));
+}
+
+function deleteSched(idx) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/delete_schedule', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            console.log('delete complete!');
+            $('#left_cont2').hide();
+            $('#left_cont').css('cssText','display : block !important');
+            var fdate = $('#fakeDate').html();
+            var year = parseInt(fdate.substring(0, 4));
+            var month = parseInt(fdate.substring(5, 7));
+            var day = parseInt(fdate.substring(8, 10));
+            calendarDayOnClick(year, month, day);
+            dateDecorator();
+            initSchedForm();
+        }
+    }
+
+    xhr.send(JSON.stringify({
+        idx: idx
+    }));
+}
+
 async function calendarDayOnClick(year, month, day) {
     //alert('Your choice: '+year+'년 '+month+'월 '+day+'일 ');
 
@@ -321,15 +427,18 @@ async function calendarDayOnClick(year, month, day) {
     var currentDate = pad(year, 4)+'-'+pad(month, 2)+'-'+pad(day, 2);
 
     var scheduleDatas = await getScheduleDatas(currentDate, currentDate, false);
+    console.log(scheduleDatas);
     var html = ``;
     for(var i = 0; i < scheduleDatas.length; i++) {
-       html += `<tr id=schedule_`+i+`>
-                    <td class="schedule-time">`+(scheduleDatas[i].startDate>12?'오후':'오전')+`</td>
-                    <td>`+scheduleDatas[i].scheduleName+` 자세히`+i+` <br> 일정 장소`+i+` <br></td>
-                    <td>아이콘`+i+`</td>
+       html += `<tr id=`+scheduleDatas[i].index+` onclick='viewSched(this.id)'>
+                    <td class="schedule-time">`+scheduleDatas[i].startTime.substring(0, 5)+`
+                    <br> ~<br>`+scheduleDatas[i].endTime.substring(0, 5)+`</td>
+                    <td>`+scheduleDatas[i].scheduleName+` <br></td>
+                    <td>`+(scheduleDatas[i].icoImageDir=='null'?"":"<img src="+scheduleDatas[i].icoImageDir+" height=24px>")+`</td>
                 </tr>`;
     }
 
+    console.log(html);
     $('#sched_table>tbody').html(html);
 
     var diaryDatas = await getDiaryDatas(click_date);
@@ -373,6 +482,8 @@ async function dateDecorator(appSettings) {
     <div class="ui text loader">Loading</div>
   </div>
 `);
+
+    $('td>').remove('div');
 
     var scheduleDatas = await getScheduleDatas('def', 'def', true); //메인페이지에서 스케쥴 불러오기
 
@@ -430,6 +541,14 @@ async function dateDecorator(appSettings) {
             var newDate = loop.setDate(loop.getDate() + 1);
             loop = new Date(newDate);
             cnt++;
+        }
+
+        if(scheduleDatas[i].isImportant) {
+            $('.schdId'+i+'>div').addClass('important');
+        }
+
+        if(scheduleDatas[i].allDay) {
+            $('.schdId'+i+'>.startend').addClass('full');
         }
 
         console.log(i+'인덱스 등록 끝!!');
@@ -573,6 +692,39 @@ function getScheduleDatas(start, end, arg) {
             mStartDate: sStartDate,
             mEndDate: sEndDate,
             mBoolPeriod: arg
+        }));
+    });
+}
+
+function schedDataWithId(index) {
+    return new Promise(function(resolve, reject) {
+        // if(start == 'def' || end == 'def') {
+        //     sStartDate = '1970-01-01';
+        //     sEndDate = '9999-12-31';
+        //     arg = true;
+        // }
+        // else {
+        //     sStartDate = start;
+        //     sEndDate = end;
+        // }
+    
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/getschedules', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                ///console.log(JSON.parse(xhr.responseText));
+                if(xhr.responseText != undefined) {
+                    resolve(JSON.parse(xhr.responseText));
+                }
+                else {
+                    reject(Error('error'));
+                }
+            }
+        }
+    
+        xhr.send(JSON.stringify({
+            index: index
         }));
     });
 }

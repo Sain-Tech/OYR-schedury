@@ -389,20 +389,37 @@ x1.addListener(myFunction1);
     
 ////////////////////////////////////////////////////////
 
+var new_src = null;
+
 $(document).ready(function(){
     $('#newsched_button').click(function(){
         $('#left_cont').hide();
         $('#left_cont2').css('cssText','display : block !important');
+        var fdate = $('#fakeDate').html();
+        var year = fdate.substring(0, 4);
+        var month = fdate.substring(5, 7);
+        var day = fdate.substring(8, 10);
+        $("#start_date").val(year + "." + month + "." + day);
     });
 
     $('#cancel_newsched').click(function(){
         $('#left_cont2').hide();
         $('#left_cont').css('cssText','display : block !important');
-    })
+        //ui 작업
+        $('#modif_sched').remove();
+        $('#delete_sched').remove();
+        $('#submit-form').show();
+        initSchedForm();
+    });
+
+    $('#submit-form').click(function() {
+        submitScheduleDatas();
+    });
+
     $('#schedicon_accordion').accordion();
     $('.sched_icons').click(function(){
         // var selected_icon = $(this).attr('id');
-        var new_src = $(this).attr('src');
+        new_src = $(this).attr('src');
         $('#selected_schedicon').attr('src', new_src);
         console.log(new_src);
         $('#selected_schedicon').css('opacity', '1.0');
@@ -550,6 +567,57 @@ function getProfImage() {
         }
     
         xhr.send();
+}
+
+function submitScheduleDatas() {
+    var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/new_schedule', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function() {
+            if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                console.log("right!");
+                $('#left_cont2').hide();
+                $('#left_cont').css('cssText','display : block !important');
+                var fdate = $('#fakeDate').html();
+                var year = parseInt(fdate.substring(0, 4));
+                var month = parseInt(fdate.substring(5, 7));
+                var day = parseInt(fdate.substring(8, 10));
+                calendarDayOnClick(year, month, day);
+                dateDecorator();
+                initSchedForm();
+            }
+        }
+
+        xhr.send(JSON.stringify({
+            nameSched: $('#input_sched_name').val(), //일정 이름
+            dateSched: $('#start_date').val(), //날짜
+            startTime: $('#time1').val(), //(종일 아닐 시) 시작 시간
+            endTime: $('#time2').val(), //종일 아닐 시 종료 시간
+            allDay: ($('#all_day').prop('checked') == true ? 'on' : ''), //종일 [0 , 1]
+            repeat: $('#p_repeat').val(), //반복 단위(없음, 일, 주, 월, 년) [0 , 1 , 2 , 3 , 4]
+            numberPeriod: $('#number_of_repeat').val(), //반복 값
+            endRepeat: $('#end_repeat').val(), //반복 종료 날짜
+            place: $('#loc_sched').val(),
+            important: ($('#important_schedule').prop('checked') == true ? 'on' : ''), //중요 [0 , 1]
+            iconImage: new_src, //일정 이미지 경로
+        }));
+}
+
+function initSchedForm() {
+    $('#input_sched_name').val(''); //일정 이름
+    $('#start_date').val(''); //날짜
+    $('#time1').val(''); //(종일 아닐 시) 시작 시간
+    $('#time2').val(''); //종일 아닐 시 종료 시간
+    $('#all_day').val(''); //종일 [0 , 1]
+    $('#p_repeat').val(''), //반복 단위(없음, 일, 주, 월, 년) [0 , 1 , 2 , 3 , 4]
+    $('#number_of_repeat').val('');//반복 값
+    $('#end_repeat').val(); //반복 종료 날짜
+    $('#loc_sched').val('');
+    $('important_schedule').val(''); //중요 [0 , 1]
+    $('#selected_schedicon').attr('src', '/images/043-calendar.png');
+    $('#modif_sched').remove();
+    $('#delete_sched').remove();
+    $('#submit-form').show();
 }
 
 function close_modal(){

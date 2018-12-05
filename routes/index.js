@@ -105,6 +105,7 @@ router.get('/auth/google/canceled', function(req, res){
 /* GET home page. */
 router.get('/', function(req, res) {
   connectDB.query("CREATE TABLE IF NOT EXISTS USERS(userId CHAR(30), userPw TEXT, pwSalt TEXT, userEmail TEXT, profileImageDir TEXT, userNickName TEXT, userMessage TEXT, PRIMARY KEY(userId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+  connectDB.query("CREATE TABLE IF NOT EXISTS SCHEDULE(`index` INT NOT NULL AUTO_INCREMENT, userId CHAR(30), scheduleName TEXT, startDate DATE, endDate DATE, startTime TIME, endTime TIME, allDay BOOLEAN, repeatOrNot BOOLEAN, numRepeat INT, periodOfRepeat INT, endRepeatDate DATE, place TEXT, isImportant BOOLEAN, icoImageDir TEXT, PRIMARY KEY(`index`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
   console.log('테이블 생성됨');
   if(req.session.userId) {
     res.redirect('/schedule/'+req.session.userId);
@@ -319,6 +320,18 @@ router.post('/new_schedule', function(req, res){
   var periodOfRepeat=req.body.repeat; // 초기값: 일정 반복 단위(일, 주, 월, 년) : INT           [null]
   var numberRepeat=req.body.numberPeriod; //얼마마다 반복할건지 : INT   [null]
   var endRepeat=req.body.endRepeat; // 반복 일정 종료일 : DATE          [null]
+  var place=req.body.place; //장소
+  var isImportant=req.body.important; // 중요 여부 : BOOLEAN
+  var icoImageDir=req.body.iconImage; // 일정 아이콘 경로: TEXT
+
+  var isMod = req.body.isMod;
+  var idx = req.body.idx;
+
+  if(isMod == undefined || isMod == null) {
+    isMod = 0;
+  }
+
+  console.log('name: ' + schedName, 'date: ' + schedDate, 'starttime: ' + startTime, 'endtime: ' + endTime, 'allday: ' + allDay, 'place: ' + place, 'isImportant: ' + isImportant, 'icon:' + icoImageDir);
   
   if(schedDate == ''){
     var startDate = '1970-01-01';
@@ -326,6 +339,9 @@ router.post('/new_schedule', function(req, res){
   } else {
     var startDate = schedDate.substring(0, 10);
     var endDate = schedDate.substring(14, 24);
+    if(endDate === undefined || endDate === null || endDate == '') {
+      endDate = startDate;
+    }
   }
   if(endRepeat == ''){
     endRepeat = '1970-01-01';
@@ -362,11 +378,23 @@ router.post('/new_schedule', function(req, res){
   startTime = hour1 + min1;
   endTime = hour2 + min2;
   
-  if(allDay == undefined){
+  if(allDay == undefined || allDay == ''){
     allDay = 0;
   } else {
     allDay = 1;
+    startTime = '00:00';
+    endTime = '23:59';
   }
+
+  if(place == undefined || place == null) {
+    place = '';
+  }
+
+  if(isImportant == undefined || isImportant == '')
+    isImportant = 0;
+  else
+    isImportant = 1;
+
   if(periodOfRepeat == ''){
     periodOfRepeat = 0;
   }
@@ -376,12 +404,26 @@ router.post('/new_schedule', function(req, res){
     var repeatBoolean = 1;
   }
 
-  connectDB.query("CREATE TABLE IF NOT EXISTS SCHEDULE(`index` INT NOT NULL AUTO_INCREMENT, userId CHAR(30), scheduleName TEXT, startDate DATE, endDate DATE, startTime TIME, endTime TIME, allDay BOOLEAN, repeatOrNot BOOLEAN, numRepeat INT, periodOfRepeat INT, endRepeatDate DATE, PRIMARY KEY(`index`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+  connectDB.query("CREATE TABLE IF NOT EXISTS SCHEDULE(`index` INT NOT NULL AUTO_INCREMENT, userId CHAR(30), scheduleName TEXT, startDate DATE, endDate DATE, startTime TIME, endTime TIME, allDay BOOLEAN, repeatOrNot BOOLEAN, numRepeat INT, periodOfRepeat INT, endRepeatDate DATE, place TEXT, isImportant BOOLEAN, icoImageDir TEXT, PRIMARY KEY(`index`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
-  var addSchedule = "INSERT INTO SCHEDULE(userId, scheduleName, startDate, endDate, startTime, endTime, allDay, repeatOrNot, numRepeat, periodOfRepeat, endRepeatDate)";
-  addSchedule = addSchedule + "VALUES('"+userID+"', '"+schedName+"', '"+startDate+"', '"+endDate+"', '"+startTime+"', '"+endTime+"', '"+allDay+"', '"+repeatBoolean+"', '"+numberRepeat+"', '"+periodOfRepeat+"', '"+endRepeat+"');";
-  connectDB.query(addSchedule);
+  if(isMod) {
+    console.log('modifying schedule...')
+    var modSchedule = "UPDATE SCHEDULE SET scheduleName='"+schedName+"', startDate='"+startDate+"', endDate='"+endDate+"', startTime='"+startTime+"', endTime='"+endTime+"', allDay="+allDay+", place='"+place+"', isImportant="+isImportant+", icoImageDir='"+icoImageDir+"' WHERE SCHEDULE.index="+idx+";";
+    connectDB.query(modSchedule);
+  }
+  else {
+    var addSchedule = "INSERT INTO SCHEDULE(userId, scheduleName, startDate, endDate, startTime, endTime, allDay, repeatOrNot, numRepeat, periodOfRepeat, endRepeatDate, place, isImportant, icoImageDir)";
+    addSchedule = addSchedule + "VALUES('"+userID+"', '"+schedName+"', '"+startDate+"', '"+endDate+"', '"+startTime+"', '"+endTime+"', '"+allDay+"', '"+repeatBoolean+"', '"+numberRepeat+"', '"+periodOfRepeat+"', '"+endRepeat+"', '"+place+"', '"+isImportant+"', '"+icoImageDir+"');";
+    connectDB.query(addSchedule);
+  }
 
+  res.send(true);
+});
+
+router.post('/delete_schedule', function(req, res){
+  var idx = req.body.idx;
+  connectDB.query("DELETE FROM SCHEDULE WHERE SCHEDULE.index="+idx+";");
+  res.send(true);
 });
 
 router.get('/new_schedule', function(req, res){
@@ -487,6 +529,15 @@ router.post('/getschedules', function(req, res) {
   var startDate = req.body.mStartDate;
   var endDate = req.body.mEndDate;
   var checkPeriod = req.body.mBoolPeriod;
+  var idIndex = req.body.index;
+
+  if(idIndex !== undefined || idIndex != null) {
+    console.log(true, idIndex);
+    resultSchedule = connectDB.query("SELECT * FROM SCHEDULE WHERE userId='"+req.session.userId+"' AND SCHEDULE.index="+parseInt(idIndex)+";");
+    res.send(resultSchedule);
+
+    return;
+  }
 
   if(!checkPeriod) {
     resultSchedule = connectDB.query(`
