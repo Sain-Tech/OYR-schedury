@@ -1,0 +1,11 @@
+.view-diary.title {
+    font-size: 36px;
+}
+
+.view-diary.title.undef{
+    color: gray;
+}
+
+#diary_summary {
+    width: 100%;
+}

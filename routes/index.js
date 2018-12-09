@@ -177,7 +177,7 @@ router.get('/schedule/:id', function(req, res) {
     }
 
     res.render('schedule', {
-      title: req.session.userId,
+      title: req.session.userId + '님의 Schedury',
       uid: resultUser[0].userId,
       uemail: resultUser[0].userEmail,
       uprofimg: resultUser[0].profileImageDir,
@@ -412,8 +412,9 @@ router.post('/new_schedule', function(req, res){
     connectDB.query(modSchedule);
   }
   else {
-    var addSchedule = "INSERT INTO SCHEDULE(userId, scheduleName, startDate, endDate, startTime, endTime, allDay, repeatOrNot, numRepeat, periodOfRepeat, endRepeatDate, place, isImportant, icoImageDir)";
-    addSchedule = addSchedule + "VALUES('"+userID+"', '"+schedName+"', '"+startDate+"', '"+endDate+"', '"+startTime+"', '"+endTime+"', '"+allDay+"', '"+repeatBoolean+"', '"+numberRepeat+"', '"+periodOfRepeat+"', '"+endRepeat+"', '"+place+"', '"+isImportant+"', '"+icoImageDir+"');";
+    var addSchedule = "INSERT INTO SCHEDULE(userId, scheduleName, startDate, endDate, startTime, endTime, allDay, place, isImportant, icoImageDir)";
+    addSchedule = addSchedule + "VALUES('"+userID+"', '"+schedName+"', '"+startDate+"', '"+endDate+"', '"+startTime+"', '"+endTime+"', '"+allDay+"', '"+place+"', '"+isImportant+"', '"+icoImageDir+"');";
+    console.log(addSchedule);
     connectDB.query(addSchedule);
   }
 
@@ -494,7 +495,7 @@ router.post('/actionUpload_images', uploadDiaryImg.fields(imagefiles), function(
   //DIARY 테이블에 이미지 경로를 'undefined'에서 imageDirsRaw로 변경(UPDATE 이용), WHERE 조건으로 사용자 아이디와 날짜 비교
   connectDB.query("UPDATE DIARY SET images='"+imageDirsRaw+"' WHERE id='"+req.session.userId+"' AND date='"+indate+"';");
   
-  resultDiary = connectDB.query("SELECT * FROM DIARY WHERE diary='"+quillContents+"';")[0];
+  resultDiary = connectDB.query("SELECT * FROM DIARY WHERE id='"+req.session.userId+"' AND date='"+indate+"'AND diary='"+quillContents+"';")[0];
 
   console.log(resultDiary);
   
@@ -503,10 +504,12 @@ router.post('/actionUpload_images', uploadDiaryImg.fields(imagefiles), function(
 
   var imagesDir = new Array();
   
-  res.send({
-    contents: conts,
-    images: imagesDir
-  });
+  res.send(resultDiary);
+});
+
+router.post('/deletediary', function(req, res) {
+  connectDB.query("DELETE FROM DIARY WHERE id='"+req.session.userId+"' AND date='"+req.body.date+"';");
+  res.send(true);
 });
 
 router.get('/diarypreview', function(req, res) {
@@ -562,7 +565,9 @@ router.post('/getdiarys', function(req, res) {
   WHERE id='`+ID+`'
   AND date >= '`+req.body.startDate+`'
   AND date <= '`+req.body.endDate+`'
+  ORDER BY date DESC
   `);
+  console.log(req.body.startDate, req.body.endDate, resultDiary);
 
   res.send(resultDiary);
 });

@@ -350,81 +350,73 @@ async function viewSched(schedid) {
 }
 
 function modifySched(isMod, idx) {
-    var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/new_schedule', true);
+    if(confirm('수정하시겠습니까?')) {
+        var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/new_schedule', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function() {
+                if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                    console.log("right!");
+                    $('#left_cont2').hide();
+                    $('#left_cont').css('cssText','display : block !important');
+                    var fdate = $('#fakeDate').html();
+                    updateSchedules(fdate);
+                    dateDecorator();
+                    initSchedForm();
+                }
+            }
+
+            xhr.send(JSON.stringify({
+                nameSched: $('#input_sched_name').val(), //일정 이름
+                dateSched: $('#start_date').val(), //날짜
+                startTime: $('#time1').val(), //(종일 아닐 시) 시작 시간
+                endTime: $('#time2').val(), //종일 아닐 시 종료 시간
+                allDay: ($('#all_day').prop('checked') == true ? 'on' : ''), //종일 [0 , 1]
+                repeat: $('#p_repeat').val(), //반복 단위(없음, 일, 주, 월, 년) [0 , 1 , 2 , 3 , 4]
+                numberPeriod: $('#number_of_repeat').val(), //반복 값
+                endRepeat: $('#end_repeat').val(), //반복 종료 날짜
+                place: $('#loc_sched').val(),
+                important: ($('#important_schedule').prop('checked') == true ? 'on' : ''), //중요 [0 , 1]
+                iconImage: new_src, //일정 이미지 경로
+                isMod: isMod,
+                idx: idx
+            }));
+    }
+    else;
+}
+
+function deleteSched(idx) {
+    if(confirm('정말로 이 일정을 삭제하시겠습니까?')) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/delete_schedule', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function() {
             if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-                console.log("right!");
+                console.log('delete complete!');
                 $('#left_cont2').hide();
                 $('#left_cont').css('cssText','display : block !important');
                 var fdate = $('#fakeDate').html();
                 var year = parseInt(fdate.substring(0, 4));
                 var month = parseInt(fdate.substring(5, 7));
                 var day = parseInt(fdate.substring(8, 10));
-                calendarDayOnClick(year, month, day);
+                updateSchedules(fdate);
                 dateDecorator();
                 initSchedForm();
             }
         }
 
         xhr.send(JSON.stringify({
-            nameSched: $('#input_sched_name').val(), //일정 이름
-            dateSched: $('#start_date').val(), //날짜
-            startTime: $('#time1').val(), //(종일 아닐 시) 시작 시간
-            endTime: $('#time2').val(), //종일 아닐 시 종료 시간
-            allDay: ($('#all_day').prop('checked') == true ? 'on' : ''), //종일 [0 , 1]
-            repeat: $('#p_repeat').val(), //반복 단위(없음, 일, 주, 월, 년) [0 , 1 , 2 , 3 , 4]
-            numberPeriod: $('#number_of_repeat').val(), //반복 값
-            endRepeat: $('#end_repeat').val(), //반복 종료 날짜
-            place: $('#loc_sched').val(),
-            important: ($('#important_schedule').prop('checked') == true ? 'on' : ''), //중요 [0 , 1]
-            iconImage: new_src, //일정 이미지 경로
-            isMod: isMod,
             idx: idx
         }));
-}
-
-function deleteSched(idx) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/delete_schedule', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onreadystatechange = function() {
-        if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-            console.log('delete complete!');
-            $('#left_cont2').hide();
-            $('#left_cont').css('cssText','display : block !important');
-            var fdate = $('#fakeDate').html();
-            var year = parseInt(fdate.substring(0, 4));
-            var month = parseInt(fdate.substring(5, 7));
-            var day = parseInt(fdate.substring(8, 10));
-            calendarDayOnClick(year, month, day);
-            dateDecorator();
-            initSchedForm();
-        }
     }
-
-    xhr.send(JSON.stringify({
-        idx: idx
-    }));
+    else;
 }
 
-async function calendarDayOnClick(year, month, day) {
-    //alert('Your choice: '+year+'년 '+month+'월 '+day+'일 ');
-
+async function updateSchedules(currentDate) {
     $('#sched_table>tbody').html(`<div class="ui active inverted dimmer">
     <div class="ui text loader">Loading</div>
   </div>
 `);
-
-    today = new Date(year, month-1, day);
-
-    $('.ui.longer.modal').modal('show');
-    $('#modal_content>#left_cont>#fakeDate').html(+year+`-`+pad(month, 2)+`-`+pad(day, 2));
-    $('#modal_header_diary').html(month+'월 '+day+'일 '+getDayNameOfWeek(today.getDay())+'요일');
-    $('#modal_header_diary2').html(month+'월 '+day+'일 '+getDayNameOfWeek(today.getDay())+'요일');
-
-    var currentDate = pad(year, 4)+'-'+pad(month, 2)+'-'+pad(day, 2);
 
     var scheduleDatas = await getScheduleDatas(currentDate, currentDate, false);
     console.log(scheduleDatas);
@@ -438,11 +430,94 @@ async function calendarDayOnClick(year, month, day) {
                 </tr>`;
     }
 
-    console.log(html);
     $('#sched_table>tbody').html(html);
+}
 
-    var diaryDatas = await getDiaryDatas(click_date);
-    console.log(diaryDatas);
+function checkDiaryDateDiff(wantdate) {
+    var fdate = $('#fakeDate').html();
+
+    if(fdate === undefined || fdate === null || fdate === '') {
+        fdate = wantdate;
+    }
+
+    var now = new Date();
+    var cDate = new Date(fdate);
+    now.setHours(00);
+    now.setMinutes(00);
+    now.setSeconds(00);
+    now.setMilliseconds(00);
+    cDate.setHours(00);
+    cDate.setMinutes(00);
+    cDate.setSeconds(00);
+    cDate.setMilliseconds(00);
+
+    var diff = (cDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+    console.log(diff);
+
+    return diff;
+}
+
+async function updateDiary(currentDate) {
+    $("#mod_right_content>#diary_hnc").html('')
+    $('#diary_hnc').attr({'style':''});
+
+    $('#new_diary_hnc').attr({'style':'display: block !important'});
+    $('#write_diary').attr({'style':'display: none !important'});
+
+    $("#mod_right_content").append(`<div class="ui active inverted dimmer">
+    <div class="ui text loader">Loading</div>
+  </div>
+`)
+
+    var diff = checkDiaryDateDiff(currentDate);
+
+    var diaryDatas = await getDiaryDatas(currentDate, currentDate, 1);
+    console.log(diaryDatas[0]);
+
+    if(diaryDatas.length > 0)
+        renderDiary(diaryDatas[0]);
+    else {
+        if(diff < 0) {
+            $('#diary_hnc').attr({'style':'display: block !important'});
+            $('#new_diary_hnc').attr({'style':'display: none !important'});
+            $('#write_diary').attr({'style':'display: none !important'});
+
+            $('#new_diary_hnc').html('');
+            $('#write_diary').html('');
+
+            $('#diary_hnc').html(
+                `<h3>날짜가 지나서 작성하실 수 없습니다..<br>하루에 하나씩, 일기를 쓰는 습관을 길러보도록 해요..!</h3>`
+            );
+        }
+        else if(diff > 0) {
+            $('#diary_hnc').attr({'style':'display: block !important'});
+            $('#new_diary_hnc').attr({'style':'display: none !important'});
+            $('#write_diary').attr({'style':'display: none !important'});
+
+            $('#new_diary_hnc').html('');
+            $('#write_diary').html('');
+
+            $('#diary_hnc').html(
+                `<h3>아직은 작성이 불가합니다..!</h3>`
+            );
+        }
+    }
+
+    $("#mod_right_content>.ui.active.inverted.dimmer").remove();
+}
+
+async function calendarDayOnClick(year, month, day) {
+    //alert('Your choice: '+year+'년 '+month+'월 '+day+'일 ');
+    today = new Date(year, month-1, day);
+
+    $('.ui.longer.modal').modal('show');
+    $('#modal_content>#left_cont>#fakeDate').html(+year+`-`+pad(month, 2)+`-`+pad(day, 2));
+    $('#modal_header_diary').html(month+'월 '+day+'일 '+getDayNameOfWeek(today.getDay())+'요일');
+    $('#modal_header_diary2').html(month+'월 '+day+'일 '+getDayNameOfWeek(today.getDay())+'요일');
+
+    var currentDate = pad(year, 4)+'-'+pad(month, 2)+'-'+pad(day, 2);
+    updateSchedules(currentDate);
+    updateDiary(currentDate);
 }
 
 function cvIdtoDate(ids) {
@@ -781,8 +856,6 @@ function getGoogleCalDatas(start, end, arg) {
     });
 }
 
-var diarydata = getDiaryDatas();
-
 function getDiaryDatas(start, end, arg){
     return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
@@ -799,11 +872,44 @@ function getDiaryDatas(start, end, arg){
                 }
             }
         }
+        console.log(start,end);
         xhr.send(JSON.stringify({
-            startDate: (arg==1?start:click_date),
-            endDate: (arg==1?end:click_date)
+            startDate: (arg==1?start:start),
+            endDate: (arg==1?end:start)
         }));
     });
+}
+
+async function delDiarySubFunc(fdate) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/deletediary', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            if(xhr.responseText == 'true') {
+                updateDiary(fdate);
+            }
+        }
+    }
+
+    xhr.send(JSON.stringify({
+        date: fdate
+    }));
+}
+
+async function delDiary() {
+    var fdate = $('#fakeDate').html();
+
+    if(checkDiaryDateDiff() >= 0) {
+        if(confirm('정말로 이 일기를 지우시겠습니까?')) {
+            delDiarySubFunc(fdate);
+        }
+    }
+    else {
+        if(confirm('정말로 이 일기를 지우시겠습니까?\n날짜가 지났으므로 지운 후에는 재작성이 불가능합니다!')) {
+            delDiarySubFunc(fdate);
+        }
+    }
 }
 
 async function setDiarySummary() {
@@ -837,7 +943,9 @@ async function setDiarySummary() {
         diaryDate.setMinutes(wTime.substring(3, 5));
         diaryDate.setSeconds(wTime.substring(6, 8));
 
-        var html = `<div class="article-element" onclick="dSumClick("`+wDate+`")">
+        console.log(diaryDate, currentDate);
+
+        var html = `<div class="article-element" onclick="calendarDayOnClick(`+parseInt(wDate.substring(0, 4))+`, `+parseInt(wDate.substring(5, 7))+`, `+parseInt(wDate.substring(8, 10))+`)">
             <div class="article-title">
             <h1 class="ui header">`+title+`</h1>
             <h4 class="ui header">`+dateTimePrintEngine(currentDate, diaryDate)+`</h4>
@@ -955,7 +1063,9 @@ function dateTimePrintEngine(current, writed) {
     var elapsed = (current.getTime() - writed.getTime())/1000;
     console.log(elapsed);
 
-    if(elapsed < 60.0)
+    if(elapsed < 0)
+        return '미리 작성 됨';
+    else if(elapsed < 60.0 && elapsed >= 0)
         return '방금 전';
     else if(elapsed >= 60 && elapsed < 60 * 60)
         return Math.floor((elapsed / 60)) + '분 전';

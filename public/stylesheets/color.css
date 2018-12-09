@@ -20,6 +20,23 @@
     color: #ffffff !important;
 }
 
+/* fore color default */
+.foreyellow {
+    color: #FDC23E !important;
+}
+.foreorange {
+    color: #F9A11B !important;
+}
+.forewhite {
+    color: #FFFFFF !important;
+}
+.foredark {
+    color: #274555 !important;
+}
+.foreblack {
+    color: #000 !important;
+}
+
 /* color text */
 .text-color-dark {
     color: #274555 !important;

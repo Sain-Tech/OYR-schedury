@@ -70,9 +70,9 @@
     margin:10px 10px 10px 10px !important;
     height:90%;
 }
-/* #diary_hnc{
-    padding: 5px 5px 5px 5px;
-} */
+#diary_hnc{
+    height: calc(100% - 64px);
+}
 #new_diary_hnc{
     text-align:center;
     padding: 5px 5px 5px 5px;

@@ -129,7 +129,7 @@ function imageHandler() {
     };
 }
 
-function editorOK() {
+async function editorOK() {
 
     var imageFields = [];
     //make image file fields
@@ -209,7 +209,7 @@ function editorOK() {
 }
 
 function onSuccess(json, status) {
-    onTest(json);
+    renderDiary(json);
 }
 
 function onError() {

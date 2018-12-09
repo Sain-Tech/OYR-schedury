@@ -228,6 +228,10 @@ header {
         -ms-transition: none!important;
         transition: none!important;
     }
+
+    .info-card {
+        left: 268px;
+    }
 }
 
 @media only screen and (max-width: 800px)  {
@@ -261,6 +265,10 @@ header {
     article>.article-element>div>h4.ui.header {
         margin-right: unset !important;
     }
+
+    .info-card {
+        left: 268px;
+    }
 }
 
 @media only screen and (max-width: 512px)  {
@@ -293,6 +301,13 @@ header {
 
     article>.article-element {
         padding: 2px 14px 2px 14px !important;
+    }
+
+    .info-card {
+        margin-left: auto;
+        margin-right: auto;
+        left: 2px;
+        z-index: 999;
     }
 }
 
@@ -571,15 +586,15 @@ article>.article-element>div>div>.content{
     font-size:30px;
 }
 #new_diary_head{
-    margin-top:60px;
+    margin-top:32px;
 }
 #mod_right_content{
     margin:10px 10px 10px 10px !important;
     height:90%;
 }
-/* #diary_hnc{
-    padding: 5px 5px 5px 5px;
-} */
+#diary_hnc{
+    width: calc(100% + 24px);
+}
 #new_diary_hnc{
     text-align:center;
     padding: 5px 5px 5px 5px;

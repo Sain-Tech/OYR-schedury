@@ -17,6 +17,7 @@
   <!-- Our stylesheets -->
   <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/schedule.css">
   <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/calendar.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/viewdiary.css">
   <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/color.css">
 
   <!-- JQuery touch library -->
@@ -74,6 +75,23 @@
       </a>
     </div>
   </div>
+
+  <div class="ui card info-card" id="info_card">
+    <div class="content">
+      <img class="ui small circular image center aligned container" id="profile_image" style="background-image: url('<%= uprofimg %>'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
+      <div class="ui fluid input user-nickname">
+        <input id="nickname" name="nickname" type="text" value="<%= unickname %>" readonly>
+      </div>
+      <div class="ui fluid input user-msg">
+        <input id="user_message" name="userMessage" type="text" value="<%= umessage %>" readonly>
+      </div>
+      <div class="bottom-menu">
+        <div class="ui circular button" id="edit_button" data-tooltip="정보 수정" data-position="left center">Edit</div>
+        <div class="ui circular button" id="logout_button" onclick="location='/logout'" data-tooltip="로그아웃" data-position="right center">Logout</div>
+      </div>
+    </div>
+  </div>
+
 
   <div class="pusher noanim">
 
@@ -133,22 +151,6 @@
     </header>
 
     <div class="card-back"></div>
-
-    <div class="ui card info-card" id="info_card">
-      <div class="content">
-        <img class="ui small circular image center aligned container" id="profile_image" style="background-image: url('<%= uprofimg %>'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
-        <div class="ui fluid input user-nickname">
-          <input id="nickname" name="nickname" type="text" value="<%= unickname %>" readonly>
-        </div>
-        <div class="ui fluid input user-msg">
-          <input id="user_message" name="userMessage" type="text" value="<%= umessage %>" readonly>
-        </div>
-        <div class="bottom-menu">
-          <div class="ui circular button" id="edit_button" data-tooltip="정보 수정" data-position="left center">Edit</div>
-          <div class="ui circular button" id="logout_button" onclick="location='/logout'" data-tooltip="로그아웃" data-position="right center">Logout</div>
-        </div>
-      </div>
-    </div>
 
     <div class="calendar-this">
       <div class="calendar-menu">
@@ -276,6 +278,7 @@
   <!-- 일기, 일정 모달 -->
   <div id='mod' class="ui longer modal">
     <div id="modal_content" class="ui two column stackable grid">
+      <i class="large close icon" style="position: absolute;margin-left: calc(100% - 48px);margin-top: 8px;font-weight: 200;z-index: 99;"></i>
       <div id="left_cont" class="four wide column">
         <h2 id='modal_header_diary' class="ui center aligned header nanumsquare">7월 31일 화요일</h2>
 
@@ -443,19 +446,8 @@
       <div id="cont_divider" class="ui vertical divider" style="position: relative"></div>
 
       <div class="twelve wide column">
-        <script>
-          function onTest(json, status) {
-            $('#write_diary').attr({'style':'display: none !important'});
-            console.log(json);
-            $('#mod_right_content').html(`<div class="ql-editor">`+json.load_title+json.load_diary+`</div>`);
-            for(var i = 0; i < $('.ql-editor>p>img').length; i++) {
-              $('#imgId_'+i).attr('src', json.images[i]);
-            }
-          }
-        </script> 
         <!-- 8월22일 채원 -->
         <div id='mod_right_content'>
-          <i class="big close icon"></i>
           <div id='diary_hnc'>
             <!-- <h3 id='diary_head'></h3> 제목 -->
             <!-- <div id='diary_content'></div> 내용 -->

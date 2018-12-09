@@ -232,7 +232,7 @@ $(document).ready(function(){
 
     $('.user-profile').click(function() {
         console.log('hi');
-        $('#info_card').attr({'style': 'display: block !important'});
+        $('#info_card').attr({'style': 'display: block !important; z-index: 999;'});
         $('.card-back').attr({'style': 'display: block !important'});
     });
 
@@ -699,4 +699,55 @@ function callAppSettings() {
         }
         xhr.send();
     });    
+}
+
+async function renderDiary(json) {
+    $('#write_diary').attr({'style':'display: none !important'});
+    
+    console.log(json);
+
+    var diaryImages = [];
+    diaryImages = json.images.split(',');
+
+    var currentDate = new Date();
+    var diaryDate = new Date(json.date);
+    diaryDate.setHours(json.time.substring(0, 2));
+    diaryDate.setMinutes(json.time.substring(3, 5));
+    diaryDate.setSeconds(json.time.substring(6, 8));
+
+    $('#mod_right_content>#diary_hnc').html(`
+    <div id='viewer_diary' class="ql-editor">`
+
+    +`<h1 class='view-diary title'>`+((json.title == '' || json.title == undefined) ? '제목 없음' : json.title) +`</h1>`
+
+    +`<h3 class='view-diary datetime'>`+dateTimePrintEngine(currentDate, diaryDate)+`</h3>`
+
+    +`<img class='view-diary emotion' src=`+json.emotion+` height=24px>`
+    +`<img class='view-diary weather' src=`+json.weather+` height=24px>`
+
+    +json.diary
+
+    +`</div>`
+    
+    +`<div id='view_diary_dock' class=''>`
+    +`<button class='ui button yellow' onclick='modifDiary()'>수정</button>`
+    +`<button class='ui button' onclick='delDiary()'>삭제</button>`
+    +`</div>`
+
+    );
+
+    for(var i = 0; i < $('.ql-editor>p>img').length; i++) {
+        $('#imgId_'+i).attr('src', diaryImages[i]);
+    }
+
+    if(json.title == undefined || json.title == '') {
+        $('#viewer_diary, .view-diary, .title').addClass('undef');
+    }
+    else {
+        $('#viewer_diary, .view-diary, .title').removeClass('undef');
+    }
+
+    $('#new_diary_hnc').attr({'style':'display: none !important'});
+    $('#diary_hnc').attr({'style':'height: calc(100% * 1.11 - 48px);'});
+    $('#write_diary').attr({'style':'display: none !important'});
 }
