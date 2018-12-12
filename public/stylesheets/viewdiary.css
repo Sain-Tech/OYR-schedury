@@ -1,4 +1,5 @@
 .view-diary.title {
+    font-family: 'Nanum Myeongjo', serif !important;
     font-size: 36px;
 }
 
@@ -6,6 +7,43 @@
     color: gray;
 }
 
+.ql-editor p{
+    font-family: 'Gamja Flower', cursive;
+    font-size: 16px;
+}
+.ql-editor h2{
+    font-family: 'Gamja Flower', cursive;
+    font-size: 20px;
+}
+
+.ql-editor h1{
+    font-family: 'Gamja Flower', cursive;
+    font-size: 28px;
+}
+
+.view-diary.datetime {
+    float: right;
+}
+
+.view-diary.weather {
+    margin: 10px 20px 10px 12px;
+}
+
+.view-diary.emotion {
+    margin: 10px 20px 10px 0px;
+}
+
+#view_diary_dock {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 32px 20px 8px;
+}
+
+#view_diary_dock>.ui.button.yellow {
+    min-width: 92px;
+}
+
 #diary_summary {
+   
     width: 100%;
 }

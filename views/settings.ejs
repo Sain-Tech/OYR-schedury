@@ -13,6 +13,7 @@
     <link rel='stylesheet' href='/stylesheets/color.css' />
 
     <link href="https://fonts.googleapis.com/css?family=Lobster|Pacifico|Shrikhand" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Black+And+White+Picture|Cute+Font|Do+Hyeon|Dokdo|East+Sea+Dokdo|Gaegu|Gamja+Flower|Gugi|Hi+Melody|Jua|Nanum+Brush+Script|Nanum+Gothic|Nanum+Gothic+Coding|Nanum+Myeongjo|Nanum+Pen+Script|Noto+Sans+KR|Noto+Serif+KR|Poor+Story|Song+Myung|Stylish|Sunflower:300|Yeon+Sung" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
     <link rel="stylesheet" type="text/css" href="../dist/semantic.css"/>
     <script
@@ -36,11 +37,7 @@
       </h1>
       <div id='menu_layout'>
         <div class="ui stackable pagination menu">
-
-          <a class="active item nanumsquare" id="startDate" onclick="changeMenu(document.getElementById('startDate'))">
-            시작일
-          </a>
-          <a class="item nanumsquare" id="pwdChange" onclick="changeMenu(document.getElementById('pwdChange'))">
+          <a class="active item nanumsquare" id="pwdChange" onclick="changeMenu(document.getElementById('pwdChange'))">
             비밀번호 변경
           </a>
           <a class="item nanumsquare" id="display" onclick="changeMenu(document.getElementById('display'))">
@@ -54,26 +51,7 @@
       <div class=segment>
         
           <div class="ui segment">
-
-            <div id=startDateDes style="display:block">
-              <div class='content nanumsquare'> 달력에 시작할 날짜를 선택해 주세요</div>
-              <p>
-                <div class='segment'>
-                  <div id='dropdown_startdate' class="ui selection dropdown">
-                    <input type="hidden" name="day">
-                    <i class="dropdown icon"></i>
-                    <div class="default text nanumsquare">Day</div>
-                    <div class="menu">
-                      <div class="item nanumsquare" data-value="0">토요일</div>
-                      <div class="item nanumsquare" data-value="1">일요일</div>
-                      <div class="item nanumsquare" data-value="2">월요일</div>
-                    </div>
-                  </div>
-                </div>
-              </p>
-            </div>
-
-            <div id=pwdChangeDes style="display:none !important;">
+            <div id=pwdChangeDes style="display:block;">
               <p class='content nanumsquare'>현재 비밀번호를 입력해 주세요.</p>
               <div class="segment nanumsquare">
                 <label style="display:none">Password</label>
@@ -100,32 +78,56 @@
             </div>
 
             <div id=displayDes style="display:none">
-              <p class='content nanumsquare'>사용할 언어를 선택하세요.</p>
-              <div class="ui selection dropdown">
-                <input type="hidden" name="day">
-                <i class="dropdown icon"></i>
-                <div class="default text nanumsquare">Language</div>
-                <div class="menu">
-                  <div class="item nanumsquare" data-value="Eng">English</div>
-                  <div class="item nanumsquare" data-value="Kor">한국어</div>
+              <div class='content nanumsquare'> 달력에 시작할 날짜를 선택해 주세요</div>
+              <p>
+                <div class='segment'>
+                  <div id='dropdown_startdate' class="ui selection dropdown">
+                    <input type="hidden" name="day">
+                    <i class="dropdown icon"></i>
+                    <div class="default text nanumsquare">Day</div>
+                    <div class="menu">
+                      <div class="item nanumsquare" data-value="0">토요일</div>
+                      <div class="item nanumsquare" data-value="1">일요일</div>
+                      <div class="item nanumsquare" data-value="2">월요일</div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              <p class='content nanumsquare'>월이 표시될 방식을 선택하세요.</p>
+              </p>
+<!--
+              <p class='content nanumsquare'>폰트를 선택해 주세요</p>
               <div id='dropdown_displaymonth' class="ui selection dropdown">
                 <input type="hidden" name="day">
                 <i class="dropdown icon"></i>
                 <div class="default text nanumsquare">Month</div>
                 <div class="menu">
-                  <div class="item nanumsquare" data-value="0">Number(1,2,3...)</div>
-                  <div class="item nanumsquare" data-value="1">English(January, February...)</div>
+                  <div class="item " style="font-family: 'Noto Serif KR', serif;" data-value="0">본고딕 Serif</div>
+                  <div class="item " style="font-family: 'Noto Sans KR', sans-serif;" data-value="1">본고딕 Sans KR</div>
+                  <div class="item " style="font-family: 'Nanum Pen Script', cursive;" data-value="2">나눔손글씨 팬</div>
+                  <div class="item " style="font-family: 'Black And White Picture', sans-serif;" data-value="3">흑백사진</div>
+                  <div class="item " style="font-family: 'Nanum Myeongjo', serif;" data-value="4">나눔명조</div>
+                  <div class="item " style="font-family: 'Nanum Gothic', sans-serif;" data-value="5">나눔고딕</div>
+                  <div class="item " style="font-family: 'Gamja Flower', cursive;" data-value="6">감자꽃마을</div>
+                  <div class="item " style="font-family: 'Nanum Brush Script', cursive;" data-value="7">나눔손글씨 붓</div>
+                  <div class="item " style="font-family: 'Dokdo', cursive;" data-value="8">독도</div>
+                  <div class="item " style="font-family: 'Sunflower', sans-serif;" data-value="9">해바라기</div>
+                  <div class="item " style="font-family: 'Do Hyeon', sans-serif;" data-value="10">도현</div>
+                  <div class="item " style="font-family: 'Yeon Sung', cursive;" data-value="11">연성</div>
+                  <div class="item " style="font-family: 'Gugi', cursive;" data-value="12">구기</div>
+                  <div class="item " style="font-family: 'Gaegu', cursive;" data-value="13">개구쟁이</div>
+                  <div class="item " style="font-family: 'Stylish', sans-serif;" data-value="14">스타일리시</div>
+                  <div class="item " style="font-family: 'Hi Melody', cursive;" data-value="15">하이멜로디</div>
+                  <div class="item " style="font-family: 'Cute Font', cursive;" data-value="16">귀여운 폰트</div>
+                  <div class="item " style="font-family: 'East Sea Dokdo', cursive;" data-value="17">대한민국독도</div>
+                  <div class="item " style="font-family: 'Song Myung', serif;" data-value="18">송명</div>
+                  <div class="item " style="font-family: 'Jua', sans-serif;" data-value="19">주아</div>
+                  <div class="item " style="font-family: 'Poor Story', cursive;" data-value="20">서툰이야기</div>
                 </div>
-              </div>
+              </div>-->
             </div>
 
             <div id=syncDes style="display:none">
               <button class="ui button fluid nanumsquare" id='google' type="button" onclick="document.location.href='/auth/google'">구글캘린더와 동기화</button>
-              <button class="ui button fluid nanumsquare" id='naver' type="button">네이버캘린더와 동기화</button>
+              <button class="ui button fluid nanumsquare" id='naver' type="button" style="display: none">네이버캘린더와 동기화</button>
             </div>
 
           </div>

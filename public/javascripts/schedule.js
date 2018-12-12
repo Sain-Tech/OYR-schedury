@@ -722,9 +722,9 @@ async function renderDiary(json) {
 
     +`<h3 class='view-diary datetime'>`+dateTimePrintEngine(currentDate, diaryDate)+`</h3>`
 
-    +`<img class='view-diary emotion' src=`+json.emotion+` height=24px>`
     +`<img class='view-diary weather' src=`+json.weather+` height=24px>`
-
+    +`<img class='view-diary emotion' src=`+json.emotion+` height=24px>`
+   
     +json.diary
 
     +`</div>`

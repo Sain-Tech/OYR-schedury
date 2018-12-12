@@ -482,11 +482,11 @@ async function updateDiary(currentDate) {
             $('#new_diary_hnc').attr({'style':'display: none !important'});
             $('#write_diary').attr({'style':'display: none !important'});
 
-            $('#new_diary_hnc').html('');
-            $('#write_diary').html('');
-
             $('#diary_hnc').html(
-                `<h3>날짜가 지나서 작성하실 수 없습니다..<br>하루에 하나씩, 일기를 쓰는 습관을 길러보도록 해요..!</h3>`
+                `<h3 style="padding: 52px;
+                margin-left: -26px;
+                line-height: 1.5em;
+                text-align: center;">날짜가 지나서 작성하실 수 없습니다..<br>하루에 하나씩, 일기를 쓰는 습관을 길러보도록 해요..!</h3>`
             );
         }
         else if(diff > 0) {
@@ -494,11 +494,11 @@ async function updateDiary(currentDate) {
             $('#new_diary_hnc').attr({'style':'display: none !important'});
             $('#write_diary').attr({'style':'display: none !important'});
 
-            $('#new_diary_hnc').html('');
-            $('#write_diary').html('');
-
             $('#diary_hnc').html(
-                `<h3>아직은 작성이 불가합니다..!</h3>`
+                `<h3 style="padding: 52px;
+                margin-left: -26px;
+                line-height: 1.5em;
+                text-align: center;">아직은 작성이 불가합니다..!</h3>`
             );
         }
     }
